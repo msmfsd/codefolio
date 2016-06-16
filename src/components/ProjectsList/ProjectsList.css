@@ -1,0 +1,80 @@
+/* local vars */
+$rowHeight: 62px;
+
+/* projects list */
+.cf-projects-list {
+  padding: 0;
+  margin: 0;
+}
+
+.cf-project-link-item {
+  width: 100%;
+  height: $rowHeight;
+  float: left;
+  opacity: 0;
+  padding: 0;
+  composes: project-link-borders from '../../assets/css/Global.css';
+
+  &:first-child {
+    margin-top: 1px;
+    @media (min-width: $medium) {
+      margin-top: 0;
+    }
+  }
+
+  & a {
+    display: block;
+    position: relative;
+    float: left;
+    width: 100%;
+    height: $rowHeight;
+    padding: 0;
+    background-color: color($greyHighlight alpha(0));
+    transition: all $duration linear;
+    color: $midGrey;
+    
+    &:hover {
+      color: $coralPink;
+      & h6,
+      & span,
+      & i {
+        padding-right: 40px;
+        color: $coralPink;
+      }
+      & i {
+        transform: translate(40px, -50%);
+        opacity: 1;
+      }
+    }
+
+    & h6 {
+      width: 100%;
+      line-height: 1.2;
+      margin: 12px 0 0;
+      padding: 0 20px;
+      font-weight: 700;
+      transition: all $duration ease-in-out;
+    }
+
+    & span {
+      width: 100%;
+      font-size: 0.9rem;
+      line-height: 1.2;
+      margin: 4px 0 0;
+      padding: 0 20px;
+      transition: all $duration ease-in-out;
+    }
+
+    & i {
+      display: block;
+      position: absolute;
+      top: 50%;
+      transition: all $duration ease-in-out;
+      transform: translate(100px, -50%);
+      opacity: 0;
+      right: 10px;
+    }
+
+  }
+
+}

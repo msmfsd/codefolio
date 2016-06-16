@@ -1,0 +1,14 @@
+.cf-code-snippet {
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto;
+  padding: 0 $padding;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+
+  & p {
+    color: $midGrey;
+  }
+}

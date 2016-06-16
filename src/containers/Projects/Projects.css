@@ -1,0 +1,61 @@
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.cf-projects {
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  animation: fadeIn calc($duration * 2) linear;
+  animation-fill-mode: forwards;
+
+  & .project-name {
+    display: block;
+    float: left;
+    width: 100%;
+    margin: 4rem 0 0.8rem 0;
+    padding: 0 $padding;
+    color: $lightGrey;
+    text-transform: none;
+
+    @media (min-width: $medium) {
+      margin-top: 0;
+      padding-top: 40px;
+    }
+  }
+
+  & .project-client {
+    display: block;
+    float: left;
+    width: 100%;
+    line-height: 1;
+    text-transform: none;
+    margin-bottom: 1.5rem;
+    padding: 0 $padding;
+    color: $midGrey;
+
+  }
+
+  & .cf-project-description {
+    display: block;
+    float: left;
+    width: 100%;
+
+    & p {
+      padding: 0 $padding;
+      margin-right: 22px;
+      line-height: 1.7;
+    }
+
+  }
+}
+
+.projects-back-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  composes: back-btn from '../../assets/css/Global.css';
+}

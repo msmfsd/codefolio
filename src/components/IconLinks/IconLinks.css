@@ -1,0 +1,28 @@
+.cf-iconlinks {
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  padding: 0 $padding;
+
+  & i {
+    display: block;
+    position: absolute;
+  }
+
+  & .iconlinks-group {
+    display: block;
+    width: 100%;
+    float: left;
+    height: auto;
+    padding-left: 32px;
+
+    & a {
+      display: inline-block;
+      margin-right: 14px;
+    }
+  }
+
+}

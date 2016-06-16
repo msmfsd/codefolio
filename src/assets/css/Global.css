@@ -1,0 +1,254 @@
+/*
+ NOTE: materialize css + icons + fonts are loaded first using CDN
+ NOTE: postcss variables: src/assets/css/Global.js
+*/
+
+/* ------------------ BASE STYLES */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+}
+
+body {
+  background: $darkGreyBlue;
+  color: $lightGrey;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased; /* light text on dark bg only */
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: calc($padding / 2);
+}
+
+a {
+  color: $lightGrey;
+  transition: color $duration linear;
+
+  & i {
+    color: $lightGrey;
+  }
+
+  &:hover {
+    color: $coralPink;
+    & i {
+      color: $coralPink;
+    }
+  }
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2.8rem;
+  line-height: 1;
+  margin: 1.5rem 0 1.1rem 0;
+  color: $coralPink;
+  text-transform: lowercase;
+  @media (max-width: 321px) {
+    font-size: 2rem;
+  }
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.1;
+  margin: 1rem 0 0.85rem 0;
+  text-transform: none;
+}
+
+/* ------------------ GLOBAL STYLES */
+
+:global #app {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+/* profile set active background image */
+:global .background-image-on {
+  background-image: url('$dirDark/background-image.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+}
+
+:global .active-link {
+  background-color: color($greyHighlight alpha(100%)) !important;
+  color: $lightGrey !important;
+  &:hover {
+    & h6,
+    & span,
+    & i {
+      color: $lightGrey !important;
+    }
+    & i {
+      opacity: 0 !important;
+    }
+  }
+}
+
+/* ------------------ MAIN STYLES TO COMPOSE */
+
+/* btns */
+.back-btn {
+  text-transform: uppercase;
+  font-size: 14px;
+  padding: 0 14px;
+  margin: 0;
+  height: 28px;
+  line-height: 28px;
+  box-shadow: none;
+  background-color: transparent !important;
+
+  &:hover,
+  &:active {
+    box-shadow: none;
+
+    & i {
+      margin-right: 9px;
+    }
+  }
+
+  & i {
+    transition: margin $duration ease-in-out;
+    margin-right: 6px;
+  }
+}
+
+/* gradient borders */
+@define-placeholder border-bottom-gradient {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+}
+@define-placeholder border-top-gradient {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  width: 100%;
+}
+.border-bottom-gradient-to-left {
+  position: relative;
+  &::after {
+    @extend border-bottom-gradient;
+    background: linear-gradient(to left, $blackGrey 50%, rgba(19, 21, 24, 0) 100%);
+  }
+}
+.border-bottom-gradient-to-right {
+  position: relative;
+  &::after {
+    @extend border-bottom-gradient;
+    background: linear-gradient(to right, $blackGrey 50%, rgba(19, 21, 24, 0) 100%);
+  }
+}
+.border-top-gradient-to-left {
+  position: relative;
+  &::after {
+    @extend border-top-gradient;
+    background: linear-gradient(to left, $blackGrey 50%, rgba(19, 21, 24, 0) 100%);
+  }
+}
+.border-top-gradient-to-right {
+  position: relative;
+  &::after {
+    @extend border-top-gradient;
+    background: linear-gradient(to right, $blackGrey 50%, rgba(19, 21, 24, 0) 100%);
+  }
+}
+.project-link-borders {
+  composes: border-bottom-gradient-to-left;
+  &:first-child {
+    &::before {
+      @extend border-top-gradient;
+      background: linear-gradient(to left, $blackGrey 50%, rgba(19, 21, 24, 0) 100%);
+    }
+  }
+  @media (max-width: $medium) {
+    &:first-child::before {
+      display: none;
+    }
+  }
+}
+
+/* ------------------ OVERRIDE MATERIALIZE */
+:global #sidenav-overlay {
+  background-color: color(black alpha(40%));
+}
+
+:global .btn,
+:global .btn-large {
+  background-color: $coralPink;
+  &:hover,
+  &:active {
+    background-color: $lightCoralPink;
+  }
+}
+
+:global .material-icons {
+  color: $midGrey;
+}
+
+:global .chip {
+  height: 22px;
+  font-size: 11px;
+  font-weight: normal;
+  font-family: monospace;
+  color: $lightGrey;
+  line-height: 22px;
+  padding: 0 8px;
+  border-radius: 11px;
+  background-color: $greyHighlight;
+  border: 1px solid color($blackGrey alpha(-40%));
+}
+
+:global .slider .slides  {
+  margin-top: $padding;
+}
+
+:global .slider .slides  {
+  background-color: $blackGrey;
+}
+
+:global .slider .slides li {
+  border: 1px solid $lightGrey;
+}
+
+:global .slider .slides li img {
+  background-position: center top;
+}
+
+:global .slider .indicators {
+  text-align: right;
+  transform: translateY(-12px);
+}
+
+:global .slider .indicators .indicator-item {
+  height: 12px;
+  width: 12px;
+  margin: 0 3px;
+  background-color: transparent;
+  border: 1px solid $lightGrey;
+}
+
+:global .slider .indicators .indicator-item.active {
+  background-color: $lightGrey;
+}

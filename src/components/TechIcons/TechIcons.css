@@ -1,0 +1,18 @@
+.cf-techicons {
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto;
+  padding: 0 $padding;
+
+  & i {
+    margin-right: 10px;
+    margin-bottom: 1.5rem;
+    float: left;
+    color: $midGrey;
+    &::before {
+      font-size: 32px;
+    }
+  }
+}

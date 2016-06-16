@@ -1,0 +1,25 @@
+@keyframes slideIn {
+  to { max-height: 440px; }
+}
+
+.cf-media-carousel {
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto;
+  max-height: 0;
+  overflow: hidden;
+  background-color: $blackGrey;
+  padding: 0 $padding;
+  margin-bottom: 1rem;
+  animation: slideIn calc($duration * 2) ease-out;
+  animation-fill-mode: forwards;
+  animation-delay: $duration;
+}
+
+.cf-caption {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}

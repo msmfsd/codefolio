@@ -1,0 +1,22 @@
+.cf-notfound {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+
+  & h1 {
+    margin-bottom: 0;
+  }
+
+  & h3 {
+    margin-top: 0;
+  }
+}
+
+.not-found-back-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  composes: back-btn from '../../assets/css/Global.css';
+}
