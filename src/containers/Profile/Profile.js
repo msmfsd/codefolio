@@ -6,9 +6,11 @@
 /* eslint no-else-return: "off" */
 import React, { Component } from 'react'
 import CssModules from 'react-css-modules'
+import ExternalConfig from 'ExternalConfig'
 import Avatar from '../../components/Avatar/Avatar'
 import IconLinks from '../../components/IconLinks/IconLinks'
 import TechIcons from '../../components/TechIcons/TechIcons'
+import Loader from '../../components/Loader/Loader'
 import styles from './Profile.css'
 
 /**
@@ -25,66 +27,96 @@ class Profile extends Component {
     }
   }
 
-  componentDidMount () {
-    this.timer = setTimeout(() => {
-      this.setState({
-        loading: false,
-        profileData: {
-          profileName: 'Steven Wozniak',
-          profileDescription: 'Objective C developer',
-          techIcons: [
-            {name: 'Rails', icon: 'rails-plain'},
-            {name: 'Javascript', icon: 'javascript-plain'},
-            {name: 'Git', icon: 'git-plain'},
-            {name: 'Bootstrap', icon: 'bootstrap-plain'},
-            {name: 'Symfony', icon: 'symfony-original'},
-            {name: 'PHP', icon: 'php-plain'},
-            {name: 'Nodejs', icon: 'nodejs-plain'}
-          ],
-          profileContacts: [
-            {name: '@swozniak_apple', url: 'http://twitter.com/swozniak_apple'},
-            {name: '@my_gitter_handle', url: 'http://gitter.im/my_gitter_handle'},
-            {name: 'swozniak@email.com', url: 'mailto:swozniak@email.com'}
-          ],
-          profileLocation: [
-            {name: 'Silicon Valley, California', url: 'https://goo.gl/maps/yA6gDxKgoTU2'}
-          ],
-          profileLinks: [
-            {name: 'github.com/swoz', url: 'http://github.com/swoz'},
-            {name: 'blogger.woz-blog.com', url: 'http://blogger.woz-blog.com'}
-          ],
-          bioHtml: `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>`
-        }
-      })
-      // clear
-      clearTimeout(this.timer)
-    }, 1000)
+  componentWillMount () {
+
+
+    // TODO ***** use async await here
+
+
+    this.runPolling()
   }
 
-  componentWillUnmount () {
-    if(this.timer !== null) {
-      clearTimeout(this.timer)
-      this.timer = null
+  setData () {
+    console.log('yeah')
+    // set data
+    this.setState({
+      loading: false,
+      profileData: {
+        profileName: d.data.name,
+        profileDescription: d.data.description,
+        techIcons: [
+          {name: 'Rails', icon: 'rails-plain'},
+          {name: 'Javascript', icon: 'javascript-plain'},
+          {name: 'Git', icon: 'git-plain'},
+          {name: 'Bootstrap', icon: 'bootstrap-plain'},
+          {name: 'Symfony', icon: 'symfony-original'},
+          {name: 'PHP', icon: 'php-plain'},
+          {name: 'Nodejs', icon: 'nodejs-plain'}
+        ],
+        profileContacts: [
+          {name: '@swozniak_apple', url: 'http://twitter.com/swozniak_apple'},
+          {name: '@my_gitter_handle', url: 'http://gitter.im/my_gitter_handle'},
+          {name: 'swozniak@email.com', url: 'mailto:swozniak@email.com'}
+        ],
+        profileLocation: [
+          {name: 'Silicon Valley, California', url: 'https://goo.gl/maps/yA6gDxKgoTU2'}
+        ],
+        profileLinks: [
+          {name: 'github.com/swoz', url: 'http://github.com/swoz'},
+          {name: 'blogger.woz-blog.com', url: 'http://blogger.woz-blog.com'}
+        ],
+        bioHtml: d.data.bio
+      }
+    })
+  }
+
+  *pollForProfileData(){
+    while(true){
+      yield fetch(ExternalConfig.API_URL + '/api/profile?apikey=' + ExternalConfig.API_KEY,{
+        method: 'get'
+      }).then(function(d){
+        var json = d.json()
+        return json
+      })
     }
   }
 
+  runPolling(generator){
+    if(!generator){
+      generator = this.pollForProfileData()
+    }
+
+    var p = generator.next();
+    p.value.then(function(d){
+      if(!d.success){
+        this.runPolling(generator)
+      } else {
+        console.log('success: ' + d.success)
+        if(d.success === false) {
+          // TODO
+          throw new Error('API error: ' + d.message)
+        } else {
+          // TODO avatar, layout-theme/bg etc.
+          // TODO api schema
+          this.setData()
+        }
+      }
+    })
+  }
+
   /**
-   * Get html formatted bio
+   * Get html formatted
    * @param html : string
    * @returns {object}
    */
-  getBioHTML (html) {
+  getSanitisedHtml (html) {
     // TODO: alt way of formatting html string
     return {__html: html }
   }
 
   render () {
     if(this.state.loading) {
-      return (
-        <div styleName="cf-progress" className="progress">
-          <div className="indeterminate"></div>
-        </div>
-      )
+      return (<Loader />)
     } else {
       return (
         <div styleName="cf-profile">
@@ -95,7 +127,7 @@ class Profile extends Component {
           <IconLinks icon="perm_contact_calendar" data={this.state.profileData.profileContacts} />
           <IconLinks icon="location_on" data={this.state.profileData.profileLocation} />
           <IconLinks icon="link" data={this.state.profileData.profileLinks} />
-          <div styleName="cf-bio" dangerouslySetInnerHTML={this.getBioHTML(this.state.profileData.bioHtml)}></div>
+          <div styleName="cf-bio" dangerouslySetInnerHTML={this.getSanitisedHtml(this.state.profileData.bioHtml)}></div>
         </div>
       )
     }

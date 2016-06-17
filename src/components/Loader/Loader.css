@@ -1,0 +1,18 @@
+.cf-progress {
+  width: 40%;
+  position: absolute;
+  left: 50%;
+  top: calc($navHeight + $padding);
+  transform: translate(-50%, 0);
+  @media (min-width: $medium) {
+    top: 25%;
+    transform: translate(-25%, -50%);
+  }
+  &::before {
+    content: 'Loading';
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: $midGrey;
+  }
+}

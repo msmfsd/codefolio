@@ -194,6 +194,10 @@ h3 {
   background-color: color(black alpha(40%));
 }
 
+:global .spinner-red-only {
+  border-color: $coralPink;
+}
+
 :global .progress {
   background-color: color($coralPink alpha(40%));
 }

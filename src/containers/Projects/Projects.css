@@ -18,7 +18,7 @@
   opacity: 0;
   animation: slideIn 4s ease-out;
   animation-fill-mode: forwards;
-  animation-delay: $duration;
+  /*animation-delay: $duration;*/
 
   & .project-name {
     display: block;
