@@ -38,7 +38,7 @@ class ProjectsList extends Component {
   render () {
     let projects = this.props.data.map((obj, index) => {
       return (<li key={index} styleName="cf-project-link-item">
-        <Link activeClassName="active-link" to={"/projects/" + obj.projectId}>
+        <Link className="waves-effect" activeClassName="active-link" to={"/projects/" + obj.projectId}>
           <h6 className="truncate">{obj.projectTitle}</h6>
           <span className="truncate">{obj.projectRole}</span>
           <i className="material-icons">chevron_right</i>

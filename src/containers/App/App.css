@@ -131,7 +131,7 @@
 
 /* content */
 .cf-content {
-
+  min-height: $mainContentHeightMin;
 }/* .cf-content */
 
 /* base64 logo @2x */

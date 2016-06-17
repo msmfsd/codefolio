@@ -2,6 +2,18 @@
   to { opacity: 1; }
 }
 
+.cf-progress {
+  width: 40%;
+  position: absolute;
+  left: 50%;
+  top: calc(($mainContentHeightMin / 2) + $navHeight);
+  transform: translate(-50%, 0);
+  @media (min-width: $medium) {
+    top: 50%;
+    transform: translate(-25%, -50%);
+  }
+}
+
 .cf-profile {
 
   display: block;

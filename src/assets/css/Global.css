@@ -194,6 +194,14 @@ h3 {
   background-color: color(black alpha(40%));
 }
 
+:global .progress {
+  background-color: color($coralPink alpha(40%));
+}
+
+:global .progress .indeterminate {
+  background-color: $coralPink;
+}
+
 :global .btn,
 :global .btn-large {
   background-color: $coralPink;

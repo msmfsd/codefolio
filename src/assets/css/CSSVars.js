@@ -25,9 +25,10 @@ const lightGrey = '#D6DAE0'
 const midGrey = '#6D7480'
 /* active link bg color */
 const greyHighlight = '#393F4B'
-/* main container widths */
+/* main container heights/widths */
 const mainWidth = '85%'
 const mainWidthMax = '990px'
+const mainContentHeightMin = '180px'
 /* main nav height */
 const navHeight = '70px'
 /* mobile nav */
@@ -59,6 +60,7 @@ module.exports = {
   greyHighlight,
   mainWidth,
   mainWidthMax,
+  mainContentHeightMin,
   navHeight,
   mobileNavWidth,
   mobileNavWidthMax,
