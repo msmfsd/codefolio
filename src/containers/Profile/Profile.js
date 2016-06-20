@@ -34,7 +34,7 @@ class Profile extends Component {
   render () {
     return (
       <div styleName="cf-profile">
-        <Avatar />
+        <Avatar data={this.props.profileData.avatar} />
         <h1 styleName="profile-name">{this.props.profileData.name}</h1>
         <span styleName="profile-description">{this.props.profileData.description}</span>
         <TechIcons data={this.props.profileData.techIcons} />

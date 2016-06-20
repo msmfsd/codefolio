@@ -1,12 +1,9 @@
 .cf-progress {
-  width: 50%;
+  width: 40%;
   position: absolute;
   left: 50%;
-  top: 10%;
-  transform: translateX(-50%);
-  @media (min-width: $medium) {
-
-  }
+  top: 50%;
+  transform: translate(-50%, -50%);
   &::before {
     content: 'Loading';
     display: block;

@@ -1,1 +1,2 @@
-src/containers/App/
+# ES7 async currently gives Eslint errors
+src/utils/api.js

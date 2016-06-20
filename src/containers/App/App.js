@@ -7,6 +7,7 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
 import ExternalConfig from 'ExternalConfig'
+import Api from '../../utils/api'
 import Loader from '../../components/Loader/Loader'
 import ProjectsList from '../../components/ProjectsList/ProjectsList'
 import styles from './App.css'
@@ -32,6 +33,7 @@ class App extends Component {
     super(props)
     this.state = {
       loading: true,
+      loadDelay: 0,
       error: false,
       errorMessage: '',
       profileData: { },
@@ -47,115 +49,131 @@ class App extends Component {
   }
 
   componentDidMount () {
-
-    // TODO *************************************************** timer for dev only
+    // if dev environment mimic server response time
+    this.state.loadDelay = ExternalConfig.ENV === 'development' ? 1700 : 500
+    // fetch api data
     this.timer = setTimeout(() => {
-      clearTimeout(this.timer)
-      // fetch api data
-      this.getAPIData()
-          .then((apiData) => {
-            if(!apiData.profile.success) {
-              this.setState({
-                loading: false,
-                error: true,
-                errorMessage: 'API error fetching profile: ' + apiData.profile.message
-              })
-            } else if(!apiData.projects.success) {
-              this.setState({
-                loading: false,
-                error: true,
-                errorMessage: 'API error fetching projects: ' + apiData.projects.message
-              })
-            } else {
-              // success
-              this.setBodyLayout(apiData.profile.data.layout)
-              this.setState({
-                loading: false,
-                profileData: apiData.profile.data,
-                projectsData: apiData.projects
-              })
-              // initialise any CDN dom manipulation
-              $('#cf-button-collapse').sideNav({ closeOnClick: true })
-            }
+      Api.FetchData()
+          .then(apiData => {
+            this.handleResponse(apiData)
           })
           .catch(reason => {
-            this.setState({
-              loading: false,
-              error: true,
-              errorMessage: reason.message
-            })
+            this.handleError(reason)
           })
-    }, 1500)
-
-
+      // clear timer
+      clearTimeout(this.timer)
+      this.timer = null
+    }, this.state.loadDelay)
   }
 
   /**
-   * Get data from API
-   * @returns {object}
+   * Handle api server response
+   * @param apiData : object
+   * @returns {}
    */
-  async getAPIData () {
-    const p1 = await fetch(ExternalConfig.API_URL + '/api/profile?apikey=' + ExternalConfig.API_KEY)
-    const p2 = await fetch(ExternalConfig.API_URL + '/api/projects?apikey=' + ExternalConfig.API_KEY)
-    const [r1, r2] = await Promise.all([p1, p2])
-    const [profile, projects] = await Promise.all([r1.json(), r2.json()])
-    return { profile: profile, projects: projects }
+  handleResponse (apiData) {
+    if(!apiData.profile.success) {
+      this.setState({
+        loading: false,
+        error: true,
+        errorMessage: 'API error fetching profile: ' + apiData.profile.message
+      })
+    } else if(!apiData.projects.success) {
+      this.setState({
+        loading: false,
+        error: true,
+        errorMessage: 'API error fetching projects: ' + apiData.projects.message
+      })
+    } else {
+      // success - update app state
+      this.setState({
+        loading: false,
+        profileData: apiData.profile.data,
+        projectsData: apiData.projects
+      })
+      // then init layout
+      this.initialiseLayout(apiData.profile.data.layout)
+    }
+  }
+
+  /**
+   * Handle api server error
+   * @param reason : object
+   * @returns {}
+   */
+  handleError (reason) {
+    this.setState({
+      loading: false,
+      error: true,
+      errorMessage: reason.message
+    })
   }
 
   /**
    * Method to set theme & bg image
+   * & any dom manipulation
    * @param layout : object
    * @returns {}
    */
-  setBodyLayout (layout) {
+  initialiseLayout (layout) {
+    // set body classes
     let classes = []
-    layout.theme === 'dark' ? classes.push('cf-theme-dark') : classes.push('cf-theme-light')
-    layout.displayBgImage ? classes.push('background-image-on') : classes.push('background-image-off')
-    // ['cf-theme-dark', 'background-image-on']
+    classes.push('cf-theme-' + layout.theme)
+    classes.push('background-image-' + String(layout.displayBgImage))
     for (let value of classes) {
       document.body.classList.add(value)
     }
+    // initialise Materialize mobile menu widget
+    $('#cf-button-collapse').sideNav({ closeOnClick: true })
   }
 
   render () {
     if(this.state.loading) {
-      return (<Loader />)
+      return (
+        <div styleName="cf-container" className="container">
+          <div className="row">
+            <div className="col s12" styleName="cf-main">
+              <div styleName="loading-panel"><Loader /></div>
+            </div>
+          </div>
+        </div>
+      )
+    } else if(this.state.error) {
+      return (
+        <div styleName="error-panel" className="card-panel">Error: {this.state.errorMessage}</div>
+      )
     } else {
-      if(this.state.error) {
-        return (<div styleName="error-panel" className="card-panel">Error: {this.state.errorMessage}</div>)
-      } else {
-        return (
-          <div styleName="cf-container" className="container">
-            <div className="row">
-              <div className="col s12" styleName="cf-main">
-                <div styleName="cf-main-inner"></div>
-                <div styleName="cf-main-divider" className="hide-on-med-and-down"></div>
-                <div className="row">
-                  <div styleName="cf-nav" className="col s12 l3 no-padding">
-                    <Link styleName="cf-logo" to="/">Codefolio</Link>
-                    <a href="#" id="cf-button-collapse" data-activates="cf-projects" styleName="cf-button-collapse">
-                      <i className="material-icons">menu</i>
-                    </a>
-                    <div id="cf-projects" styleName="cf-projects">
-                      <ProjectsList data={this.state.projectsData.data} />
-                    </div>
+      return (
+        <div styleName="cf-container" className="container">
+          <div className="row">
+            <div className="col s12" styleName="cf-main">
+              <div styleName="cf-main-inner"></div>
+              <div styleName="cf-main-divider" className="hide-on-med-and-down"></div>
+              <div className="row">
+                <div styleName="cf-nav" className="col s12 l3 no-padding">
+                  <Link styleName="cf-logo" to="/">Codefolio</Link>
+                  <a href="#" id="cf-button-collapse" data-activates="cf-projects" styleName="cf-button-collapse">
+                    <i className="material-icons">menu</i>
+                  </a>
+                  <div id="cf-projects" styleName="cf-projects">
+                    <ProjectsList data={this.state.projectsData.data} />
                   </div>
-                  <div styleName="cf-content" className="col s12 l9 no-padding">
-                    { this.props.children && React.cloneElement(this.props.children, { profileData: this.state.profileData, projectsData: this.state.projectsData }) }
-                  </div>
+                </div>
+                <div styleName="cf-content" className="col s12 l9 no-padding">
+                  { this.props.children && React.cloneElement(this.props.children, { profileData: this.state.profileData, projectsData: this.state.projectsData }) }
                 </div>
               </div>
             </div>
           </div>
-        )
-      }
+        </div>
+      )
     }
   }
 
 }
 
 App.propTypes = {
-  children: PropTypes.object
+  children: PropTypes.object.isRequired
 }
 
 export default CssModules(App, styles)

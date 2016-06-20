@@ -15,7 +15,6 @@ class Loader extends Component {
 
   constructor (props) {
     super(props)
-    this.state = { }
   }
 
   render () {
@@ -29,7 +28,5 @@ class Loader extends Component {
   }
 
 }
-
-Loader.propTypes = {}
 
 export default CssModules(Loader, styles)

@@ -11,10 +11,7 @@
     "Prism": true
   },
 
-  "plugins": [
-    "react",
-    "babel"
-  ],
+  "plugins": ["react"],
 
   "parserOptions": {
         "ecmaVersion": 6,
@@ -217,18 +214,6 @@
     //
     "no-bitwise": 0, // disallow use of bitwise operators (off by default)
     "no-plusplus": 2, // disallow use of unary operators, ++ and -- (off by default)
-
-    //
-    // eslint-plugin-babel
-    //
-    // Babel ES6/7 specific linting rules for ESLint
-    //
-    "babel/generator-star-spacing": 1,
-    "babel/array-bracket-spacing": 1,
-    "babel/object-shorthand": 1,
-    "babel/arrow-parens": 1,
-    "babel/no-await-in-loop": 1,
-    "babel/flow-object-type": 1,
 
     //
     // eslint-plugin-react

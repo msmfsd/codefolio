@@ -19,7 +19,10 @@
   margin: $padding;
 }
 
-/* container */
+.loading-panel {
+  height: 200px;
+}
+
 .cf-container {
   width: $mainWidth;
   @media (min-width: $medium) {
@@ -28,7 +31,6 @@
   }
 }
 
-/* main */
 .cf-main {
   display: block;
   position: relative;
@@ -57,9 +59,8 @@
     @extend divider-gradient-vertical;
   }
 
-}/* .cf-main */
+}
 
-/* nav */
 .cf-nav {
   height: $navHeight;
   composes: border-bottom-gradient-to-right from '../../assets/css/Global.css';
@@ -68,7 +69,6 @@
     height: auto;
   }
 
-  /* mobile menu button */
   & .cf-button-collapse {
     display: block;
     position: absolute;
@@ -132,12 +132,11 @@
   @media (min-width: $medium) {
     display: none;
   }
-}/* .cf-nav */
+}
 
-/* content */
 .cf-content {
   min-height: $mainContentHeightMin;
-}/* .cf-content */
+}
 
 /* base64 logo @2x */
 .cf-logo {
@@ -156,4 +155,4 @@
   &:--enter {
   	filter: contrast(105%);
   }
-}/* logo */
+}

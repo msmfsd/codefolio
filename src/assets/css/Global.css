@@ -75,7 +75,7 @@ h3 {
 }
 
 /* profile set active background image */
-:global .background-image-on {
+:global .background-image-true {
   background-image: url('$dirDark/background-image.jpg');
   background-repeat: no-repeat;
   background-size: cover;
