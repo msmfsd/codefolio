@@ -22,9 +22,11 @@ module.exports = {
   },
   plugins: DEV ? [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.ProvidePlugin({ 'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch' })
   ] : [
     new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.ProvidePlugin({ 'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch' }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.join(__dirname, 'src') + '/assets/html/index-prod.html',

@@ -1,12 +1,11 @@
 .cf-progress {
-  width: 40%;
+  width: 50%;
   position: absolute;
   left: 50%;
-  top: calc($navHeight + $padding);
-  transform: translate(-50%, 0);
+  top: 10%;
+  transform: translateX(-50%);
   @media (min-width: $medium) {
-    top: 25%;
-    transform: translate(-25%, -50%);
+
   }
   &::before {
     content: 'Loading';

@@ -28,7 +28,7 @@ class MediaCarousel extends Component {
 
   render () {
     let media = this.props.data.map((obj, index) => {
-      return (<li key={index}><img alt={obj.desc} src={this.state.imgUploadDirUrl + obj.name}/></li>)
+      return (<li key={index}><img src={this.state.imgUploadDirUrl + obj}/></li>)
     })
     return (
       <div styleName="cf-media-carousel">

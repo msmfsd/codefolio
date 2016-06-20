@@ -25,10 +25,12 @@ class CodeSnippet extends Component {
   }
 
   render () {
+    let hideShowClass = this.props.data.display ? 'show' : 'hide'
+    let styleClass = 'language-' + this.props.data.language
     return (
-      <div styleName="cf-code-snippet">
+      <div className={hideShowClass} styleName="cf-code-snippet">
         <p><strong>Code excerpt:</strong></p>
-        <pre><code className={this.props.language}>{this.props.code}</code></pre>
+        <pre><code className={styleClass}>{this.props.data.code}</code></pre>
       </div>
     )
   }
@@ -36,8 +38,7 @@ class CodeSnippet extends Component {
 }
 
 CodeSnippet.propTypes = {
-  language: PropTypes.string,
-  code: PropTypes.string
+  data: PropTypes.object
 }
 
 export default CssModules(CodeSnippet, styles)

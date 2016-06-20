@@ -194,6 +194,11 @@ h3 {
   background-color: color(black alpha(40%));
 }
 
+:global .card-panel {
+  background-color: $greyHighlight;
+  color: white;
+}
+
 :global .spinner-red-only {
   border-color: $coralPink;
 }

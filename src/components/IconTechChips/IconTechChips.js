@@ -20,7 +20,7 @@ class IconTechChips extends Component {
 
   render () {
     let links = this.props.data.map((obj, index) => {
-      return (<div key={index} styleName="cf-chip" className="chip">{obj.name}</div>)
+      return (<div key={index} styleName="cf-chip" className="chip">{obj}</div>)
     })
     return (
       <div styleName="cf-icon-tech-chips">
