@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import { Router, Link } from 'react-router'
 import CssModules from 'react-css-modules'
+import Panel from '../../components/Panel/Panel'
 import MediaCarousel from '../../components/MediaCarousel/MediaCarousel'
 import IconLinks from '../../components/IconLinks/IconLinks'
 import IconTechChips from '../../components/IconTechChips/IconTechChips'
@@ -31,26 +32,27 @@ class Projects extends Component {
   }
 
   render () {
-    let project = {}
-    this.props.projectsData.data.map((obj) => {
-      if(obj.slug === this.props.params.projectId) {
-        project = obj
-        return
-      }
-    })
-    return (
-      <div styleName="cf-projects">
-        <Link styleName="projects-back-btn" className="btn" to="/"><i className="material-icons left">arrow_back</i>profile</Link>
-        <h1 styleName="project-name">{project.name}</h1>
-        <span styleName="project-client">{project.client}</span>
-        <MediaCarousel data={project.media} />
-        <IconLinks icon="web" data={project.linkWeb} />
-        <IconLinks icon="storage" data={project.linkRepo} />
-        <IconTechChips icon="code" data={project.projectTech} />
-        <div styleName="cf-project-description" dangerouslySetInnerHTML={this.getSanitisedHtml(project.description)}></div>
-        <CodeSnippet data={project.codeSnippet} />
-      </div>
-    )
+    // find matching slug
+    let project = this.props.projectsData.data.find(obj => obj.slug === this.props.params.projectId)
+    if(typeof project === 'undefined') {
+      return (
+        <Panel message={'Error: project not found: ' + this.props.params.projectId} />
+      )
+    } else {
+      return (
+        <div styleName="cf-projects">
+          <Link styleName="projects-back-btn" className="btn" to="/"><i className="material-icons left">arrow_back</i>profile</Link>
+          <h1 styleName="project-name">{project.name}</h1>
+          <span styleName="project-client">{project.client}</span>
+          <MediaCarousel data={project.media} />
+          <IconLinks icon="web" data={project.linkWeb} />
+          <IconLinks icon="storage" data={project.linkRepo} />
+          <IconTechChips icon="code" data={project.projectTech} />
+          <div styleName="cf-project-description" dangerouslySetInnerHTML={this.getSanitisedHtml(project.description)}></div>
+          <CodeSnippet data={project.codeSnippet} />
+        </div>
+      )
+    }
   }
 
 }

@@ -8,6 +8,7 @@ import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
 import ExternalConfig from 'ExternalConfig'
 import Api from '../../utils/api'
+import Panel from '../../components/Panel/Panel'
 import Loader from '../../components/Loader/Loader'
 import ProjectsList from '../../components/ProjectsList/ProjectsList'
 import styles from './App.css'
@@ -133,14 +134,22 @@ class App extends Component {
         <div styleName="cf-container" className="container">
           <div className="row">
             <div className="col s12" styleName="cf-main">
-              <div styleName="loading-panel"><Loader /></div>
+              <div styleName="panel-height"><Loader /></div>
             </div>
           </div>
         </div>
       )
     } else if(this.state.error) {
       return (
-        <div styleName="error-panel" className="card-panel">Error: {this.state.errorMessage}</div>
+        <div styleName="cf-container" className="container">
+          <div className="row">
+            <div className="col s12" styleName="cf-main">
+              <div styleName="panel-height">
+                <Panel message={'Error: ' + this.state.errorMessage} />
+              </div>
+            </div>
+          </div>
+        </div>
       )
     } else {
       return (

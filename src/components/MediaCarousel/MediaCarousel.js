@@ -17,7 +17,7 @@ class MediaCarousel extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      imgUploadDirUrl: ExternalConfig.API_URL + ExternalConfig.API_IMG_UPLOAD_DIR
+      projectsImgDir: ExternalConfig.API_URL + ExternalConfig.API_IMG_UPLOAD_DIR + 'projects/'
     }
   }
 
@@ -28,7 +28,7 @@ class MediaCarousel extends Component {
 
   render () {
     let media = this.props.data.map((obj, index) => {
-      return (<li key={index}><img src={this.state.imgUploadDirUrl + obj}/></li>)
+      return (<li key={index}><img src={this.state.projectsImgDir + obj}/></li>)
     })
     return (
       <div styleName="cf-media-carousel">

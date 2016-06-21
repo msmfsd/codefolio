@@ -30,7 +30,7 @@ p {
 }
 
 a {
-  color: $lightGrey;
+  color: $coralPink;
   transition: color $duration linear;
 
   & i {
@@ -38,9 +38,9 @@ a {
   }
 
   &:hover {
-    color: $coralPink;
+    color: $midGrey;
     & i {
-      color: $coralPink;
+      color: $midGrey;
     }
   }
 }

@@ -14,12 +14,7 @@
   background: linear-gradient(to top, $blackGrey 50%, rgba(19, 21, 24, 0) 100%);
 }
 
-.error-panel {
-  font-style: italic;
-  margin: $padding;
-}
-
-.loading-panel {
+.panel-height {
   height: 200px;
 }
 

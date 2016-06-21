@@ -1,0 +1,6 @@
+.message-panel {
+  margin: $padding calc($padding * 2);
+  text-align: center;
+  background-color: $midGrey;
+  font-style: italic;
+}

@@ -32,7 +32,7 @@ $rowHeight: 62px;
     background-color: color($greyHighlight alpha(0));
     transition: all $duration linear;
     color: $midGrey;
-    
+
     &:hover {
       color: $coralPink;
       & h6,
@@ -53,6 +53,7 @@ $rowHeight: 62px;
       margin: 12px 0 0;
       padding: 0 20px;
       font-weight: 700;
+      color: color($midGrey lightness(54%));
       transition: all $duration ease-in-out;
     }
 

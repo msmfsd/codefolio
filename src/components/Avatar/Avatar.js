@@ -5,6 +5,7 @@
  */
 import React, { Component, PropTypes } from 'react'
 import CssModules from 'react-css-modules'
+import ExternalConfig from 'ExternalConfig'
 import styles from './Avatar.css'
 
 /**
@@ -18,8 +19,9 @@ class Avatar extends Component {
   }
 
   render () {
-    let url = this.props.data.use === 'avatarBase64' ? this.props.data.avatarBase64 : this.props.data.avatarURL
-    let figureStyle = { backgroundImage: 'url(' + url + ')' }
+    const useDefault = this.props.data.useDefault
+    let bgImage = useDefault ? this.props.data.defaultAvatar : ExternalConfig.API_URL + ExternalConfig.API_IMG_UPLOAD_DIR + 'avatar/' + this.props.data.customAvatar
+    let figureStyle = { backgroundImage: 'url(' + bgImage + ')' }
     return (
       <figure style={figureStyle} styleName="cf-avatar" className="hoverable"></figure>
     )
