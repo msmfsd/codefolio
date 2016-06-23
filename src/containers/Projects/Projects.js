@@ -19,9 +19,11 @@ class Projects extends Component {
     this.state = {
       className: 'project-update project-update-anim'
     }
+    this.onClick = this.onClick.bind(this)
   }
 
   componentWillUpdate () {
+    // TODO - do this better
     this.state.className = 'project-update'
     this.timer = setTimeout(() => {
       this.state.className = 'project-update project-update-anim'
@@ -30,6 +32,16 @@ class Projects extends Component {
       clearTimeout(this.timer)
       this.timer = null
     }, 300)
+  }
+
+  /**
+   * Back to top btn click
+   * @param event : object
+   */
+  onClick (event) {
+    event.preventDefault()
+    // TODO
+    $('#app').offset({ top: 0 })
   }
 
   /**
@@ -61,6 +73,7 @@ class Projects extends Component {
         <IconTechChips icon="code" data={project.projectTech} />
         <div styleName="cf-project-description" dangerouslySetInnerHTML={this.getSanitisedHtml(project.description)}></div>
         <CodeSnippet data={project.codeSnippet} />
+        <a onClick={this.onClick} styleName="projects-back-to-top" className="btn"><i className="material-icons left">arrow_upward</i>Top</a>
       </div>
     )
   }
