@@ -131,52 +131,37 @@ class App extends Component {
   render () {
     if(this.state.loading) {
       return (
-        <div styleName="cf-container" className="container">
-          <div className="row">
-            <div className="col s12" styleName="cf-main">
-              <div styleName="panel-height"><Loader /></div>
-            </div>
-          </div>
-        </div>
+        <div styleName="cf-container" className="container"><div className="row"><div className="col s12" styleName="cf-main"><div styleName="panel-height"><Loader /></div></div></div></div>
       )
     } else if(this.state.error) {
       return (
-        <div styleName="cf-container" className="container">
-          <div className="row">
-            <div className="col s12" styleName="cf-main">
-              <div styleName="panel-height">
-                <Panel message={'Error: ' + this.state.errorMessage} />
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div styleName="cf-container" className="container">
-          <div className="row">
-            <div className="col s12" styleName="cf-main">
-              <div styleName="cf-main-inner"></div>
-              <div styleName="cf-main-divider" className="hide-on-med-and-down"></div>
-              <div className="row">
-                <div styleName="cf-nav" className="col s12 l3 no-padding">
-                  <Link styleName="cf-logo" to="/">Codefolio</Link>
-                  <a href="#" id="cf-button-collapse" data-activates="cf-projects" styleName="cf-button-collapse">
-                    <i className="material-icons">menu</i>
-                  </a>
-                  <div id="cf-projects" styleName="cf-projects">
-                    <ProjectsList data={this.state.projectsData.data} />
-                  </div>
-                </div>
-                <div styleName="cf-content" className="col s12 l9 no-padding">
-                  { this.props.children && React.cloneElement(this.props.children, { profileData: this.state.profileData, projectsData: this.state.projectsData }) }
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div styleName="cf-container" className="container"><div className="row"><div className="col s12" styleName="cf-main"><div styleName="panel-height"><Panel message={'Error: ' + this.state.errorMessage} /></div></div></div></div>
       )
     }
+    return (
+      <div styleName="cf-container" className="container">
+        <div className="row">
+          <div className="col s12" styleName="cf-main">
+            <div styleName="cf-main-inner"></div>
+            <div styleName="cf-main-divider" className="hide-on-med-and-down"></div>
+            <div className="row">
+              <div styleName="cf-nav" className="col s12 l3 no-padding">
+                <Link styleName="cf-logo" to="/">Codefolio</Link>
+                <a href="#" id="cf-button-collapse" data-activates="cf-projects" styleName="cf-button-collapse">
+                  <i className="material-icons">menu</i>
+                </a>
+                <div id="cf-projects" styleName="cf-projects">
+                  <ProjectsList data={this.state.projectsData.data} />
+                </div>
+              </div>
+              <div styleName="cf-content" className="col s12 l9 no-padding">
+                { this.props.children && React.cloneElement(this.props.children, { profileData: this.state.profileData, projectsData: this.state.projectsData }) }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
 }

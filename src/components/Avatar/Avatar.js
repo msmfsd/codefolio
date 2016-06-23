@@ -9,9 +9,6 @@ import md5 from 'md5'
 import ExternalConfig from 'ExternalConfig'
 import styles from './Avatar.css'
 
-// TODO var imgSourseUrl = "http://www.gravatar.com/avatar/" + md5(this.props.email);
-// TODO update schema for gravitar option
-
 /**
  * @class Avatar
  * @extends Component
@@ -23,11 +20,26 @@ class Avatar extends Component {
   }
 
   render () {
-    const useDefault = this.props.data.useDefault
-    let bgImage = useDefault ? this.props.data.defaultAvatar : ExternalConfig.API_URL + ExternalConfig.API_IMG_UPLOAD_DIR + 'avatar/' + this.props.data.customAvatar
-    let figureStyle = { backgroundImage: 'url(' + bgImage + ')' }
+    // avatar options: grvatarEmail, defaultAvatar, customAvatar
+    const use = this.props.data.use
+    const inlineStyle = {}
+    let imgSrc = ''
+    switch (use) {
+      case 'defaultAvatar':
+        imgSrc = this.props.data.defaultAvatar
+        break
+      case 'grvatarEmail':
+        imgSrc = 'http://www.gravatar.com/avatar/' + md5(this.props.data.grvatarEmail) + '.jpg'
+        break
+      case 'customAvatar':
+        imgSrc = ExternalConfig.API_URL + ExternalConfig.API_IMG_UPLOAD_DIR + 'avatar/' + this.props.data.customAvatar
+        break
+      default:
+        imgSrc = this.props.data.defaultAvatar
+    }
+    inlineStyle.backgroundImage = 'url(' + imgSrc + ')'
     return (
-      <figure style={figureStyle} styleName="cf-avatar" className="hoverable"></figure>
+      <figure style={inlineStyle} styleName="cf-avatar" className="hoverable"></figure>
     )
   }
 

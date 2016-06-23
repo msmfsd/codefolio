@@ -76,10 +76,12 @@ h3 {
 
 /* profile set active background image */
 :global .background-image-true {
-  background-image: url('$dirDark/background-image.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
+  @media (min-width: $medium) {
+    background-image: url('$dirDark/background-image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+  }
 }
 
 :global .active-link {
