@@ -24,12 +24,11 @@
     "url": "git+https://github.com/msmfsd/codefolio.git"
   },
   "scripts": {
-    "clear": "rimraf dist",
     "dev": "cross-env NODE_ENV=development webpack && node server.js",
-    "build": "npm run clear && cross-env NODE_ENV=production webpack",
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack",
     "lint": "./node_modules/.bin/eslint server.js src/",
-    "mocha": "./node_modules/.bin/mocha --compilers js:babel-core/register",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --compilers js:babel-core/register",
+    "mocha": "./node_modules/.bin/mocha --compilers js:babel-core/register __tests__/code_test.js",
+    "karma": "NODE_ENV=production karma start karma.config.js",
     "test": "npm run lint && npm run mocha"
   },
   "dependencies": {
@@ -56,6 +55,7 @@
     "imports-loader": "^0.6.5",
     "json-loader": "^0.5.4",
     "lodash": "4.13.1",
+    "md5": "^2.1.0",
     "postcss-advanced-variables": "^1.2.2",
     "postcss-color-function": "^2.0.1",
     "postcss-cssnext": "^2.6.0",
@@ -80,13 +80,14 @@
     "chai": "^3.5.0",
     "eslint": "^2.13.1",
     "eslint-plugin-react": "^5.2.2",
-    "istanbul": "^0.4.4",
-    "jasmine-core": "^2.4.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
-    "karma-jasmine": "^1.0.2",
+    "karma-mocha": "^1.0.1",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-phantomjs-shim": "^1.4.0",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.5.3",
+    "phantomjs-prebuilt": "^2.1.7",
     "react-addons-test-utils": "^15.1.0"
   }
 }

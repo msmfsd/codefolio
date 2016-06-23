@@ -28,4 +28,5 @@ node_modules
 .DS_Store
 .env
 dist
-config/
+config/config.dev.json
+config/config.prod.json

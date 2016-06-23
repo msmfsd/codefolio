@@ -5,8 +5,12 @@
  */
 import React, { Component, PropTypes } from 'react'
 import CssModules from 'react-css-modules'
+import md5 from 'md5'
 import ExternalConfig from 'ExternalConfig'
 import styles from './Avatar.css'
+
+// TODO var imgSourseUrl = "http://www.gravatar.com/avatar/" + md5(this.props.email);
+// TODO update schema for gravitar option
 
 /**
  * @class Avatar
