@@ -13,17 +13,6 @@ import Loader from '../../components/Loader/Loader'
 import ProjectsList from '../../components/ProjectsList/ProjectsList'
 import styles from './App.css'
 
-/*
-  NOTE:
-  Most of your components should simply take some data from props and render it. However, sometimes you need to respond to user input, a server request or the passage of time. For this you use state.
-
-  Try to keep as many of your components as possible stateless. By doing this you'll isolate the state to its most logical place and minimize redundancy, making it easier to reason about your application.
-
-  A common pattern is to create several stateless components that just render data, and have a stateful component above them in the hierarchy that passes its state to its children via props. The stateful component encapsulates all of the interaction logic, while the stateless components take care of rendering data in a declarative way.
-  NOTE:
-  Usually, a component's children (this.props.children) is an array of components
-*/
-
 /**
  * @class App
  * @extends Component

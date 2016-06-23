@@ -17,8 +17,19 @@ class Projects extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      projectIndex: 0
+      className: 'project-update project-update-anim'
     }
+  }
+
+  componentWillUpdate () {
+    this.state.className = 'project-update'
+    this.timer = setTimeout(() => {
+      this.state.className = 'project-update project-update-anim'
+      this.setState(this.state)
+      // clear timer
+      clearTimeout(this.timer)
+      this.timer = null
+    }, 300)
   }
 
   /**
@@ -40,7 +51,7 @@ class Projects extends Component {
       )
     }
     return (
-      <div styleName="cf-projects">
+      <div className={this.state.className} styleName="cf-projects">
         <Link styleName="projects-back-btn" className="btn" to="/"><i className="material-icons left">arrow_back</i>profile</Link>
         <h1 styleName="project-name">{project.name}</h1>
         <span styleName="project-client">{project.client}</span>

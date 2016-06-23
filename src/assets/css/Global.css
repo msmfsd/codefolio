@@ -74,6 +74,14 @@ h3 {
   margin: 0;
 }
 
+:global .project-update {
+  opacity: 0;
+}
+
+:global .project-update.project-update-anim {
+  opacity: 1;
+}
+
 /* profile set active background image */
 :global .background-image-true {
   @media (min-width: $medium) {

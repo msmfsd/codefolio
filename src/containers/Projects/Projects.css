@@ -1,24 +1,9 @@
-@keyframes slideIn {
-  10% {
-    opacity: 1;
-  }
-  to {
-    max-height: 8000px;
-    opacity: 1;
-  }
-}
-
 .cf-projects {
   display: block;
   position: relative;
   float: left;
   width: 100%;
   height: auto;
-  max-height: 0;
-  opacity: 0;
-  animation: slideIn 4s ease-out;
-  animation-fill-mode: forwards;
-  /*animation-delay: $duration;*/
 
   & .project-name {
     display: block;
@@ -26,6 +11,7 @@
     width: 100%;
     margin: 4rem 0 0.8rem 0;
     padding: 0 $padding;
+    font-size: 2.2rem;
     color: $lightGrey;
     text-transform: none;
 
