@@ -1,0 +1,39 @@
+.cf-repolink {
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  padding: 0 $padding;
+
+  & i {
+    display: block;
+    position: absolute;
+  }
+
+  & .repolink-group {
+    display: block;
+    width: 100%;
+    float: left;
+    height: auto;
+    padding-left: 32px;
+
+    & a {
+      display: inline-block;
+      margin-right: 14px;
+    }
+  }
+
+  & .repolink-stars {
+    display: block;
+    position: relative;
+    margin-top: 2.5rem;
+    @media (min-width: $medium) {
+      position: absolute;
+      right: $padding;
+      margin-top: 0;
+    }
+  }
+
+}

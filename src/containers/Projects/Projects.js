@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
+import ApiGithub from '../../utils/api-github'
 import Panel from '../../components/Panel/Panel'
 import MediaCarousel from '../../components/MediaCarousel/MediaCarousel'
 import IconLinks from '../../components/IconLinks/IconLinks'
+import RepoLink from '../../components/RepoLink/RepoLink'
 import IconTechChips from '../../components/IconTechChips/IconTechChips'
 import CodeSnippet from '../../components/CodeSnippet/CodeSnippet'
 import styles from './Projects.css'
@@ -16,32 +18,32 @@ class Projects extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      className: 'project-update project-update-anim'
-    }
-    this.onClick = this.onClick.bind(this)
+    this.scrollToTop = this.scrollToTop.bind(this)
   }
 
   componentWillUpdate () {
-    // TODO - do this better
-    this.state.className = 'project-update'
-    this.timer = setTimeout(() => {
-      this.state.className = 'project-update project-update-anim'
-      this.setState(this.state)
-      // clear timer
-      clearTimeout(this.timer)
+    if(this.timer !== null) {
+      clearInterval(this.timer)
       this.timer = null
-    }, 300)
+    }
   }
 
   /**
    * Back to top btn click
    * @param event : object
    */
-  onClick (event) {
-    event.preventDefault()
-    // TODO
-    $('#app').offset({ top: 0 })
+  scrollToTop () {
+    const doc = document.documentElement
+    let top = null
+    this.timer = setInterval(() => {
+      top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
+      if (top > 0) {
+        window.scrollTo(0, top - 30)
+      } else {
+        clearInterval(this.timer)
+        this.timer = null
+      }
+    }, this.props.scrollSpeed)
   }
 
   /**
@@ -63,17 +65,17 @@ class Projects extends Component {
       )
     }
     return (
-      <div className={this.state.className} styleName="cf-projects">
+      <div styleName="cf-projects">
         <Link styleName="projects-back-btn" className="btn" to="/"><i className="material-icons left">arrow_back</i>profile</Link>
         <h1 styleName="project-name">{project.name}</h1>
         <span styleName="project-client">{project.client}</span>
         <MediaCarousel data={project.media} />
         <IconLinks icon="web" data={project.linkWeb} />
-        <IconLinks icon="storage" data={project.linkRepo} />
+        <RepoLink repoUrl={project.repo.repoUrl} starsCount={22} />
         <IconTechChips icon="code" data={project.projectTech} />
         <div styleName="cf-project-description" dangerouslySetInnerHTML={this.getSanitisedHtml(project.description)}></div>
         <CodeSnippet data={project.codeSnippet} />
-        <a onClick={this.onClick} styleName="projects-back-to-top" className="btn"><i className="material-icons left">arrow_upward</i>Top</a>
+        <a onClick={this.scrollToTop} styleName="projects-back-to-top" className="btn"><i className="material-icons left">arrow_upward</i>Top</a>
       </div>
     )
   }
@@ -82,7 +84,12 @@ class Projects extends Component {
 
 Projects.propTypes = {
   projectsData: PropTypes.object,
-  params: PropTypes.object
+  params: PropTypes.object,
+  scrollSpeed: PropTypes.number
+}
+
+Projects.defaultProps = {
+  scrollSpeed: 10
 }
 
 export default CssModules(Projects, styles)

@@ -19,9 +19,11 @@ class CodeSnippet extends Component {
   }
 
   componentDidMount () {
-    // If this component is mounted using router
-    // External Prism lib will not render it
-    Prism.highlightAll();
+    Prism.highlightAll()
+  }
+
+  componentDidUpdate () {
+    Prism.highlightAll()
   }
 
   render () {

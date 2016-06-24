@@ -4,6 +4,7 @@
   float: left;
   width: 100%;
   height: auto;
+  transform: opacity $duration linear;
 
   & .project-name {
     display: block;
