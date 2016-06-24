@@ -33,7 +33,7 @@ class App extends Component {
 
   componentWillMount () {
     // ensure all CDN libs are defined
-    if(typeof $ === 'undefined' || typeof Materialize === 'undefined' || typeof Prism === 'undefined') {
+    if(typeof $ === 'undefined' || typeof Materialize === 'undefined') {
       throw new Error('CODEFOLIO ERROR: CDN lib undefined')
     }
   }
@@ -43,7 +43,7 @@ class App extends Component {
     this.state.loadDelay = ExternalConfig.ENV === 'development' ? 1700 : 500
     // fetch api data
     this.timer = setTimeout(() => {
-      Api.FetchData()
+      Api.FetchCodefolioData()
           .then(apiData => {
             this.handleResponse(apiData)
           })

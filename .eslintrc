@@ -7,8 +7,7 @@
   },
 
   "globals": {
-    "Materialize": true,
-    "Prism": true
+    "Materialize": true
   },
 
   "plugins": ["react"],

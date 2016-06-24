@@ -24,7 +24,7 @@ class RepoLink extends Component {
         <span styleName="repolink-group">
           <a target="_blank" href={this.props.repoUrl}>{this.props.repoUrl}</a>
         </span>
-        <span styleName="repolink-stars">Stars: {this.props.starsCount}</span>
+        <span className="hide" styleName="repolink-stars">Stars: {this.props.starsCount}</span>
       </div>
     )
   }

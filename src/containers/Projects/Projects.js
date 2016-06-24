@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
-import ApiGithub from '../../utils/api-github'
 import Panel from '../../components/Panel/Panel'
 import MediaCarousel from '../../components/MediaCarousel/MediaCarousel'
 import IconLinks from '../../components/IconLinks/IconLinks'
@@ -22,9 +21,9 @@ class Projects extends Component {
   }
 
   componentWillUpdate () {
-    if(this.timer !== null) {
-      clearInterval(this.timer)
-      this.timer = null
+    if(this.scrollTopTimer !== null) {
+      clearInterval(this.scrollTopTimer)
+      this.scrollTopTimer = null
     }
   }
 
@@ -35,13 +34,13 @@ class Projects extends Component {
   scrollToTop () {
     const doc = document.documentElement
     let top = null
-    this.timer = setInterval(() => {
+    this.scrollTopTimer = setInterval(() => {
       top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
       if (top > 0) {
         window.scrollTo(0, top - 30)
       } else {
-        clearInterval(this.timer)
-        this.timer = null
+        clearInterval(this.scrollTopTimer)
+        this.scrollTopTimer = null
       }
     }, this.props.scrollSpeed)
   }

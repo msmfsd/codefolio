@@ -5,6 +5,7 @@
  */
 import React, { Component, PropTypes } from 'react'
 import CssModules from 'react-css-modules'
+import hljs from 'highlight.js'
 import styles from './CodeSnippet.css'
 
 /**
@@ -19,16 +20,20 @@ class CodeSnippet extends Component {
   }
 
   componentDidMount () {
-    Prism.highlightAll()
+    $('pre code').each(function (i, block) {
+      hljs.highlightBlock(block)
+    })
   }
 
   componentDidUpdate () {
-    Prism.highlightAll()
+    $('pre code').each(function (i, block) {
+      hljs.highlightBlock(block)
+    })
   }
 
   render () {
     let hideShowClass = this.props.data.display ? 'show' : 'hide'
-    let styleClass = 'language-' + this.props.data.language
+    let styleClass = this.props.data.language
     return (
       <div className={hideShowClass} styleName="cf-code-snippet">
         <p><strong>Code excerpt:</strong></p>
