@@ -31,19 +31,11 @@ import ExternalConfig from 'ExternalConfig'
   static async FetchGithubData (projects) {
     let newData = []
     for( let project of projects ) {
-      if(!project.repo.display) {
-        newData.push(0)
-      } else {
-        const response = await fetch('https://api.github.com/repos/' + project.repo.repoUser + '/' + project.repo.repoName)
-        const data = await response.json()
-        if(data.message && data.message === 'Not Found') {
-          newData.push(0)
-        } else {
-          newData.push(data.watchers)
-        }
-      }
+      const response = await fetch('https://api.github.com/repos/' + project.repo.repoUser + '/' + project.repo.repoName)
+      const data = await response.json()
+      newData.push(data.watchers)
     }
-    return newData;
+    return newData
   }
 
 }

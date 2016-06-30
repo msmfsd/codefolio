@@ -43,16 +43,20 @@ class App extends Component {
           // get github stars for each project repo
           Api.FetchGithubData(apiData.projects.data)
                 .then(newData => {
-                  // add new repo data to apiData
+                  // add new repo data to projects
                   apiData.projects.data.forEach((project, index) => {
-                    apiData.projects.data[index].repo.watchers = newData[index]
+                    if(newData[index] === undefined || !apiData.projects.data[index].repo.display) {
+                      apiData.projects.data[index].repo.watchers = 0
+                    } else {
+                      apiData.projects.data[index].repo.watchers = newData[index]
+                    }
                   })
                   this.handleResponse(apiData)
                 })
                 .catch(reason => {
-                  // if github fetch fails we stil want to display api data
                   console.error(reason)
-                  // add 0 watchers data to all project repos
+                  // possible github api issue
+                  // add empty repo data and continue
                   apiData.projects.data.forEach((project, index) => {
                     apiData.projects.data[index].repo.watchers = 0
                   })
