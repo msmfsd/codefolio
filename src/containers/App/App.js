@@ -54,7 +54,9 @@ class App extends Component {
                   this.handleResponse(apiData)
                 })
                 .catch(reason => {
+                  /* eslint-disable no-console */
                   console.error(reason)
+                  /* eslint-enable no-console */
                   // probable github api call issue
                   // add empty repo data and continue
                   apiData.projects.data.forEach((project, index) => {
