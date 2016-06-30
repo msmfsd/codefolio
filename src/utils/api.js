@@ -33,7 +33,7 @@ import ExternalConfig from 'ExternalConfig'
     for( let project of projects ) {
       const response = await fetch('https://api.github.com/repos/' + project.repo.repoUser + '/' + project.repo.repoName)
       const data = await response.json()
-      newData.push(data.watchers)
+      newData.push(data.stargazers_count)
     }
     return newData
   }

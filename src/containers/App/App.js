@@ -45,7 +45,7 @@ class App extends Component {
                 .then(newData => {
                   // add new repo data to projects
                   apiData.projects.data.forEach((project, index) => {
-                    if(newData[index] === undefined || !apiData.projects.data[index].repo.display) {
+                    if(typeof newData[index] === 'undefined' || !apiData.projects.data[index].repo.display) {
                       apiData.projects.data[index].repo.watchers = 0
                     } else {
                       apiData.projects.data[index].repo.watchers = newData[index]
@@ -55,7 +55,7 @@ class App extends Component {
                 })
                 .catch(reason => {
                   console.error(reason)
-                  // possible github api issue
+                  // probable github api call issue
                   // add empty repo data and continue
                   apiData.projects.data.forEach((project, index) => {
                     apiData.projects.data[index].repo.watchers = 0
