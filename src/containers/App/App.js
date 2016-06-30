@@ -57,7 +57,7 @@ class App extends Component {
                   /* eslint-disable no-console */
                   console.error(reason)
                   /* eslint-enable no-console */
-                  // probable github api call issue
+                  // error here is a probable github api call issue
                   // add empty repo data and continue
                   apiData.projects.data.forEach((project, index) => {
                     apiData.projects.data[index].repo.watchers = 0
