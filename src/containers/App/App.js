@@ -6,7 +6,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
-import ExternalConfig from 'ExternalConfig'
 import Api from '../../utils/api'
 import Panel from '../../components/Panel/Panel'
 import Loader from '../../components/Loader/Loader'
@@ -23,7 +22,6 @@ class App extends Component {
     super(props)
     this.state = {
       loading: true,
-      loadDelay: 0,
       error: false,
       errorMessage: '',
       profileData: { },
@@ -39,21 +37,31 @@ class App extends Component {
   }
 
   componentDidMount () {
-    // if dev environment mimic server response time
-    this.state.loadDelay = ExternalConfig.ENV === 'development' ? 1700 : 500
-    // fetch api data
-    this.timer = setTimeout(() => {
-      Api.FetchCodefolioData()
-          .then(apiData => {
-            this.handleResponse(apiData)
-          })
-          .catch(reason => {
-            this.handleError(reason)
-          })
-      // clear timer
-      clearTimeout(this.timer)
-      this.timer = null
-    }, this.state.loadDelay)
+    // get codefolio api data
+    Api.FetchCodefolioData()
+        .then(apiData => {
+          // get github stars for each project repo
+          Api.FetchGithubData(apiData.projects.data)
+                .then(newData => {
+                  // add new repo data to apiData
+                  apiData.projects.data.forEach((project, index) => {
+                    apiData.projects.data[index].repo.watchers = newData[index]
+                  })
+                  this.handleResponse(apiData)
+                })
+                .catch(reason => {
+                  // if github fetch fails we stil want to display api data
+                  console.error(reason)
+                  // add 0 watchers data to all project repos
+                  apiData.projects.data.forEach((project, index) => {
+                    apiData.projects.data[index].repo.watchers = 0
+                  })
+                  this.handleResponse(apiData)
+                })
+        })
+        .catch(reason => {
+          this.handleError(reason)
+        })
   }
 
   /**
@@ -95,7 +103,7 @@ class App extends Component {
     this.setState({
       loading: false,
       error: true,
-      errorMessage: reason.message
+      errorMessage: reason.message + ' - Ensure your Codefolio API server is running.'
     })
   }
 

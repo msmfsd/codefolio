@@ -18,15 +18,19 @@ class IconLinks extends Component {
   }
 
   render () {
-    let links = this.props.data.map((obj, index) => {
-      return (<a key={index} target="_blank" href={obj.url}>{obj.name}</a>)
-    })
-    return (
-      <div styleName="cf-iconlinks">
-        <i className="material-icons left">{this.props.icon}</i>
-        <span styleName="iconlinks-group">{links}</span>
-      </div>
-    )
+    if(this.props.data.length === 0) {
+      return (<div className="hide"></div>)
+    } else {
+      let links = this.props.data.map((obj, index) => {
+        return (<a key={index} target="_blank" href={obj.url}>{obj.name}</a>)
+      })
+      return (
+        <div styleName="cf-iconlinks">
+          <i className="material-icons left cf-icon-left">{this.props.icon}</i>
+          <span styleName="iconlinks-group">{links}</span>
+        </div>
+      )
+    }
   }
 
 }

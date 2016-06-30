@@ -24,7 +24,7 @@ class IconTechChips extends Component {
     })
     return (
       <div styleName="cf-icon-tech-chips">
-        <i className="material-icons left">{this.props.icon}</i>
+        <i className="material-icons left cf-icon-left">{this.props.icon}</i>
         <span styleName="icon-tech-chips-group">{links}</span>
       </div>
     )

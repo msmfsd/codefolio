@@ -70,7 +70,7 @@ class Projects extends Component {
         <span styleName="project-client">{project.client}</span>
         <MediaCarousel data={project.media} />
         <IconLinks icon="web" data={project.linkWeb} />
-        <RepoLink repoUrl={project.repo.repoUrl} starsCount={22} />
+        <RepoLink data={project.repo} />
         <IconTechChips icon="code" data={project.projectTech} />
         <div styleName="cf-project-description" dangerouslySetInnerHTML={this.getSanitisedHtml(project.description)}></div>
         <CodeSnippet data={project.codeSnippet} />

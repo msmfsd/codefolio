@@ -27,16 +27,20 @@ class MediaCarousel extends Component {
   }
 
   render () {
-    let media = this.props.data.map((obj, index) => {
-      return (<li key={index}><img src={this.state.projectsImgDir + obj}/></li>)
-    })
-    return (
-      <div styleName="cf-media-carousel">
-        <div className="slider">
-          <ul className="slides">{media}</ul>
+    if(this.props.data.length === 0) {
+      return (<div className="hide"></div>)
+    } else {
+      let media = this.props.data.map((obj, index) => {
+        return (<li key={index}><img src={this.state.projectsImgDir + obj}/></li>)
+      })
+      return (
+        <div styleName="cf-media-carousel">
+          <div className="slider">
+            <ul className="slides">{media}</ul>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 
 }

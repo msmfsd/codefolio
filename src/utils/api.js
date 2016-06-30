@@ -24,27 +24,26 @@ import ExternalConfig from 'ExternalConfig'
   }
 
   /**
-   * Get data from Github API
-   * @param user : string
-   * @param repo : string
+   * Get github stars for array of repos
+   * @param projects : array
    * @returns {object}
    */
-  static async FetchGithubData (user, repo) {
-    const response = await fetch('https://api.github.com/repos/' + user + '/' + repo);
-    const data = await response.json();
-    return data;
+  static async FetchGithubData (projects) {
+    let newData = []
+    for( let project of projects ) {
+      if(!project.repo.display) {
+        newData.push(0)
+      } else {
+        const response = await fetch('https://api.github.com/repos/' + project.repo.repoUser + '/' + project.repo.repoName)
+        const data = await response.json()
+        if(data.message && data.message === 'Not Found') {
+          newData.push(0)
+        } else {
+          newData.push(data.watchers)
+        }
+      }
+    }
+    return newData;
   }
-
-  /*
-  // usage
-  ApiGithub.FetchGithubData(this.props.data.repoUser, this.props.data.repoName)
-      .then(apiData => {
-      log(apiData)
-      log(apiData.watchers)
-      })
-      .catch(reason => {
-        log(reason)
-      })
-  */
 
 }

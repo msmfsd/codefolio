@@ -18,22 +18,28 @@ class RepoLink extends Component {
   }
 
   render () {
-    return (
-      <div styleName="cf-repolink">
-        <i className="material-icons left">storage</i>
-        <span styleName="repolink-group">
-          <a target="_blank" href={this.props.repoUrl}>{this.props.repoUrl}</a>
-        </span>
-        <span className="hide" styleName="repolink-stars">Stars: {this.props.starsCount}</span>
-      </div>
-    )
+    if(!this.props.data.display) {
+      return (<div className="hide"></div>)
+    } else {
+      return (
+        <div styleName="cf-repolink">
+          <i className="material-icons left cf-icon-left">storage</i>
+          <span styleName="repolink-group">
+            <a target="_blank" href={this.props.data.repoUrl}>{this.props.data.repoUrl}</a>
+          </span>
+          <span className={this.props.data.watchers === 0 ? 'hide' : ''} styleName="repolink-watchers">
+            <i className="material-icons left">star rate</i>
+            {this.props.data.watchers}
+          </span>
+        </div>
+      )
+    }
   }
 
 }
 
 RepoLink.propTypes = {
-  repoUrl: PropTypes.string,
-  starsCount: PropTypes.number
+  data: PropTypes.object
 }
 
 export default CssModules(RepoLink, styles)

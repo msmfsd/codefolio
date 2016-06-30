@@ -119,6 +119,10 @@ h3 {
   }
 }
 
+:global .cf-icon-left {
+  transform: translateY(-1px);
+}
+
 /* ------------------ MAIN STYLES TO COMPOSE */
 
 /* btns */
