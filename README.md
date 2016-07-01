@@ -3,7 +3,7 @@
 > Front-end application for building your developer online folio website with Codefolio & Codefolio API
 
 #### Requirements
-- npm v3.8+ & node v5.8+
+- npm v3.8+ & node v5+
 - Codefolio API - [get it here](https://github.com/msmfsd/codefolio-api).
 
 ## Getting started
