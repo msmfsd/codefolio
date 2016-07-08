@@ -1,4 +1,5 @@
 'use strict';
+const path = require('path')
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -10,9 +11,9 @@ const config = {
   devtool: DEV ? 'source-map' : 'source-map',
   target: 'web',
   output: {
-    path: __dirname + '/dist',
-    publicPath: '/',
-    filename: '[name].js'
+    path: path.join(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '/static/'
   },
   module: {
     loaders: [{
@@ -39,14 +40,7 @@ const config = {
     ]
   },
   plugins: [
-    // Output our index.html and inject the script tag
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      inject: 'body'
-    }),
-    // Without this, Webpack would output styles inside JS - we prefer a separate CSS file
     new ExtractTextPlugin('styles.css'),
-
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
@@ -64,14 +58,12 @@ const config = {
 if (DEV) {
   console.log('dev build');
   config.entry.push('webpack-hot-middleware/client');
-
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   );
 } else {
   console.log('production build');
-  // Minify JS for production
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       compress: {

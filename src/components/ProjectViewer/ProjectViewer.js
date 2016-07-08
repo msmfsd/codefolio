@@ -31,7 +31,7 @@ class ProjectViewer extends Component {
       clearInterval(this.scrollTopTimer)
       this.scrollTopTimer = null
     }
-    if(this._imageGallery !== null) {
+    if(typeof this._imageGallery !== 'undefined') {
       this._imageGallery.slideToIndex(0)
     }
   }
@@ -73,8 +73,8 @@ class ProjectViewer extends Component {
 
   render() {
     const { projects } = this.props
-    // render states
-    if(projects.loading) {
+    // async render states
+    if(projects.loading || (!projects.hasLoaded && !projects.error)) {
       return (<div><Loader /></div>)
     } else if(projects.error) {
       return (<div><Panel message={'Error: ' + projects.errMesage} /></div>)

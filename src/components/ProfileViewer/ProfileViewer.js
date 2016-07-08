@@ -60,8 +60,8 @@ class ProfileViewer extends Component {
   render() {
     // map data
     const { profile } = this.props
-    // render states
-    if(profile.loading) {
+    // async render states
+    if(profile.loading || (!profile.hasLoaded && !profile.error)) {
       return (<div><Loader /></div>)
     } else if(profile.error) {
       return (<div><Panel message={'Error: ' + profile.errMesage} /></div>)

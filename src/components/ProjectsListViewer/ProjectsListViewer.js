@@ -40,8 +40,8 @@ class ProjectsListViewer extends Component {
           </Link>
         </li>)
     })
-    // render states
-    if(projects.loading) {
+    // async render states
+    if(projects.loading || (!projects.hasLoaded && !projects.error)) {
       return (<div><Loader /></div>)
     } else if(projects.error) {
       return (<div><Panel message={'Error: ' + projects.errMesage} /></div>)

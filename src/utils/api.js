@@ -3,7 +3,10 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
-// TODO - config
+import __CONFIG__ from '../../config/config'
+
+const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_URL : __CONFIG__.production.API_URL
+const API_KEY = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_KEY : __CONFIG__.production.API_KEY
 
 /**
 * @class Api
@@ -15,7 +18,7 @@ export default class Api {
    * @returns {object}
    */
   static async FetchCodefolioProfile () {
-    return await fetch('http://' + 'localhost:8090' + '/api/profile?apikey=' + 'D6F319D4D224147BDCDBE493E3FDE')
+    return await fetch(API_URL + '/api/profile?apikey=' + API_KEY)
         .then(response => {
           return response.json()
         })
@@ -26,7 +29,7 @@ export default class Api {
    * @returns {object}
    */
   static async FetchCodefolioProjects () {
-    return await fetch('http://' + 'localhost:8090' + '/api/projects?apikey=' + 'D6F319D4D224147BDCDBE493E3FDE')
+    return await fetch(API_URL + '/api/projects?apikey=' + API_KEY)
         .then(response => {
           return response.json()
         })
@@ -38,7 +41,7 @@ export default class Api {
    * @returns {object}
    */
   static async FetchCodefolioProjectById (id) {
-    return await fetch('http://' + 'localhost:8090' + '/api/project/' + id.trim() + '?apikey=D6F319D4D224147BDCDBE493E3FDE')
+    return await fetch(API_URL + '/api/project/' + id.trim() + API_KEY)
         .then(response => {
           return response.json()
         })
