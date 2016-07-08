@@ -12,11 +12,11 @@ import styles from './Panel.css'
  * @extends Component
  */
 class Panel extends Component {
+
   render () {
-    return (
-      <div styleName="message-panel" className="card-panel">{this.props.message}</div>
-    )
+    return (<div styleName="message-panel" className="card-panel">{this.props.message}</div>)
   }
+
 }
 
 Panel.propTypes = {

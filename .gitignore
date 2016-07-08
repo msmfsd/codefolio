@@ -25,8 +25,7 @@ node_modules
 .node_repl_history
 
 # User defined
+*.orig
 .DS_Store
 .env
 dist
-config/config.dev.json
-config/config.prod.json

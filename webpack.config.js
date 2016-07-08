@@ -1,82 +1,91 @@
-const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const DEV = process.env.NODE_ENV !== 'production'
+'use strict';
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const DEV = process.env.NODE_ENV !== 'production';
 
-module.exports = {
-  devtool: DEV ? 'cheap-module-eval-source-map' : 'source-map',
-  entry: DEV ? [
-    'eventsource-polyfill',
-    'webpack-hot-middleware/client',
-    './src/Router'
-  ] : [ './src/Router' ],
+const config = {
+  entry: ['./src/index.js'],
+  debug: DEV,
+  devtool: DEV ? 'source-map' : 'source-map',
+  target: 'web',
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/'
+    path: __dirname + '/dist',
+    publicPath: '/',
+    filename: '[name].js'
   },
-  externals: {
-    'ExternalConfig': JSON.stringify(DEV ? require('./config/config.dev.json') : require('./config/config.prod.json'))
-  },
-  plugins: DEV ? [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.ProvidePlugin({ 'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch' })
-  ] : [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.ProvidePlugin({ 'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch' }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: path.join(__dirname, 'src') + '/assets/html/index-prod.html',
-      environment: 'production'
-    }),
-    new CopyWebpackPlugin([
-      { from: path.join(__dirname, 'src') + '/assets/html/browserconfig.xml' },
-      { from: path.join(__dirname, 'src') + '/assets/html/static', to: 'static' }
-    ]),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      }
-    }),
-    new ExtractTextPlugin('styles.css', {
-        allChunks: true
-    })
-  ],
   module: {
-    loaders: [
-      {
-        test: /\.js?/,
-        exclude: /(node_modules)/,
-        loaders: ['babel'],
-        include: path.join(__dirname, 'src')
-      },
-      {
-        test: /\.css$/,
-        exclude: /(node_modules)/,
-        loader: DEV ? 'style?sourceMap!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss' :ExtractTextPlugin.extract('style','css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
-      },
-      { test: /\.json/, exclude: /(node_modules)/, loader: 'json'},
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, exclude: /(node_modules)/, loader: "file" },
-			{ test: /\.(woff|woff2)$/, exclude: /(node_modules)/, loader: "url?prefix=font/&limit=5000" },
-			{ test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, exclude: /(node_modules)/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-			{ test: /\.(jpe?g|png|gif|svg)$/i, exclude: /(node_modules)/, loader: "url-loader?limit=10000" }
+    loaders: [{
+      test: /\.jsx?$/,
+      exclude: /(node_modules)/,
+      loaders: ['babel']
+    }, {
+      test: /\.jpe?g$|\.gif$|\.png$|\.ico$/,
+      loader: 'url-loader?name=[path][name].[ext]&context=./src'
+    }, {
+      test: /\.html/,
+      loader: 'file?name=[name].[ext]'
+    }, {
+      test: /\.css$/,
+                                // or ?sourceMap&modules&importLoaders=1!postcss-loader
+      loader: DEV ? 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' : ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader')
+      // 'style-loader!css-loader?modules&importLoaders=1!postcss-loader'
+    },
+    { test: /\.json/, loader: 'json'},
+    {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?mimetype=application/vnd.ms-fontobject'},
+    {test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+    {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
+    {test: /.svg(\?v=\d+\.\d+\.\d+)?$|.svg$/, loader: 'file?name=[path][name].[ext]&context=./src&mimetype=image/svg+xml'}
     ]
   },
+  plugins: [
+    // Output our index.html and inject the script tag
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      inject: 'body'
+    }),
+    // Without this, Webpack would output styles inside JS - we prefer a separate CSS file
+    new ExtractTextPlugin('styles.css'),
+
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    })
+  ],
   postcss: () => {
     return [
-      require('postcss-import'),
       require('postcss-sorting'),
-      require('postcss-advanced-variables')({ variables: require('./src/assets/css/CSSVars') }),
+      require('postcss-advanced-variables')({ variables: require('./src/assets/cssvars') }),
       require('postcss-cssnext'),
       require('postcss-extend')
     ]
   }
+};
+
+if (DEV) {
+  console.log('dev build');
+  config.entry.push('webpack-hot-middleware/client');
+
+  config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  );
+} else {
+  console.log('production build');
+  // Minify JS for production
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        unused: true,
+        dead_code: true
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('"production"')
+      }
+    })
+  );
 }
+
+module.exports = config;

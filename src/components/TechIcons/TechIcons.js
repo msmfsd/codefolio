@@ -13,18 +13,15 @@ import styles from './TechIcons.css'
  */
 class TechIcons extends Component {
 
-  constructor (props) {
-    super(props)
-    this.state = { }
-  }
-
   render () {
-    let techicons = this.props.data.map((obj, index) => {
-      return (<i key={index} title={obj.name} className={this.props.devIconPrefix + obj.icon}></i>)
-    })
-    return (
-      <div styleName="cf-techicons">{techicons}</div>
-    )
+    if(!this.props.data) {
+      return (<div></div>)
+    } else {
+      let techicons = this.props.data.map((obj, index) => {
+        return (<i key={index} title={obj.name} className={this.props.devIconPrefix + obj.icon}></i>)
+      })
+      return (<div styleName="cf-techicons">{techicons}</div>)
+    }
   }
 
 }

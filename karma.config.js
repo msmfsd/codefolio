@@ -1,61 +1,91 @@
+const webpack = require('webpack');
+// See issues for details on parts of this config.
+// https://github.com/airbnb/enzyme/issues/47
+// had issues loading sinon as its a dep of enzyme
+var argv = require('minimist')(process.argv.slice(2));
+
+
 module.exports = (config) => {
   config.set({
+    browsers: [ 'PhantomJS' ], // run in Chrome
+    singleRun: argv.watch ? false : true, // just run once by default
+    frameworks: [ 'mocha' ], // use the mocha test framework
     files: [
-      './node_modules/babel-polyfill/dist/polyfill.js',
-      './__tests__/*_test.js'
+      'tests.webpack.js' // just load this file
     ],
-    preprocessors: { './__tests__/*_test.js': ['webpack'] },
-    browsers: ['PhantomJS'],
-    frameworks: ['mocha'],
-    webpack: {
-      devtool: 'source-map',
+    preprocessors: {
+      'tests.webpack.js': [ 'webpack', 'sourcemap' ] // preprocess with webpack and our sourcemap loader
+    },
+    reporters: [ 'dots' ], // report results in this format
+    webpack: { // kind of a copy of your webpack config
+      devtool: 'inline-source-map', // just do inline source maps instead of the default
       module: {
-        loaders: [
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel'
-          },
-          {
-            test: /\.css$/,
-            exclude: /(node_modules)/,
-            loader: 'style-loader!css-loader?modules&importLoaders=1!postcss-loader'
-          },
-          { test: /\.json/, exclude: /(node_modules)/, loader: 'json'},
-          { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, exclude: /(node_modules)/, loader: "file" },
-    			{ test: /\.(woff|woff2)$/, exclude: /(node_modules)/, loader: "url?prefix=font/&limit=5000" },
-    			{ test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, exclude: /(node_modules)/, loader: "url?limit=10000&mimetype=application/octet-stream" },
-    			{ test: /\.(jpe?g|png|gif|svg)$/i, exclude: /(node_modules)/, loader: "url-loader?limit=10000" }
+        preLoaders: [{
+          test: /\.(js|jsx)$/,
+          include: /src/,
+          exclude: /node_modules/,
+          loader: 'isparta'
+        }],
+        loaders: [{
+          test: /\.jsx?$/,
+          exclude: /(node_modules)/,
+          loaders: ['babel']
+        }, {
+          test: /\.jpe?g$|\.gif$|\.png$|\.ico$/,
+          loader: 'url-loader?name=[path][name].[ext]&context=./src'
+        }, {
+          test: /\.html/,
+          loader: 'file?name=[name].[ext]'
+        }, {
+          test: /\.css$/,
+                                    // or ?sourceMap&modules&importLoaders=1!postcss-loader
+          loader: 'style-loader!css-loader?modules&importLoaders=1!postcss-loader'
+        }, {
+          test: /\.json$/,
+          loader: 'json'
+        },
+        {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file?mimetype=application/vnd.ms-fontobject'},
+        {test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
+        {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
+        {test: /.svg(\?v=\d+\.\d+\.\d+)?$|.svg$/, loader: 'url?name=[path][name].[ext]&context=./src&mimetype=image/svg+xml'},
+        {
+          test: /sinon\.js$/,
+          loader: 'imports?define=>false,require=>false'
+        }
         ]
       },
       postcss: () => {
         return [
-          require('postcss-import'),
-          require('postcss-sorting'),
-          require('postcss-advanced-variables')({ variables: require('./src/assets/css/CSSVars') }),
-          require('postcss-cssnext'),
-          require('postcss-extend')
-        ]
+          require('precss'),
+          require('postcss-simple-vars')({
+            variables: () => {
+              return require('./src/colors');
+            }
+          }),
+          require('autoprefixer')({ browsers: ['last 2 versions'] })
+        ];
+      },
+      isparta: {
+        embedSource: true,
+        noAutoWrap: true
+        // these babel options will be passed only to isparta and not to babel-loader
       },
       externals: {
-        'ExternalConfig': JSON.stringify(require('./config/config.dev.json'))
+        jsdom: 'window',
+        cheerio: 'window',
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': 'window',
+        'text-encoding': 'window'
       },
       resolve: {
-        extensions: ['', '.js']
+        alias: {
+          sinon: 'sinon/pkg/sinon'
+        }
       }
     },
-    webpackMiddleware: {
-      noInfo: true // turn off verbose logging of webpack compilation.
-    },
+
     webpackServer: {
       noInfo: false // please don't spam the console when running in karma!
-    },
-    singleRun: false,
-    plugins: [
-      'karma-phantomjs-shim',
-      'karma-mocha',
-      'karma-phantomjs-launcher',
-      'karma-webpack'
-    ]
+    }
   });
 };

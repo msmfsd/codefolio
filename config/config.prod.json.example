@@ -1,6 +1,0 @@
-{
-  "ENV": "production",
-  "API_URL": "https://myapiserver.prod",
-  "API_IMG_UPLOAD_DIR": "/uploads/img/",
-  "API_KEY": "AAABBBB1111222"
-}

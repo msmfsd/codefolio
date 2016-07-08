@@ -13,11 +13,6 @@ import styles from './IconTechChips.css'
  */
 class IconTechChips extends Component {
 
-  constructor (props) {
-    super(props)
-    this.state = { }
-  }
-
   render () {
     let links = this.props.data.map((obj, index) => {
       return (<div key={index} styleName="cf-chip" className="chip">{obj}</div>)

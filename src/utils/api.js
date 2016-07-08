@@ -3,24 +3,45 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
-import ExternalConfig from 'ExternalConfig'
+// TODO - config
 
- /**
-  * @class Api
-  * @extends
-  */
- export default class Api {
+/**
+* @class Api
+*/
+export default class Api {
 
   /**
-   * Get data from Codefolio API
+   * Get profile data from Codefolio API
    * @returns {object}
    */
-  static async FetchCodefolioData () {
-    const p1 = await fetch(ExternalConfig.API_URL + '/api/profile?apikey=' + ExternalConfig.API_KEY)
-    const p2 = await fetch(ExternalConfig.API_URL + '/api/projects?apikey=' + ExternalConfig.API_KEY)
-    const [r1, r2] = await Promise.all([p1, p2])
-    const [profile, projects] = await Promise.all([r1.json(), r2.json()])
-    return { profile: profile, projects: projects }
+  static async FetchCodefolioProfile () {
+    return await fetch('http://' + 'localhost:8090' + '/api/profile?apikey=' + 'D6F319D4D224147BDCDBE493E3FDE')
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
+   * Get projects data from Codefolio API
+   * @returns {object}
+   */
+  static async FetchCodefolioProjects () {
+    return await fetch('http://' + 'localhost:8090' + '/api/projects?apikey=' + 'D6F319D4D224147BDCDBE493E3FDE')
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
+   * Get projects data from Codefolio API
+   * @param id : string
+   * @returns {object}
+   */
+  static async FetchCodefolioProjectById (id) {
+    return await fetch('http://' + 'localhost:8090' + '/api/project/' + id.trim() + '?apikey=D6F319D4D224147BDCDBE493E3FDE')
+        .then(response => {
+          return response.json()
+        })
   }
 
   /**

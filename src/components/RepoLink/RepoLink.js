@@ -13,10 +13,6 @@ import styles from './RepoLink.css'
  */
 class RepoLink extends Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     if(!this.props.data.display) {
       return (<div className="hide"></div>)

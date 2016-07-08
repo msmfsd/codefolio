@@ -13,12 +13,8 @@ import styles from './IconLinks.css'
  */
 class IconLinks extends Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   render () {
-    if(this.props.data.length === 0) {
+    if(!this.props.data || this.props.data.length === 0) {
       return (<div className="hide"></div>)
     } else {
       let links = this.props.data.map((obj, index) => {

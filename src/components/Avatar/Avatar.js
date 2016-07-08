@@ -6,7 +6,6 @@
 import React, { Component, PropTypes } from 'react'
 import CssModules from 'react-css-modules'
 import md5 from 'md5'
-import ExternalConfig from 'ExternalConfig'
 import styles from './Avatar.css'
 
 /**
@@ -15,29 +14,28 @@ import styles from './Avatar.css'
  */
 class Avatar extends Component {
 
-  constructor (props) {
-    super(props)
-  }
-
   render () {
-    // avatar options: grvatarEmail, defaultAvatar, customAvatar
-    const use = this.props.data.use
+    // map data
     const inlineStyle = {}
     let imgSrc = ''
-    switch (use) {
-      case 'defaultAvatar':
-        imgSrc = this.props.data.defaultAvatar
-        break
-      case 'grvatarEmail':
-        imgSrc = 'http://www.gravatar.com/avatar/' + md5(this.props.data.grvatarEmail) + '.jpg'
-        break
-      case 'customAvatar':
-        imgSrc = ExternalConfig.API_URL + ExternalConfig.API_IMG_UPLOAD_DIR + 'avatar/' + this.props.data.customAvatar
-        break
-      default:
-        imgSrc = this.props.data.defaultAvatar
+    // wait for data to update and re render
+    if(this.props.data) {
+      switch (this.props.data.use) {
+        case 'defaultAvatar':
+          imgSrc = this.props.data.defaultAvatar
+          break
+        case 'gravitarEmail':
+          imgSrc = 'http://www.gravatar.com/avatar/' + md5(this.props.data.gravitarEmail) + '.jpg'
+          break
+        case 'customAvatar':
+          imgSrc = '/uploads/avatar/' + this.props.data.customAvatar
+          break
+        default:
+          imgSrc = this.props.data.defaultAvatar
+      }
+      inlineStyle.backgroundImage = 'url(' + imgSrc + ')'
     }
-    inlineStyle.backgroundImage = 'url(' + imgSrc + ')'
+    // render
     return (
       <figure style={inlineStyle} styleName="cf-avatar" className="hoverable"></figure>
     )

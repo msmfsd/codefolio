@@ -14,11 +14,6 @@ import styles from './CodeSnippet.css'
  */
 class CodeSnippet extends Component {
 
-  constructor (props) {
-    super(props)
-    this.state = { }
-  }
-
   componentDidMount () {
     $('pre code').each(function (i, block) {
       hljs.highlightBlock(block)

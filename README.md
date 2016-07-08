@@ -1,28 +1,31 @@
-# Codefolio [![devDependency Status](https://david-dm.org/msmfsd/codefolio/dev-status.svg)](https://david-dm.org/msmfsd/codefolio#info=devDependencies) [![travis Status](https://api.travis-ci.org/msmfsd/codefolio.svg?branch=master)](https://travis-ci.org/msmfsd/codefolio)
+# Codefolio [![travis Status](https://api.travis-ci.org/msmfsd/codefolio.svg?branch=master)](https://travis-ci.org/msmfsd/codefolio)
 
 > Front-end application for building your developer online folio website with Codefolio & Codefolio API
 
 #### Requirements
-- npm v3.8+ & node v5+
+- npm v3+ & node v5+
 - Codefolio API - [get it here](https://github.com/msmfsd/codefolio-api).
 
 ## Getting started
 1. Clone this repo with ```git clone https://github.com/msmfsd/codefolio.git```
 2. Open directory
 3. Run ```npm install```
-4. Make your own package.json (optional)
-5. * Remove existing git directory with ```rm -rf .git```
-6. Make your own .git with ```git init```
+4. * Remove existing git directory with ```rm -rf .git```
+5. Make your own .git with ```git init```
 
 ## Start dev server
-**Dev server is running with hot reloading and it should really not be production server!**
-
-1. Run ```npm dev``` command
+1. [Install Redux Devtools Chrome extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
+1. Run ```npm run start``` command
 2. Open browser at [http://localhost:3000/](http://localhost:3000/)
 
-## Build bundle for uploading to your production server
-1. Run ```npm run publish``` command
-2. Your compiled app file is located at dist folder
+## Build bundle for production server
+1. Ensure your Codefolio API server is running - see below
+2. Update your config with your API domain and API key
+3. Run ```npm run build``` command
+4. Upload project to your Node/NPM production server
+5. Run ```npm install``` command
+6. Run ```npm install -g pm2``` command
+7. Run ```pm2 start server.js``` command
 
 ##### How to create your Codefolio API site to connect this Codefolio application
 1. Install Codefolio API - it can be found here: [Codefolio API](https://github.com/msmfsd/codefolio-api)

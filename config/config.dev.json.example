@@ -1,6 +1,0 @@
-{
-  "ENV": "development",
-  "API_URL": "http://localhost:8090",
-  "API_IMG_UPLOAD_DIR": "/uploads/img/",
-  "API_KEY": "AAABBBB1111222"
-}
