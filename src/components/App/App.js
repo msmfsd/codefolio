@@ -22,7 +22,7 @@ class App extends Component {
     $('#cf-button-collapse').sideNav({ closeOnClick: true })
   }
 
-  render() {
+  render () {
     return (
       <div styleName="cf-container" className="container">
         <div className="row">

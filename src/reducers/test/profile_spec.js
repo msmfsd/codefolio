@@ -1,376 +1,102 @@
-import {expect} from 'chai';
-import reducer from '../profile';
-// TODO
+/*!
+ * Codefolio
+ * Copyright(c) 2016 MSMFSD
+ * MIT Licensed
+ */
+import { expect } from 'chai'
+import reducer from '../profile'
+
+/**
+ * TEST PROFILE REDUCER
+ */
 describe('profile reducer', () => {
-
-  it('Handles AUTH', () => {
+  // FETCH_PROFILE_REQUEST
+  it('Handles FETCH_PROFILE_REQUEST', () => {
     const initialState = {
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: false,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const newState = reducer(initialState, {type: 'AUTH', payload: {username: 'admin'}});
-
-    expect(newState).to.eql({
-      token: null,
-      tokenExpires: null,
-      username: 'admin',
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    });
-
-  });
-
-  it('Handles AUTH_SUCCESS', () => {
-
-
-    const initialState = {
-      token: null,
-      tokenExpires: null,
-      username: 'admin',
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const expireDate = new Date();
-
+      loading: false,
+      hasLoaded: false,
+      error: false,
+      errMesage: '',
+      data: {}
+    }
     const newState = reducer(initialState, {
-      type: 'AUTH_SUCCESS',
+      type: 'FETCH_PROFILE_REQUEST',
       payload: {
-        token: '1234',
-        expires: expireDate
+        loading: true
       }
-    });
-
+    })
     expect(newState).to.eql({
-      token: '1234',
-      tokenExpires: expireDate,
-      username: 'admin',
-      authFetch: false,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    });
-
-  });
-
-  it('Handles AUTH_FAIL', () => {
-
+      loading: true,
+      hasLoaded: false,
+      error: false,
+      errMesage: '',
+      data: {}
+    })
+  })
+  // FETCH_PROFILE_RESULT
+  it('Handles FETCH_PROFILE_RESULT', () => {
     const initialState = {
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const error = new Error();
-
+      loading: true,
+      hasLoaded: false,
+      error: false,
+      errMesage: '',
+      data: {}
+    }
     const newState = reducer(initialState, {
-      type: 'AUTH_FAIL',
+      type: 'FETCH_PROFILE_RESULT',
       payload: {
-        ErrorMessage: 'An Error Occurred',
-        error
+        loading: false,
+        hasLoaded: true,
+        data: {
+          success: true,
+          message: 'Profile found.',
+          data: {
+            name: 'Steve Wozniak'
+          }
+        }
       }
-    });
-
+    })
     expect(newState).to.eql({
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: false,
-      authFailed: false,
-      errorMessage: 'An Error Occurred',
-      error: error,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
+      loading: false,
+      hasLoaded: true,
+      error: false,
+      errMesage: '',
+      data: {
+        success: true,
+        message: 'Profile found.',
+        data: {
+          name: 'Steve Wozniak'
+        }
       }
-    });
-  });
-
-  it('Handles AUTH_FORGOT', () => {
-
+    })
+  })
+  // FETCH_PROFILE_ERROR
+  it('Handles FETCH_PROFILE_ERROR', () => {
     const initialState = {
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const newState = reducer(initialState, {type: 'AUTH_FORGOT'});
-
-    expect(newState).to.eql({
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    });
-
-  });
-
-  it('Handles AUTH_FORGOT_SUCCESS', () => {
-
-    const initialState = {
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const newState = reducer(initialState, {type: 'AUTH_FORGOT_SUCCESS'});
-
-    expect(newState).to.eql({
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: true
-      }
-    });
-  });
-
-  it('Handles AUTH_FORGOT_FAIL', () => {
-
-    const initialState = {
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const error = new Error();
-
+      loading: true,
+      hasLoaded: false,
+      error: false,
+      errMesage: '',
+      data: {}
+    }
+    const error = { message: 'API Error' }
     const newState = reducer(initialState, {
-      type: 'AUTH_FORGOT_FAIL',
+      type: 'FETCH_PROFILE_ERROR',
       payload: {
-        message: 'Something Wrong Happened',
-        error
+        loading: false,
+        hasLoaded: false,
+        error: true,
+        errMesage: error.message,
+        data: {}
       }
-    });
-
+    })
     expect(newState).to.eql({
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: true,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      forgot: {
-        authForgetFetch: false,
-        error: error,
-        errorMessage: 'Something Wrong Happened',
-        success: false
-      }
-    });
-  });
+      loading: false,
+      hasLoaded: false,
+      error: true,
+      errMesage: 'API Error',
+      data: {}
+    })
+  })
 
-  it('Handles auth AUTH_LOGOUT', () => {
-    const initialState = {
-      token: '1234',
-      tokenExpires: null,
-      username: 'admin',
-      authFetch: false,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      logoutFetch: false,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const newState = reducer(initialState, {
-      type: 'AUTH_LOGOUT'
-    });
-
-    expect(newState).to.eql({
-      token: '1234',
-      tokenExpires: null,
-      username: 'admin',
-      authFetch: false,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      logoutFetch: true,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    });
-  });
-
-  it('Handles auth AUTH_LOGOUT_SUCCESS', () => {
-    const initialState = {
-      token: '1234',
-      tokenExpires: null,
-      username: 'username',
-      authFetch: false,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      logoutFetch: true,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const newState = reducer(initialState, {
-      type: 'AUTH_LOGOUT_SUCCESS'
-    });
-
-    expect(newState).to.eql({
-      token: null,
-      tokenExpires: null,
-      username: null,
-      authFetch: false,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      logoutFetch: false,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    });
-  });
-
-  it('Handles auth AUTH_LOGOUT_FAIL', () => {
-    const initialState = {
-      token: '1234',
-      tokenExpires: null,
-      username: 'admin',
-      authFetch: false,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      logoutFetch: false,
-      logoutFetchFail: false,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    };
-
-    const newState = reducer(initialState, {
-      type: 'AUTH_LOGOUT_FAIL'
-    });
-
-    expect(newState).to.eql({
-      token: '1234',
-      tokenExpires: null,
-      username: 'admin',
-      authFetch: false,
-      authFailed: false,
-      errorMessage: null,
-      error: null,
-      logoutFetch: false,
-      logoutFetchFail: true,
-      forgot: {
-        authForgetFetch: false,
-        error: null,
-        errorMessage: null,
-        success: false
-      }
-    });
-  });
-});
+})

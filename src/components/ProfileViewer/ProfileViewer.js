@@ -3,6 +3,7 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
+/* eslint react/prop-types: "off" */
 import React, { Component, PropTypes } from 'react'
 import CssModules from 'react-css-modules'
 import Loader from '../../components/Loader/Loader'
@@ -18,14 +19,14 @@ import styles from './ProfileViewer.css'
  */
 class ProfileViewer extends Component {
 
-  componentDidMount() {
+  componentDidMount () {
     //console.log(this.props)
     if(!this.props.profile.hasLoaded) {
       this.props.fetchProfileAsync()
     }
   }
 
-  componentDidUpdate (oldProps, oldState){
+  componentDidUpdate () {
     if(this.props.profile.hasLoaded && !this.props.profile.error) {
       this.initialiseLayout(this.props.profile.data.layout)
     }
@@ -57,7 +58,7 @@ class ProfileViewer extends Component {
     return {__html: html }
   }
 
-  render() {
+  render () {
     // map data
     const { profile } = this.props
     // async render states

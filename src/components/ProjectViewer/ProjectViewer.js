@@ -3,10 +3,13 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
+ /* eslint no-return-assign: "off" */
+ /* eslint react/prop-types: "off" */
 import React, { Component, PropTypes } from 'react'
-import ImageGallery from 'react-image-gallery'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
+import ImageGallery from 'react-image-gallery'
+import __CONFIG__ from '../../../config/config'
 import Loader from '../../components/Loader/Loader'
 import Panel from '../../components/Panel/Panel'
 import IconLinks from '../../components/IconLinks/IconLinks'
@@ -26,7 +29,7 @@ class ProjectViewer extends Component {
     this.scrollToTop = this.scrollToTop.bind(this)
   }
 
-  componentWillUpdate (newProps, newState) {
+  componentWillUpdate () {
     if(this.scrollTopTimer !== null) {
       clearInterval(this.scrollTopTimer)
       this.scrollTopTimer = null
@@ -36,7 +39,7 @@ class ProjectViewer extends Component {
     }
   }
 
-  componentWillUnmount (){
+  componentWillUnmount () {
     if(this.scrollTopTimer !== null) {
       clearInterval(this.scrollTopTimer)
       this.scrollTopTimer = null
@@ -71,8 +74,9 @@ class ProjectViewer extends Component {
     return {__html: html }
   }
 
-  render() {
+  render () {
     const { projects } = this.props
+    const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_URL : __CONFIG__.production.API_URL
     // async render states
     if(projects.loading || (!projects.hasLoaded && !projects.error)) {
       return (<div><Loader /></div>)
@@ -83,8 +87,8 @@ class ProjectViewer extends Component {
       const project = projects.data.find((item) => item.slug === slug)
       let images = []
       if(typeof project !== 'undefined') {
-        images = project.media.map((img, index) => {
-          return { original: '/uploads/projects/' + img, thumbnail: '/uploads/projects/' + img }
+        images = project.media.map((img) => {
+          return { original: API_URL + '/uploads/projects/' + img, thumbnail: API_URL + '/uploads/projects/' + img }
         })
       }
       return (
@@ -96,7 +100,8 @@ class ProjectViewer extends Component {
             <ImageGallery
             ref={i => this._imageGallery = i}
             items={images}
-            slideInterval={2000}
+            slideInterval={6000}
+            autoPlay={true}
             showNav={false}
             showThumbnails={true}/>
           </div>
@@ -114,7 +119,7 @@ class ProjectViewer extends Component {
 }
 
 ProjectViewer.propTypes = {
-  projectsData: PropTypes.object,
+  projects: PropTypes.object,
   params: PropTypes.object,
   scrollSpeed: PropTypes.number
 }

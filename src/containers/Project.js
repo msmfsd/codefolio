@@ -12,6 +12,10 @@ const mapStateToProps = (state) => {
   return { projects: state.projects }
 }
 
-const Project = connect(mapStateToProps)(ProjectViewer)
+function mapDispachToProps (dispatch) {
+  return bindActionCreators(actionCreators, dispatch)
+}
+
+const Project = connect(mapStateToProps, mapDispachToProps)(ProjectViewer)
 
 export default Project

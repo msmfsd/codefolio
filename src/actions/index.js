@@ -1,6 +1,13 @@
+/*!
+ * Codefolio
+ * Copyright(c) 2016 MSMFSD
+ * MIT Licensed
+ */
 import API from '../utils/api'
 
-// action types
+/*
+ * action types
+ */
 export const FETCH_PROFILE_REQUEST = 'FETCH_PROFILE_REQUEST'
 export const FETCH_PROFILE_RESULT = 'FETCH_PROFILE_RESULT'
 export const FETCH_PROFILE_ERROR = 'FETCH_PROFILE_ERROR'
@@ -36,7 +43,7 @@ export function fetchProfileAsync () {
           .catch(reason => {
             dispatch(fetchProfileError(reason))
           })
-    }, 500)
+    }, 300)
   }
 }
 
@@ -64,7 +71,7 @@ export function fetchProjectsAsync () {
           .catch(reason => {
             dispatch(fetchProjectsError(reason))
           })
-    }, 300)
+    }, 500)
   }
 }
 
@@ -77,11 +84,7 @@ export function fetchProfileRequest () {
   return {
     type: FETCH_PROFILE_REQUEST,
     payload: {
-      loading: true,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: {}
+      loading: true
     }
   }
 }
@@ -98,8 +101,7 @@ export function fetchProfileError (err) {
       loading: false,
       hasLoaded: false,
       error: true,
-      errMesage: err.message,
-      data: {}
+      errMesage: err.message
     }
   }
 }
@@ -109,11 +111,7 @@ export function fetchProjectsRequest () {
   return {
     type: FETCH_PROJECTS_REQUEST,
     payload: {
-      loading: true,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: []
+      loading: true
     }
   }
 }
@@ -136,8 +134,7 @@ export function fetchProjectsError (err) {
       loading: false,
       hasLoaded: false,
       error: true,
-      errMesage: err.message,
-      data: []
+      errMesage: err.message
     }
   }
 }

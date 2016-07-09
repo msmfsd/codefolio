@@ -1,13 +1,13 @@
 'use strict';
 const path = require('path')
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const DEV = process.env.NODE_ENV !== 'production';
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const DEV = process.env.NODE_ENV !== 'production'
 
 const config = {
   entry: ['./src/index.js'],
-  debug: DEV,
   devtool: DEV ? 'source-map' : 'source-map',
   target: 'web',
   output: {
@@ -28,9 +28,7 @@ const config = {
       loader: 'file?name=[name].[ext]'
     }, {
       test: /\.css$/,
-                                // or ?sourceMap&modules&importLoaders=1!postcss-loader
       loader: DEV ? 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' : ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader')
-      // 'style-loader!css-loader?modules&importLoaders=1!postcss-loader'
     },
     { test: /\.json/, loader: 'json'},
     {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?mimetype=application/vnd.ms-fontobject'},
@@ -43,7 +41,8 @@ const config = {
     new ExtractTextPlugin('styles.css'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
+    }),
+    new CleanWebpackPlugin(['dist'], { root: __dirname }),
   ],
   postcss: () => {
     return [
@@ -53,18 +52,24 @@ const config = {
       require('postcss-extend')
     ]
   }
-};
+}
 
 if (DEV) {
-  console.log('dev build');
+  console.log('_____dev_build______')
   config.entry.push('webpack-hot-middleware/client');
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
-  );
+  )
 } else {
-  console.log('production build');
+  console.log('_____prod_build______')
   config.plugins.push(
+    new CopyWebpackPlugin([
+      { from: path.join(__dirname, 'public') + '/index-prod.html', to: 'index.html' },
+      { from: path.join(__dirname, 'public') + '/browserconfig.xml' },
+      { from: path.join(__dirname, 'public') + '/static', to: 'static' },
+      { from: path.join(__dirname, 'public') + '/vendor', to: 'vendor' }
+    ]),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
@@ -77,7 +82,7 @@ if (DEV) {
         'NODE_ENV': JSON.stringify('"production"')
       }
     })
-  );
+  )
 }
 
-module.exports = config;
+module.exports = config

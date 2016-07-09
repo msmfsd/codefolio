@@ -5,6 +5,7 @@
  */
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
+//import createLogger from 'redux-logger'
 import rootReducer from '../reducers'
 /**
  * Method to create stores based on a set of passed
@@ -13,22 +14,19 @@ import rootReducer from '../reducers'
  * @returns {*}
  */
 export default function configureStore (initialState) {
-
+  //const logger = createLogger()
+  //const middleware = applyMiddleware(thunk, logger)
   const middleware = applyMiddleware(thunk)
-
   const createStoreWithMiddleware = compose(
     middleware,
     window.devToolsExtension && window.devToolsExtension()
   )
-
   const store = createStoreWithMiddleware(createStore)(rootReducer, initialState)
-
   if (module.hot) {
     module.hot.accept('../reducers', () => {
       const nextRootReducer = require('../reducers').default
       store.replaceReducer(nextRootReducer)
     })
   }
-
   return store
 }

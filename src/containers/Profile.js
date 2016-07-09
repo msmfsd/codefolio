@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
   return { profile: state.profile }
 }
 
-function mapDispachToProps(dispatch) {
+function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 

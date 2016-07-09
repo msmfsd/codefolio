@@ -54,7 +54,7 @@ export default class Api {
    */
   static async FetchGithubData (projects) {
     let newData = []
-    for( let project of projects ) {
+    for(let project of projects) {
       const response = await fetch('https://api.github.com/repos/' + project.repo.repoUser + '/' + project.repo.repoName)
       const data = await response.json()
       newData.push(data.stargazers_count)

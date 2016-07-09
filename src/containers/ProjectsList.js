@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
   return { projects: state.projects }
 }
 
-function mapDispachToProps(dispatch) {
+function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 

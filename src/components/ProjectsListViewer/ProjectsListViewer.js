@@ -3,6 +3,7 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
+/* eslint react/prop-types: "off" */
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
@@ -22,7 +23,7 @@ class ProjectsListViewer extends Component {
     }
   }
 
-  componentDidUpdate (oldProps, oldState){
+  componentDidUpdate () {
     if(this.props.projects.hasLoaded && !this.props.projects.error) {
       Materialize.showStaggeredList('#cf-projects-list')
     }
@@ -53,11 +54,7 @@ class ProjectsListViewer extends Component {
 }
 
 ProjectsListViewer.propTypes = {
-  animationDelay: PropTypes.number.isRequired,
   projects: PropTypes.object.isRequired
-}
-ProjectsListViewer.defaultProps = {
-  animationDelay: 3500
 }
 
 export default CssModules(ProjectsListViewer, styles)
