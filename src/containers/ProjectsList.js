@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
 function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
-
-const ProjectsList = connect(mapStateToProps, mapDispachToProps)(ProjectsListViewer)
+// TODO: remove ', null, {pure:false}' once react-router v3 release
+const ProjectsList = connect(mapStateToProps, mapDispachToProps, null, { pure: false })(ProjectsListViewer)
 
 export default ProjectsList

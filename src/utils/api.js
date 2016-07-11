@@ -47,19 +47,4 @@ export default class Api {
         })
   }
 
-  /**
-   * Get github stars for array of repos
-   * @param projects : array
-   * @returns {object}
-   */
-  static async FetchGithubData (projects) {
-    let newData = []
-    for(let project of projects) {
-      const response = await fetch('https://api.github.com/repos/' + project.repo.repoUser + '/' + project.repo.repoName)
-      const data = await response.json()
-      newData.push(data.stargazers_count)
-    }
-    return newData
-  }
-
 }

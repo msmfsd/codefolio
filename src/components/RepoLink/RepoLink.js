@@ -25,7 +25,7 @@ class RepoLink extends Component {
           </span>
           <span className={this.props.data.watchers === 0 ? 'hide' : ''} styleName="repolink-watchers">
             <i className="material-icons left">star rate</i>
-            {this.props.data.watchers}
+            {this.props.data.stargazers_count}
           </span>
         </div>
       )

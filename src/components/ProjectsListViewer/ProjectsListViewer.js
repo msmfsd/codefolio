@@ -17,6 +17,14 @@ import styles from './ProjectsListViewer.css'
  */
 class ProjectsListViewer extends Component {
 
+  constructor (props) {
+    super(props)
+    // TODO: remove listShown state once react-router v3 release
+    this.state = {
+      listShown: false
+    }
+  }
+
   componentDidMount () {
     if(!this.props.projects.hasLoaded) {
       this.props.fetchProjectsAsync()
@@ -24,9 +32,18 @@ class ProjectsListViewer extends Component {
   }
 
   componentDidUpdate () {
-    if(this.props.projects.hasLoaded && !this.props.projects.error) {
-      Materialize.showStaggeredList('#cf-projects-list')
+    if(!this.state.listShown && this.props.projects.hasLoaded && !this.props.projects.error) {
+      this.updateLayout()
     }
+  }
+
+  /**
+   * Show projects list
+   * @returns void
+   */
+  updateLayout () {
+    this.setState({ listShown: true })
+    Materialize.showStaggeredList('#cf-projects-list')
   }
 
   render () {
