@@ -1,6 +1,6 @@
-# Codefolio [![travis Status](https://api.travis-ci.org/msmfsd/codefolio.svg?branch=master)](https://travis-ci.org/msmfsd/codefolio)
+# Codefolio [![Build Status](https://travis-ci.com/msmfsd/codefolio.svg?token=pQuZQVJCHi2ifpjKbzd7&branch=master)](https://travis-ci.com/msmfsd/codefolio)
 
-> Static HTML/CSS/JS application for building your developer online folio website with Codefolio & Codefolio API
+> Codefolio is the static HTML/CSS/JS application for building your developer online folio website with Codefolio & Codefolio API
 
 #### Requirements
 - npm v3+ & node v5+

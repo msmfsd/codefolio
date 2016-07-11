@@ -23,7 +23,9 @@ const initialState = {
 const store = configureStore(initialState)
 const history = syncHistoryWithStore(browserHistory, store)
 /*eslint-disable no-console */
-console.log('%c CODEFOLIO ', 'background: #171A1F; color: #EE6E73')
+if (process.env.NODE_ENV !== 'production') {
+  console.log('%c CODEFOLIO ', 'background: #171A1F; color: #EE6E73')
+}
 /*eslint-enable no-console */
 
 render(<Provider store={store}>

@@ -38,6 +38,7 @@
     }
 
     & i {
+      color: $coralPink;
       font-size: 16px;
       transform: translate(-18px, 2px);
     }

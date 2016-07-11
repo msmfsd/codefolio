@@ -43,9 +43,7 @@
     background-color: $blackGrey;
     padding: $padding 0;
     margin-bottom: 1rem;
-    @media (min-width: $medium) {
-      padding: 8px;
-    }
+    padding: 8px;
   }
 
   & .cf-project-description {

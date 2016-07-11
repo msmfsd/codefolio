@@ -14,6 +14,8 @@ import styles from './RepoLink.css'
 class RepoLink extends Component {
 
   render () {
+    // TODO get stars - https://www.npmjs.com/package/github-api
+    const stars = 0
     if(!this.props.data.display) {
       return (<div className="hide"></div>)
     } else {
@@ -23,9 +25,9 @@ class RepoLink extends Component {
           <span styleName="repolink-group">
             <a target="_blank" href={this.props.data.repoUrl}>{this.props.data.repoUrl}</a>
           </span>
-          <span className={this.props.data.watchers === 0 ? 'hide' : ''} styleName="repolink-watchers">
+          <span className={stars === 0 ? 'hide' : ''} styleName="repolink-watchers">
             <i className="material-icons left">star rate</i>
-            {this.props.data.stargazers_count}
+            {stars}
           </span>
         </div>
       )

@@ -4,7 +4,7 @@
   margin-top: $padding;
   padding: 0 10%;
   &::before {
-    content: 'Fetching data..';
+    content: 'Fetching API data..';
     display: block;
     text-align: center;
     font-size: 12px;

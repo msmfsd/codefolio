@@ -23,27 +23,24 @@ export const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR'
 export function fetchProfileAsync () {
   return dispatch => {
     dispatch(fetchProfileRequest())
-    // TODO dev only - mimic loading
-    setTimeout(() => {
-      API.FetchCodefolioProfile()
-          .then(response => {
-            if(!response.success) {
-              dispatch(fetchProfileError(response.message))
-            } else {
-              // success!
-              dispatch(fetchProfileResult({
-                loading: false,
-                hasLoaded: true,
-                error: false,
-                errMesage: '',
-                data: response.data
-              }))
-            }
-          })
-          .catch(reason => {
-            dispatch(fetchProfileError(reason))
-          })
-    }, 300)
+    API.FetchCodefolioProfile()
+        .then(response => {
+          if(!response.success) {
+            dispatch(fetchProfileError(response.message))
+          } else {
+            // success!
+            dispatch(fetchProfileResult({
+              loading: false,
+              hasLoaded: true,
+              error: false,
+              errMesage: '',
+              data: response.data
+            }))
+          }
+        })
+        .catch(reason => {
+          dispatch(fetchProfileError(reason))
+        })
   }
 }
 
@@ -51,27 +48,24 @@ export function fetchProfileAsync () {
 export function fetchProjectsAsync () {
   return dispatch => {
     dispatch(fetchProjectsRequest())
-    // TODO dev only - mimic loading
-    setTimeout(() => {
-      API.FetchCodefolioProjects()
-          .then(response => {
-            if(!response.success) {
-              dispatch(fetchProjectsError(response.message))
-            } else {
-              // success!
-              dispatch(fetchProjectsResult({
-                loading: false,
-                hasLoaded: true,
-                error: false,
-                errMesage: '',
-                data: response.data
-              }))
-            }
-          })
-          .catch(reason => {
-            dispatch(fetchProjectsError(reason))
-          })
-    }, 500)
+    API.FetchCodefolioProjects()
+        .then(response => {
+          if(!response.success) {
+            dispatch(fetchProjectsError(response.message))
+          } else {
+            // success!
+            dispatch(fetchProjectsResult({
+              loading: false,
+              hasLoaded: true,
+              error: false,
+              errMesage: '',
+              data: response.data
+            }))
+          }
+        })
+        .catch(reason => {
+          dispatch(fetchProjectsError(reason))
+        })
   }
 }
 
