@@ -1,5 +1,5 @@
 /*!
- * Codefolio config - complete and rename to config.js
+ * Codefolio config example file
  * IMPORTANT: These settings must be copied from your Codefolio API config
  * Ensure you git ignore this file
  */
