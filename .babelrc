@@ -9,6 +9,12 @@
           "locals": ["module"]
         }]
       }]]
+    },
+    "testing": {
+      "plugins": [["transform-runtime", {
+        "polyfill": false,
+        "regenerator": true
+      }]]
     }
   }
 }

@@ -1,6 +1,6 @@
 /*
  NOTE: materialize css + icons + fonts are loaded first using CDN
- NOTE: postcss variables: src/assets/css/Global.js
+ NOTE: postcss $variables are here: /src/assets/css/Global.js
 */
 
 /* ------------------ BASE STYLES */

@@ -28,7 +28,7 @@ const config = {
       loader: 'file?name=[name].[ext]'
     }, {
       test: /\.css$/,
-      loader: DEV ? 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' : ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader')
+      loader: DEV ? 'style?sourceMap!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' : ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader')
     },
     { test: /\.json/, loader: 'json'},
     {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?mimetype=application/vnd.ms-fontobject'},

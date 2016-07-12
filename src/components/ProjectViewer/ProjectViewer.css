@@ -60,13 +60,6 @@
   }
 }
 
-.projects-back-to-top {
-  margin-top: $padding;
-  float: right;
-  margin-right: 10px;
-  composes: cf-btn from '../../assets/css/Global.css';
-}
-
 .projects-back-btn {
   position: absolute;
   top: 10px;
