@@ -1,0 +1,16 @@
+.cf-admin-container {
+  width: $mainWidth;
+  @media (min-width: $medium) {
+    width: $mainWidth;
+    max-width: $mainWidthMax;
+  }
+}
+
+.cf-admin-main {
+  display: block;
+  position: relative;
+  height: 100%;
+  margin-top: 2rem;
+  background-color: $midGreyBlue;
+  border: 1px solid $blackGreyBlue;
+}

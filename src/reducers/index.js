@@ -7,9 +7,10 @@ import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import profile from './profile'
 import projects from './projects'
+import auth from './auth'
 
 const reducers = combineReducers({
-  profile, projects, routing: routerReducer
+  profile, projects, auth, routing: routerReducer
 })
 
 export default reducers

@@ -6,7 +6,7 @@
 import React, { Component, PropTypes } from 'react'
 import CssModules from 'react-css-modules'
 import md5 from 'md5'
-import __CONFIG__ from '../../../config/config'
+import __CONFIG__ from '../../../cf.config'
 import styles from './Avatar.css'
 
 /**

@@ -17,7 +17,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }))
 app.use(express.static(path.join(__dirname, 'dist')))
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'src/assets/public')))
 app.use(require('webpack-hot-middleware')(compiler))
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'src/index.html'))

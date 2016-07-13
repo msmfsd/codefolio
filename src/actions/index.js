@@ -14,6 +14,8 @@ export const FETCH_PROFILE_ERROR = 'FETCH_PROFILE_ERROR'
 export const FETCH_PROJECTS_REQUEST = 'FETCH_PROJECTS_REQUEST'
 export const FETCH_PROJECTS_RESULT = 'FETCH_PROJECTS_RESULT'
 export const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR'
+export const AUTH_SET_LOGGED_IN = 'AUTH_SET_LOGGED_IN'
+export const AUTH_SET_LOGGED_OUT = 'AUTH_SET_LOGGED_OUT'
 
 /*
  * async action creators
@@ -129,6 +131,28 @@ export function fetchProjectsError (err) {
       hasLoaded: false,
       error: true,
       errMesage: err.message
+    }
+  }
+}
+
+// auth
+export function authSetLoggedIn (jwt, message) {
+  return {
+    type: AUTH_SET_LOGGED_IN,
+    payload: {
+      isLoggedIn: true,
+      jwt: jwt,
+      message: message
+    }
+  }
+}
+export function authSetLoggedOut (message) {
+  return {
+    type: AUTH_SET_LOGGED_OUT,
+    payload: {
+      isLoggedIn: false,
+      jwt: '',
+      message: message
     }
   }
 }

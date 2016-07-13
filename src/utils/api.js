@@ -3,7 +3,7 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
-import __CONFIG__ from '../../config/config'
+import __CONFIG__ from '../../cf.config'
 
 const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_URL : __CONFIG__.production.API_URL
 const API_KEY = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_KEY : __CONFIG__.production.API_KEY
