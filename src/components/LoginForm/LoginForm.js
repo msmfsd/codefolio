@@ -1,7 +1,21 @@
+/*!
+ * Codefolio
+ * Copyright(c) 2016 MSMFSD
+ * MIT Licensed
+ */
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
+import { reduxForm } from 'redux-form'
+import { createValidator, email, required, minLength, maxLength } from '../../utils/validate'
 import CssModules from 'react-css-modules'
 import styles from './LoginForm.css'
+
+// client validation
+const loginValidation = createValidator({
+  username: [required, email],
+  password: [required, minLength(6), maxLength(14)]
+})
 
 /**
  * @class LoginForm
@@ -9,14 +23,52 @@ import styles from './LoginForm.css'
  */
 class LoginForm extends Component {
 
+  componentWillMount () {
+    // if loggged in redirect to admin
+    if(this.props.auth.token !== null) {
+      browserHistory.push('admin')
+    }
+  }
+
   render () {
-    const { authSetLoggedIn, authSetLoggedOut } = this.props
+    const { auth, loginAsync, fields: { username, password }, handleSubmit, submitting } = this.props
     return (
-      <div>
-        <h4>LoginForm component</h4>
-        <a className="btn" onClick={() => authSetLoggedIn('JGHJGHJHGJGHJHG', 'admin logged in success')}>Set logged in to true and token and message</a><br />
-        <a className="btn" onClick={() => authSetLoggedOut('admin logged out')}>Logout</a><br />
-        <Link className="btn" to={'/admin'}>Now go to admin dashboard</Link>
+      <div styleName="cf-container" className="container">
+        <div className="row">
+          <div className="col s12" styleName="cf-main">
+            <div styleName="cf-main-inner"></div>
+            <div className="row">
+              <div styleName="cf-nav-admin" className="col s12 no-padding">
+                <Link styleName="cf-logo" to="/">Codefolio</Link>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col s12" styleName="cf-content-admin">
+                <form autocomplete="off" styleName="login-form" onSubmit={handleSubmit(data => loginAsync(data))}>
+                  <div className="col s12">
+                    <h3>Log in to admin</h3>
+                  </div>
+                  <div className="input-field col s12">
+                    <input type="text" placeholder="Enter admin email" {...username}/>
+                    {username.touched && username.error && <div>{username.error}</div>}
+                  </div>
+                  <div className="input-field col s12">
+                    <input type="password" placeholder="Enter admin password" {...password}/>
+                    {password.touched && password.error && <div>{password.error}</div>}
+                  </div>
+                  <div styleName="form-messages" className="col s12">
+                    {auth.error && auth.errMessage}
+                  </div>
+                  <div className="input-field col s12">
+                    <button styleName="form-btn" className={auth.authLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={auth.authLoading}>
+                      {auth.authLoading ? 'Fetching..' : 'Login'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
@@ -24,9 +76,14 @@ class LoginForm extends Component {
 
 LoginForm.propTypes = {
   auth: PropTypes.object.isRequired,
-  authSetLoggedIn: PropTypes.func,
-  authSetLoggedOut: PropTypes.func,
-  dispatch: PropTypes.func
+  loginAsync: PropTypes.func,
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 }
 
-export default CssModules(LoginForm, styles)
+export default reduxForm({
+  form: 'login',
+  fields: [ 'username', 'password' ],
+  validate: loginValidation
+})(CssModules(LoginForm, styles))

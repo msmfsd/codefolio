@@ -8,9 +8,7 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../actions'
 import EditProfileForm from '../components/EditProfileForm/EditProfileForm'
 
-const mapStateToProps = (state) => {
-  return { state }
-}
+const mapStateToProps = ({auth}) => ({auth})
 
 function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)

@@ -8,9 +8,7 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../actions'
 import LoginForm from '../components/LoginForm/LoginForm'
 
-const mapStateToProps = (state) => {
-  return { auth: state.auth }
-}
+const mapStateToProps = ({auth}) => ({auth})
 
 function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)

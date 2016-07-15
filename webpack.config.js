@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const DEV = process.env.NODE_ENV !== 'production'
 
 const config = {
-  entry: ['./src/index.js'],
+  entry: ['babel-polyfill', './src/index.js'],
   devtool: DEV ? 'source-map' : 'source-map',
   target: 'web',
   output: {

@@ -3,45 +3,45 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
-import 'babel-polyfill'
+ /*eslint-disable no-console */
+ if (process.env.NODE_ENV !== 'production') { console.log('%c codefolio ', 'background: #171A1F; color: #EE6E73') }
+ /*eslint-enable no-console */
 import React from 'react'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import { render } from 'react-dom'
+import initialState from './store/initial-state'
 import configureStore from './store'
+import { authInit } from './actions'
 import Profile from './containers/Profile'
 import Project from './containers/Project'
 import Login from './containers/Login'
 import Register from './containers/Register'
 import Forgot from './containers/Forgot'
 import Reset from './containers/Reset'
+import AdminDashboard from './containers/AdminDashboard'
 import EditAdministrator from './containers/EditAdministrator'
 import EditProfile from './containers/EditProfile'
 import EditProjects from './containers/EditProjects'
 import Admin from './components/Admin/Admin'
 import App from './components/App/App'
-import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 import NotFound from './components/NotFound/NotFound'
 import './assets/css/Global.css'
 
-const initialState = {
-  profile: { loading: false, hasLoaded: false, error: false, errMesage: '', data: {} },
-  projects: { loading: false, hasLoaded: false, error: false, errMesage: '', data: [] },
-  auth: { isLoggedIn: false, jwt: '', message: '' }
-}
+// configure store/history
 const store = configureStore(initialState)
 const history = syncHistoryWithStore(browserHistory, store)
+
+// fire auth init action
+store.dispatch(authInit())
+
+// redirect admin to login?
 const requireAuth = (nextState, replace) => {
-  if (!store.getState().auth.isLoggedIn) {
+  if (!store.getState().auth.token) {
     replace('/login')
   }
 }
-/*eslint-disable no-console */
-if (process.env.NODE_ENV !== 'production') {
-  console.log('%c CODEFOLIO ', 'background: #171A1F; color: #EE6E73')
-}
-/*eslint-enable no-console */
 
 render(<Provider store={store}>
     <Router history={history}>

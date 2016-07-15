@@ -4,6 +4,8 @@
  * MIT Licensed
  */
 import API from '../utils/api'
+import { setStorage, getStorage, clearStorage } from '../utils/storage'
+import { browserHistory } from 'react-router'
 
 /*
  * action types
@@ -14,15 +16,20 @@ export const FETCH_PROFILE_ERROR = 'FETCH_PROFILE_ERROR'
 export const FETCH_PROJECTS_REQUEST = 'FETCH_PROJECTS_REQUEST'
 export const FETCH_PROJECTS_RESULT = 'FETCH_PROJECTS_RESULT'
 export const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR'
-export const AUTH_SET_LOGGED_IN = 'AUTH_SET_LOGGED_IN'
-export const AUTH_SET_LOGGED_OUT = 'AUTH_SET_LOGGED_OUT'
+export const AUTH = 'AUTH'
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const AUTH_FAIL = 'AUTH_FAIL'
+export const AUTH_LOGOUT = 'AUTH_LOGOUT'
+export const AUTH_LOGOUT_FAIL = 'AUTH_LOGOUT_FAIL'
+export const AUTH_LOGOUT_SUCCESS = 'AUTH_LOGOUT_SUCCESS'
+export const AUTH_INIT = 'AUTH_INIT'
 
 /*
- * async action creators
+ * public action methods
  */
 
-// profile
-export function fetchProfileAsync () {
+// PROFILE
+export const fetchProfileAsync = () => {
   return dispatch => {
     dispatch(fetchProfileRequest())
     API.FetchCodefolioProfile()
@@ -40,14 +47,12 @@ export function fetchProfileAsync () {
             }))
           }
         })
-        .catch(reason => {
-          dispatch(fetchProfileError(reason))
-        })
+        .catch( (reason) => dispatch(fetchProfileError(reason)))
   }
 }
 
-// projects
-export function fetchProjectsAsync () {
+// PROJECTS
+export const fetchProjectsAsync = () => {
   return dispatch => {
     dispatch(fetchProjectsRequest())
     API.FetchCodefolioProjects()
@@ -65,94 +70,137 @@ export function fetchProjectsAsync () {
             }))
           }
         })
-        .catch(reason => {
-          dispatch(fetchProjectsError(reason))
-        })
+        .catch( (reason) => dispatch(fetchProjectsError(reason)))
   }
+}
+
+// AUTH
+export const authInit = () => (dispatch) => {
+  // if storage found and token not expired
+  const storageResult = getStorage()
+  if(!storageResult) {
+    clearStorage()
+  } else {
+    dispatch(auth(storageResult.username))
+    dispatch(authSuccess({ token: storageResult.token }))
+  }
+}
+
+export const loginAsync = ({username, password}) => {
+  return (dispatch) => {
+    dispatch(auth(username))
+    // TODO dev only
+    setTimeout(() => {
+      API.Login(username, password)
+      .then((response) => {
+        if(!response.success) {
+          dispatch(authFail(response.message))
+        } else {
+          dispatch(authSuccess(response))
+          setStorage(response.token, username)
+          browserHistory.push('/admin')
+        }
+      })
+      .catch((reason) => dispatch(authFail(reason.message)))
+    }, 1500)
+  }
+}
+
+export const logoutAsync = (token) => (dispatch) => {
+  dispatch(authLogout())
+  // TODO dev only
+  setTimeout(() => {
+    API.Logout(token)
+    .then((response) => {
+      if(!response.success) {
+        dispatch(authLogoutFail(response.message))
+      } else {
+        dispatch(authLogoutSuccess())
+        clearStorage()
+        browserHistory.push('/login')
+      }
+    })
+    .catch((reason) => dispatch(authLogoutFail(reason.message)))
+  }, 1500)
 }
 
 /*
- * action creators
+ * private action creators
  */
 
-// profile
-export function fetchProfileRequest () {
-  return {
-    type: FETCH_PROFILE_REQUEST,
-    payload: {
-      loading: true
-    }
+// PROFILE
+const fetchProfileRequest = () => ({
+  type: FETCH_PROFILE_REQUEST,
+  payload: {
+    loading: true
   }
-}
-export function fetchProfileResult (data) {
-  return {
-    type: FETCH_PROFILE_RESULT,
-    payload: data
+})
+const fetchProfileResult = (data) => ({
+  type: FETCH_PROFILE_RESULT,
+  payload: data
+})
+const fetchProfileError = (err) => ({
+  type: FETCH_PROFILE_ERROR,
+  payload: {
+    loading: false,
+    hasLoaded: false,
+    error: true,
+    errMesage: err.message
   }
-}
-export function fetchProfileError (err) {
-  return {
-    type: FETCH_PROFILE_ERROR,
-    payload: {
-      loading: false,
-      hasLoaded: false,
-      error: true,
-      errMesage: err.message
-    }
-  }
-}
+})
 
-// projects
-export function fetchProjectsRequest () {
-  return {
-    type: FETCH_PROJECTS_REQUEST,
-    payload: {
-      loading: true
-    }
+// PROJECTS
+const fetchProjectsRequest = () => ({
+  type: FETCH_PROJECTS_REQUEST,
+  payload: {
+    loading: true
   }
-}
-export function fetchProjectsResult (result) {
-  return {
-    type: FETCH_PROJECTS_RESULT,
-    payload: {
-      loading: false,
-      hasLoaded: true,
-      error: false,
-      errMesage: '',
-      data: result.data
-    }
+})
+const fetchProjectsResult = (result) => ({
+  type: FETCH_PROJECTS_RESULT,
+  payload: {
+    loading: false,
+    hasLoaded: true,
+    error: false,
+    errMesage: '',
+    data: result.data
   }
-}
-export function fetchProjectsError (err) {
-  return {
-    type: FETCH_PROJECTS_ERROR,
-    payload: {
-      loading: false,
-      hasLoaded: false,
-      error: true,
-      errMesage: err.message
-    }
+})
+const fetchProjectsError = (err) => ({
+  type: FETCH_PROJECTS_ERROR,
+  payload: {
+    loading: false,
+    hasLoaded: false,
+    error: true,
+    errMesage: err.message
   }
-}
+})
 
-// auth
-export function authSetLoggedIn (jwt, message) {
-  return {
-    type: AUTH_SET_LOGGED_IN,
-    payload: {
-      isLoggedIn: true,
-      jwt: jwt,
-      message: message
-    }
-  }
-}
-export function authSetLoggedOut (message) {
-  return {
-    type: AUTH_SET_LOGGED_OUT,
-    payload: {
-      isLoggedIn: false,
-      jwt: '',
-      message: message
-    }
-  }
-}
+// AUTH
+const auth = (username) => ({
+  type: AUTH,
+  payload: username
+})
+
+const authSuccess = (data) => ({
+  type: AUTH_SUCCESS,
+  payload: data
+})
+
+const authFail = (data) => ({
+  type: AUTH_FAIL,
+  payload: data
+})
+
+const authLogout = () => ({
+  type: AUTH_LOGOUT
+})
+
+const authLogoutFail = (err) => ({
+  type: AUTH_LOGOUT_FAIL,
+  payload: err
+})
+
+const authLogoutSuccess = () => ({
+  type: AUTH_LOGOUT_SUCCESS
+})

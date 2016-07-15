@@ -1,3 +1,8 @@
+/*!
+ * Codefolio
+ * Copyright(c) 2016 MSMFSD
+ * MIT Licensed
+ */
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
