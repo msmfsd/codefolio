@@ -29,7 +29,8 @@ class EditAdministratorForm extends Component {
 }
 
 EditAdministratorForm.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  logoutAsync: PropTypes.func.isRequired
 }
 
 export default CssModules(EditAdministratorForm, styles)

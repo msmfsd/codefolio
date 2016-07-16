@@ -6,6 +6,12 @@
 /* custom selectors */
 @custom-selector :--enter :hover, :focus;
 
+/* animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* ------------------ BASE STYLES */
 * {
   box-sizing: border-box;
@@ -147,7 +153,13 @@ input:-webkit-autofill:active {
 }
 
 :global .btn-loading {
-  opacity: 0.5 !important;
+  opacity: 0.8 !important;
+  & i {
+    display: block !important;
+  }
+  & span {
+    padding-left: 28px !important;
+  }
 }
 
 :global .cf-icon-left {
@@ -235,6 +247,7 @@ input:-webkit-autofill:active {
 .cf-content-admin-global {
   min-height: $mainContentHeightMin;
   position: relative;
+  margin-bottom: $padding;
   padding: $padding !important;
 }
 
@@ -256,6 +269,7 @@ input:-webkit-autofill:active {
 }
 
 .cf-form-btn {
+  color: $lightGrey;
   text-transform: uppercase;
   font-size: 14px;
   padding: 0 14px;
@@ -263,7 +277,16 @@ input:-webkit-autofill:active {
   height: 28px;
   line-height: 28px;
   opacity: 1;
-  transition: opacity 1s linear;
+  transition: opacity $duration;
+  & i {
+    display: none;
+    position: absolute;
+    color: $lightGrey;
+    animation: spin 1s linear infinite;
+  }
+  & span {
+    transition: all $duration;
+  }
 }
 
 .cf-form-messages-global {
@@ -339,19 +362,6 @@ input:-webkit-autofill:active {
 
 /* ------------------ OVERRIDE MATERIALIZE */
 
-input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly]) {
-    border-bottom: 1px solid $coralPink;
-    box-shadow: 0 1px 0 0 $coralPink;
-}
-
-:global .input-field div {
-  color: $coralPink;
-  font-size: 13px;
-  font-family: monospace;
-  line-height: 1;
-  padding: 0;
-}
-
 :global #sidenav-overlay {
   background-color: color(black alpha(40%));
 }
@@ -377,7 +387,8 @@ input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly
 :global .btn-large {
   background-color: $coralPink;
   &:hover,
-  &:active {
+  &:active,
+  &:focus {
     background-color: $lightCoralPink;
   }
 }
@@ -430,4 +441,19 @@ input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly
 
 :global .slider .indicators .indicator-item.active {
   background-color: $lightGrey;
+}
+
+/* override form elements */
+input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid $coralPink;
+    box-shadow: 0 1px 0 0 $coralPink;
+}
+
+/* validation errors */
+:global .input-field div {
+  color: $coralPink;
+  font-size: 13px;
+  font-family: monospace;
+  line-height: 1;
+  padding: 0;
 }

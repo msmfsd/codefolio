@@ -32,7 +32,8 @@ class AdminDashboardViewer extends Component {
 }
 
 AdminDashboardViewer.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  logoutAsync: PropTypes.func.isRequired
 }
 
 export default CssModules(AdminDashboardViewer, styles)

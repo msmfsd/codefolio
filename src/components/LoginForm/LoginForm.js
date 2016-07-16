@@ -31,7 +31,7 @@ class LoginForm extends Component {
   }
 
   render () {
-    const { auth, loginAsync, fields: { username, password }, handleSubmit, submitting } = this.props
+    const { auth, loginAsync, fields: { username, password }, handleSubmit } = this.props
     return (
       <div styleName="cf-container" className="container">
         <div className="row">
@@ -44,10 +44,8 @@ class LoginForm extends Component {
             </div>
             <div className="row">
               <div className="col s12" styleName="cf-content-admin">
-                <form autocomplete="off" styleName="login-form" onSubmit={handleSubmit(data => loginAsync(data))}>
-                  <div className="col s12">
-                    <h3>Log in to admin</h3>
-                  </div>
+                <form styleName="login-form" onSubmit={handleSubmit(data => loginAsync(data))}>
+                  <div className="col s12"><h3>Log in to admin</h3></div>
                   <div className="input-field col s12">
                     <input type="text" placeholder="Enter admin email" {...username}/>
                     {username.touched && username.error && <div>{username.error}</div>}
@@ -56,13 +54,9 @@ class LoginForm extends Component {
                     <input type="password" placeholder="Enter admin password" {...password}/>
                     {password.touched && password.error && <div>{password.error}</div>}
                   </div>
-                  <div styleName="form-messages" className="col s12">
-                    {auth.error && auth.errMessage}
-                  </div>
+                  <div styleName="form-messages" className="col s12">{auth.error && auth.errMessage}</div>
                   <div className="input-field col s12">
-                    <button styleName="form-btn" className={auth.authLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={auth.authLoading}>
-                      {auth.authLoading ? 'Fetching..' : 'Login'}
-                    </button>
+                    <button styleName="form-btn" className={auth.authLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={auth.authLoading}><i className="material-icons">settings</i><span>Login</span></button>
                   </div>
                 </form>
               </div>
@@ -78,8 +72,7 @@ LoginForm.propTypes = {
   auth: PropTypes.object.isRequired,
   loginAsync: PropTypes.func,
   fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired
+  handleSubmit: PropTypes.func.isRequired
 }
 
 export default reduxForm({

@@ -17,7 +17,7 @@ const initialState = {
     logoutLoading: false,
     logoutFail: null,
     logoutErrMessage: null,
-    logoutError: null,
+    logoutError: null
   }
 }
 

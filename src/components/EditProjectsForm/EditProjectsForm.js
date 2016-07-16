@@ -29,7 +29,8 @@ class EditProjectsForm extends Component {
 }
 
 EditProjectsForm.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  logoutAsync: PropTypes.func.isRequired
 }
 
 export default CssModules(EditProjectsForm, styles)

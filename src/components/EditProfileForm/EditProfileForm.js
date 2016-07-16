@@ -29,7 +29,8 @@ class EditProfileForm extends Component {
 }
 
 EditProfileForm.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  logoutAsync: PropTypes.func.isRequired
 }
 
 export default CssModules(EditProfileForm, styles)

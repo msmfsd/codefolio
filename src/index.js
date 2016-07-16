@@ -3,9 +3,9 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
- /*eslint-disable no-console */
- if (process.env.NODE_ENV !== 'production') { console.log('%c codefolio ', 'background: #171A1F; color: #EE6E73') }
- /*eslint-enable no-console */
+/*eslint-disable*/
+if (process.env.NODE_ENV !== 'production') { console.log('%c codefolio ', 'background: #171A1F; color: #EE6E73') }
+/*eslint-enable*/
 import React from 'react'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
