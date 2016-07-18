@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const DEV = process.env.NODE_ENV !== 'production'
 
 const config = {
-  entry: ['./src/index.js'],
+  entry: ['babel-polyfill', './src/index.js'],
   devtool: DEV ? 'source-map' : 'source-map',
   target: 'web',
   output: {
@@ -47,7 +47,7 @@ const config = {
   postcss: () => {
     return [
       require('postcss-sorting'),
-      require('postcss-advanced-variables')({ variables: require('./src/assets/cssvars') }),
+      require('postcss-advanced-variables')({ variables: require('./src/assets/css/cssvars') }),
       require('postcss-cssnext'),
       require('postcss-extend')
     ]
@@ -65,10 +65,10 @@ if (DEV) {
   console.log('_____prod_build______')
   config.plugins.push(
     new CopyWebpackPlugin([
-      { from: path.join(__dirname, 'public') + '/index-prod.html', to: 'index.html' },
-      { from: path.join(__dirname, 'public') + '/browserconfig.xml' },
-      { from: path.join(__dirname, 'public') + '/static', to: 'static' },
-      { from: path.join(__dirname, 'public') + '/vendor', to: 'vendor' }
+      { from: path.join(__dirname, 'src/assets/public') + '/index-prod.html', to: 'index.html' },
+      { from: path.join(__dirname, 'src/assets/public') + '/browserconfig.xml' },
+      { from: path.join(__dirname, 'src/assets/public') + '/static', to: 'static' },
+      { from: path.join(__dirname, 'src/assets/public') + '/vendor', to: 'vendor' }
     ]),
     new webpack.optimize.UglifyJsPlugin({
       compress: {

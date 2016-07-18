@@ -15,7 +15,7 @@
 
 ## Start dev server
 1. Ensure your development Codefolio API server is running - [see here](#apiguide)
-2. Update config/config.js API_URL/API_KEY from your development Codefolio API server
+2. Update cf.config.js API_URL/API_KEY from your development Codefolio API server
 3. [Install Redux Devtools Chrome extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 4. Run ```npm run start``` command
 5. Open browser at [http://localhost:3000/](http://localhost:3000/)

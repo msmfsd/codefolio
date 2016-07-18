@@ -32,7 +32,7 @@ module.exports = function (config) {
       postcss: () => {
         return [
           require('postcss-sorting'),
-          require('postcss-advanced-variables')({ variables: require('./src/assets/cssvars') }),
+          require('postcss-advanced-variables')({ variables: require('./src/assets/css/cssvars') }),
           require('postcss-cssnext'),
           require('postcss-extend')
         ]

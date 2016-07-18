@@ -8,9 +8,7 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../actions'
 import ProfileViewer from '../components/ProfileViewer/ProfileViewer'
 
-const mapStateToProps = (state) => {
-  return { profile: state.profile }
-}
+const mapStateToProps = ({profile}) => ({profile})
 
 function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)

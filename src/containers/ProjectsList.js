@@ -8,9 +8,7 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../actions'
 import ProjectsListViewer from '../components/ProjectsListViewer/ProjectsListViewer'
 
-const mapStateToProps = (state) => {
-  return { projects: state.projects }
-}
+const mapStateToProps = ({projects}) => ({projects})
 
 function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
