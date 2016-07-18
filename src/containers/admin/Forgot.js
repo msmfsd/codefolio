@@ -5,8 +5,8 @@
  */
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actionCreators from '../actions'
-import ResetForm from '../components/ResetForm/ResetForm'
+import * as actionCreators from '../../actions'
+import ForgotForm from '../../components/admin/ForgotForm/ForgotForm'
 
 const mapStateToProps = ({auth}) => ({auth})
 
@@ -14,6 +14,6 @@ function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-const Reset = connect(mapStateToProps, mapDispachToProps)(ResetForm)
+const Forgot = connect(mapStateToProps, mapDispachToProps)(ForgotForm)
 
-export default Reset
+export default Forgot

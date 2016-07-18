@@ -6,13 +6,13 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
-import styles from './Admin.css'
+import styles from './AdminLayout.css'
 
 /**
- * @class Admin
+ * @class AdminLayout
  * @extends Component
  */
-class Admin extends Component {
+class AdminLayout extends Component {
 
   render () {
     return (
@@ -37,8 +37,8 @@ class Admin extends Component {
   }
 }
 
-Admin.propTypes = {
+AdminLayout.propTypes = {
   children: PropTypes.object.isRequired
 }
 
-export default CssModules(Admin, styles)
+export default CssModules(AdminLayout, styles)

@@ -23,6 +23,15 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT'
 export const AUTH_LOGOUT_FAIL = 'AUTH_LOGOUT_FAIL'
 export const AUTH_LOGOUT_SUCCESS = 'AUTH_LOGOUT_SUCCESS'
 export const AUTH_INIT = 'AUTH_INIT'
+export const REGISTER = 'REGISTER'
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+export const REGISTER_FAIL = 'REGISTER_FAIL'
+export const FORGOT = 'FORGOT'
+export const FORGOT_SUCCESS = 'FORGOT_SUCCESS'
+export const FORGOT_FAIL = 'FORGOT_FAIL'
+export const RESET = 'RESET'
+export const RESET_SUCCESS = 'RESET_SUCCESS'
+export const RESET_FAIL = 'RESET_FAIL'
 
 /*
  * private action creators
@@ -87,9 +96,9 @@ const authSuccess = (data) => ({
   payload: data
 })
 
-const authFail = (data) => ({
+const authFail = (err) => ({
   type: AUTH_FAIL,
-  payload: data
+  payload: err
 })
 
 const authLogout = () => ({
@@ -103,6 +112,47 @@ const authLogoutFail = (err) => ({
 
 const authLogoutSuccess = () => ({
   type: AUTH_LOGOUT_SUCCESS
+})
+
+const register = () => ({
+  type: REGISTER
+})
+
+const registerSuccess = () => ({
+  type: REGISTER_SUCCESS
+})
+
+const registerFail = (err) => ({
+  type: REGISTER_FAIL,
+  payload: err
+})
+
+const forgot = () => ({
+  type: FORGOT
+})
+
+const forgotSuccess = (data) => ({
+  type: FORGOT_SUCCESS,
+  payload: data
+})
+
+const forgotFail = (err) => ({
+  type: FORGOT_FAIL,
+  payload: err
+})
+
+const reset = () => ({
+  type: RESET
+})
+
+const resetSuccess = (data) => ({
+  type: RESET_SUCCESS,
+  payload: data
+})
+
+const resetFail = (err) => ({
+  type: RESET_FAIL,
+  payload: err
 })
 
 /*
@@ -203,4 +253,58 @@ export const logoutAsync = (token) => (dispatch) => {
     })
     .catch((reason) => dispatch(authLogoutFail(reason.message)))
   }, 1500)
+}
+
+export const registerAsync = ({username, password}) => {
+  return (dispatch) => {
+    dispatch(register())
+    // TODO dev only
+    setTimeout(() => {
+      API.Register(username, password)
+      .then((response) => {
+        if(!response.success) {
+          dispatch(registerFail(response.message))
+        } else {
+          dispatch(registerSuccess())
+        }
+      })
+      .catch((reason) => dispatch(registerFail(reason.message)))
+    }, 1500)
+  }
+}
+
+export const forgotAsync = ({username}) => {
+  return (dispatch) => {
+    dispatch(forgot())
+    // TODO dev only
+    setTimeout(() => {
+      API.Forgot(username)
+      .then((response) => {
+        if(!response.success) {
+          dispatch(forgotFail(response.message))
+        } else {
+          dispatch(forgotSuccess(response))
+        }
+      })
+      .catch((reason) => dispatch(forgotFail(reason.message)))
+    }, 1500)
+  }
+}
+
+export const resetAsync = ({password, confirm}, resetToken) => {
+  return (dispatch) => {
+    dispatch(reset())
+    // TODO dev only
+    setTimeout(() => {
+      API.Reset(password, confirm, resetToken)
+      .then((response) => {
+        if(!response.success) {
+          dispatch(resetFail(response.message))
+        } else {
+          dispatch(resetSuccess(response))
+        }
+      })
+      .catch((reason) => dispatch(resetFail(reason.message)))
+    }, 1500)
+  }
 }

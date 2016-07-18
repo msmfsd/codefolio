@@ -5,8 +5,8 @@
  */
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actionCreators from '../actions'
-import RegisterForm from '../components/RegisterForm/RegisterForm'
+import * as actionCreators from '../../actions'
+import EditProjectsForm from '../../components/admin/EditProjectsForm/EditProjectsForm'
 
 const mapStateToProps = ({auth}) => ({auth})
 
@@ -14,6 +14,6 @@ function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-const Register = connect(mapStateToProps, mapDispachToProps)(RegisterForm)
+const EditProjects = connect(mapStateToProps, mapDispachToProps)(EditProjectsForm)
 
-export default Register
+export default EditProjects

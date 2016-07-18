@@ -259,7 +259,7 @@ input:-webkit-autofill:active {
   margin: 0 auto;
   padding: 0;
   @media (min-width: $medium) {
-    max-width: 420px;
+    max-width: $formWidth;
   }
   & input {
     background-color: transparent;

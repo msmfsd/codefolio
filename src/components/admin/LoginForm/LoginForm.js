@@ -7,8 +7,8 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import { browserHistory } from 'react-router'
 import { reduxForm } from 'redux-form'
-import { createValidator, email, required, minLength, maxLength } from '../../utils/validate'
 import CssModules from 'react-css-modules'
+import { createValidator, email, required, minLength, maxLength } from '../../../utils/validate'
 import styles from './LoginForm.css'
 
 // client validation
@@ -57,6 +57,10 @@ class LoginForm extends Component {
                   <div styleName="form-messages" className="col s12">{auth.error && auth.errMessage}</div>
                   <div className="input-field col s12">
                     <button styleName="form-btn" className={auth.authLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={auth.authLoading}><i className="material-icons">settings</i><span>Login</span></button>
+                  </div>
+                  <div className="input-field col s12" styleName="login-links">
+                    <Link to="/forgot">forgot password?</Link>
+                    <Link to="/register">register admin</Link>
                   </div>
                 </form>
               </div>

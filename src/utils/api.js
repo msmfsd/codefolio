@@ -87,4 +87,64 @@ export default class Api {
         })
   }
 
+  /**
+   * Register admin to Codefolio API
+   * @param username : string
+   * @param password : string
+   * @returns {object}
+   */
+  static async Register (username, password) {
+    const opts = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      body: 'email=' + username + '&password=' + password
+    }
+    return await fetch(API_URL + '/api/admin/register', opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
+   * Forgot password request for Codefolio API
+   * @param username : string
+   * @returns {object}
+   */
+  static async Forgot (username) {
+    const reseturl = window.location.protocol + '//' + window.location.host + '/reset'
+    const opts = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      body: 'email=' + username + '&reseturl=' + reseturl
+    }
+    return await fetch(API_URL + '/api/admin/forgotpassword', opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
+   * Reset admin password to Codefolio API
+   * @param password : string
+   * @param confirm : string
+   * @returns {object}
+   */
+  static async Reset (password, confirm, resetToken) {
+    const opts = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      body: 'password=' + password + '&confirm=' + confirm
+    }
+    return await fetch(API_URL + '/api/admin/resetpassword/' + resetToken, opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
 }

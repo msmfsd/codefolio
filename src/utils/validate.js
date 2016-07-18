@@ -41,6 +41,12 @@ export function integer (value) {
   }
 }
 
+export function alphaNumeric (value) {
+  if(typeof value !== 'undefined' && !value.match(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/)) {
+    return 'Must contain a combination of numbers and letters only'
+  }
+}
+
 export function oneOf (enumeration) {
   return value => {
     if (!~enumeration.indexOf(value)) {
@@ -53,7 +59,7 @@ export function match (field) {
   return (value, data) => {
     if (data) {
       if (value !== data[field]) {
-        return 'Do not match'
+        return 'Passwords do not match'
       }
     }
   }

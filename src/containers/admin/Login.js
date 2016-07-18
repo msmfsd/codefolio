@@ -5,8 +5,8 @@
  */
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actionCreators from '../actions'
-import ForgotForm from '../components/ForgotForm/ForgotForm'
+import * as actionCreators from '../../actions'
+import LoginForm from '../../components/admin/LoginForm/LoginForm'
 
 const mapStateToProps = ({auth}) => ({auth})
 
@@ -14,6 +14,6 @@ function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-const Forgot = connect(mapStateToProps, mapDispachToProps)(ForgotForm)
+const Login = connect(mapStateToProps, mapDispachToProps)(LoginForm)
 
-export default Forgot
+export default Login

@@ -5,8 +5,8 @@
  */
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actionCreators from '../actions'
-import EditProfileForm from '../components/EditProfileForm/EditProfileForm'
+import * as actionCreators from '../../actions'
+import EditProfileForm from '../../components/admin/EditProfileForm/EditProfileForm'
 
 const mapStateToProps = ({auth}) => ({auth})
 

@@ -1,0 +1,37 @@
+.cf-container {
+  composes: cf-container-global from '../../../assets/css/Global.css';
+}
+
+.cf-main {
+  composes: cf-main-global from '../../../assets/css/Global.css';
+}
+
+.cf-main-inner {
+  composes: cf-main-inner-global from '../../../assets/css/Global.css';
+}
+
+.cf-nav-admin {
+  height: $navHeight;
+  composes: border-bottom-gradient-to-right from '../../../assets/css/Global.css';
+}
+
+.cf-logo {
+  composes: cf-logo-global from '../../../assets/css/Global.css';
+}
+
+.cf-content-admin {
+  composes: cf-content-admin-global from '../../../assets/css/Global.css';
+}
+
+.reset-form,
+.reset-success {
+  composes: cf-form-global from '../../../assets/css/Global.css';
+}
+
+.form-btn {
+  composes: cf-form-btn from '../../../assets/css/Global.css';
+}
+
+.form-messages {
+  composes: cf-form-messages-global from '../../../assets/css/Global.css';
+}

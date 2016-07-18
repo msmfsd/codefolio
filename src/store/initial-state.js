@@ -11,13 +11,26 @@ const initialState = {
     username: '',
     lastLoggedIn: null,
     authLoading: false,
-    authFailed: false,
     errMessage: null,
     error: null,
     logoutLoading: false,
-    logoutFail: null,
     logoutErrMessage: null,
-    logoutError: null
+    logoutError: null,
+    registerLoading: false,
+    registerFail: null,
+    registerErrMessage: null,
+    registerError: null,
+    registerSuccess: null,
+    forgotLoading: false,
+    forgotFail: null,
+    forgotErrMessage: null,
+    forgotError: null,
+    forgotSuccess: null,
+    resetLoading: false,
+    resetFail: null,
+    resetErrMessage: null,
+    resetError: null,
+    resetSuccess: null
   }
 }
 

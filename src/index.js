@@ -16,15 +16,15 @@ import configureStore from './store'
 import { authInit } from './actions'
 import Profile from './containers/Profile'
 import Project from './containers/Project'
-import Login from './containers/Login'
-import Register from './containers/Register'
-import Forgot from './containers/Forgot'
-import Reset from './containers/Reset'
-import AdminDashboard from './containers/AdminDashboard'
-import EditAdministrator from './containers/EditAdministrator'
-import EditProfile from './containers/EditProfile'
-import EditProjects from './containers/EditProjects'
-import Admin from './components/Admin/Admin'
+import Login from './containers/admin/Login'
+import Register from './containers/admin/Register'
+import Forgot from './containers/admin/Forgot'
+import Reset from './containers/admin/Reset'
+import AdminDashboard from './containers/admin/AdminDashboard'
+import EditAdministrator from './containers/admin/EditAdministrator'
+import EditProfile from './containers/admin/EditProfile'
+import EditProjects from './containers/admin/EditProjects'
+import AdminLayout from './components/admin/AdminLayout/AdminLayout'
 import App from './components/App/App'
 import NotFound from './components/NotFound/NotFound'
 import './assets/css/Global.css'
@@ -48,8 +48,8 @@ render(<Provider store={store}>
       <Route path={'/login'} component={Login}/>
       <Route path={'/register'} component={Register}/>
       <Route path={'/forgot'} component={Forgot}/>
-      <Route path={'/reset'} component={Reset}/>
-      <Route path={'/admin'} component={Admin} onEnter={requireAuth}>
+      <Route path={'/reset/:resetToken'} component={Reset}/>
+      <Route path={'/admin'} component={AdminLayout} onEnter={requireAuth}>
         <IndexRoute component={AdminDashboard}/>
         <Route path={'edit-administrator'} component={EditAdministrator} />
         <Route path={'edit-profile'} component={EditProfile} />

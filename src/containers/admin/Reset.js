@@ -5,8 +5,8 @@
  */
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actionCreators from '../actions'
-import EditAdministratorForm from '../components/EditAdministratorForm/EditAdministratorForm'
+import * as actionCreators from '../../actions'
+import ResetForm from '../../components/admin/ResetForm/ResetForm'
 
 const mapStateToProps = ({auth}) => ({auth})
 
@@ -14,6 +14,6 @@ function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-const EditAdministrator = connect(mapStateToProps, mapDispachToProps)(EditAdministratorForm)
+const Reset = connect(mapStateToProps, mapDispachToProps)(ResetForm)
 
-export default EditAdministrator
+export default Reset

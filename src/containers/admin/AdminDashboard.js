@@ -5,8 +5,8 @@
  */
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as actionCreators from '../actions'
-import EditProjectsForm from '../components/EditProjectsForm/EditProjectsForm'
+import * as actionCreators from '../../actions'
+import AdminDashboardViewer from '../../components/admin/AdminDashboardViewer/AdminDashboardViewer'
 
 const mapStateToProps = ({auth}) => ({auth})
 
@@ -14,6 +14,6 @@ function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-const EditProjects = connect(mapStateToProps, mapDispachToProps)(EditProjectsForm)
+const AdminDashboard = connect(mapStateToProps, mapDispachToProps)(AdminDashboardViewer)
 
-export default EditProjects
+export default AdminDashboard
