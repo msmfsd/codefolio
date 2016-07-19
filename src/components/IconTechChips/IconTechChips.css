@@ -28,6 +28,16 @@
 }
 
 .cf-chip {
+  height: 26px;
+  font-size: 13px;
+  font-weight: normal;
+  font-family: monospace;
+  color: $lightGrey;
+  line-height: 24px;
+  padding: 0 12px;
+  border-radius: 13px;
+  background-color: $greyHighlight;
+  border: 1px solid color($blackGrey alpha(-40%));
   margin-right: 7px;
   margin-bottom: 7px;
 }

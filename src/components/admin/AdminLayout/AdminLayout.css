@@ -18,7 +18,3 @@
 .cf-logo {
   composes: cf-logo-global from '../../../assets/css/Global.css';
 }
-
-.cf-content-admin {
-  composes: cf-content-admin-global from '../../../assets/css/Global.css';
-}

@@ -16,6 +16,8 @@ const blackGreyBlue = '#171A1F'
 const darkGreyBlue = '#20252B'
 /* panel background */
 const midGreyBlue = '#272C34'
+/* admin cards background */
+const rustGrey = '#555555'
 /* main link/highlight color */
 const coralPink = '#EE6E73'
 const lightCoralPink = '#E28487'
@@ -55,6 +57,7 @@ module.exports = {
   blackGreyBlue,
   darkGreyBlue,
   midGreyBlue,
+  rustGrey,
   coralPink,
   lightCoralPink,
   lightGrey,

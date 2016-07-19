@@ -26,7 +26,7 @@ class AdminLayout extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col s12" styleName="cf-content-admin">
+              <div className="col s12">
                 {this.props.children}
               </div>
             </div>

@@ -1,0 +1,27 @@
+.admin-nav {
+  margin-bottom: $padding;
+}
+
+.admin-nav-back-btn {
+  composes: cf-btn from '../../../assets/css/Global.css';
+  padding-left: 0;
+  padding-right: 0;
+  @media (max-width: 320px) {
+    font-size: 11px;
+    & i {
+      margin-right: 2px;
+    }
+  }
+  @media (min-width: $medium) {
+    float: right;
+  }
+}
+
+.logout-messages {
+  composes: cf-form-messages-global from '../../../assets/css/Global.css';
+}
+
+.logout-btn {
+  composes: cf-form-btn from '../../../assets/css/Global.css';
+  float: right;
+}

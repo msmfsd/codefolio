@@ -248,7 +248,10 @@ input:-webkit-autofill:active {
   min-height: $mainContentHeightMin;
   position: relative;
   margin-bottom: $padding;
-  padding: $padding !important;
+  padding: 0 $padding;
+  @media (min-width: $medium) {
+    padding: 0 calc($padding * 2);
+  }
 }
 
 .cf-form-global {
@@ -277,7 +280,7 @@ input:-webkit-autofill:active {
   height: 28px;
   line-height: 28px;
   opacity: 1;
-  transition: opacity $duration;
+  transition: all $duration;
   & i {
     display: none;
     position: absolute;
@@ -287,6 +290,9 @@ input:-webkit-autofill:active {
   & span {
     transition: all $duration;
   }
+  &:hover {
+    color: $lightGrey;
+  }
 }
 
 .cf-form-messages-global {
@@ -294,6 +300,7 @@ input:-webkit-autofill:active {
   font-family: monospace;
   color: $coralPink;
   font-size: 13px;
+  line-height: 1.2;
 }
 
 /* gradient borders */
@@ -371,6 +378,11 @@ input:-webkit-autofill:active {
   color: white;
 }
 
+:global .card {
+  background-color: $rustGrey;
+  color: $lightGrey;
+}
+
 :global .spinner-red-only {
   border-color: $coralPink;
 }
@@ -395,19 +407,6 @@ input:-webkit-autofill:active {
 
 :global .material-icons {
   color: $midGrey;
-}
-
-:global .chip {
-  height: 22px;
-  font-size: 11px;
-  font-weight: normal;
-  font-family: monospace;
-  color: $lightGrey;
-  line-height: 22px;
-  padding: 0 8px;
-  border-radius: 11px;
-  background-color: $greyHighlight;
-  border: 1px solid color($blackGrey alpha(-40%));
 }
 
 :global .slider .slides  {
