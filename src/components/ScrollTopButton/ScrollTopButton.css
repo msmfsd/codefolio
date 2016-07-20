@@ -1,6 +1,6 @@
 .projects-back-to-top {
   margin-top: $padding;
   float: right;
-  margin-right: 10px;
+  margin-right: $padding;
   composes: cf-btn from '../../assets/css/Global.css';
 }

@@ -6,6 +6,8 @@
 const initialState = {
   profile: { loading: false, hasLoaded: false, error: false, errMesage: '', data: {} },
   projects: { loading: false, hasLoaded: false, error: false, errMesage: '', data: [] },
+  editProfile: { editProfileLoading: false, editProfileErrMessage: null, editProfileError: null, editProfileSuccess: null },
+  admin: { editAdminLoading: false, editAdminErrMessage: null, editAdminError: null },
   auth: {
     token: null,
     username: '',
@@ -17,12 +19,10 @@ const initialState = {
     logoutErrMessage: null,
     logoutError: null,
     registerLoading: false,
-    registerFail: null,
     registerErrMessage: null,
     registerError: null,
     registerSuccess: null,
     forgotLoading: false,
-    forgotFail: null,
     forgotErrMessage: null,
     forgotError: null,
     forgotSuccess: null,

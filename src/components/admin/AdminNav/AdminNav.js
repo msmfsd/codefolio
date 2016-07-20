@@ -17,15 +17,17 @@ class AdminNav extends Component {
   render () {
     const { auth, showBackBtn, onClick } = this.props
     return (
-      <div styleName="admin-nav" className="row">
-        <div className="col s12 l8">
-          <p styleName="logout-messages">{auth.logoutError && auth.logoutErrMessage}</p>
-        </div>
-        <div className="col s6 l2">
-          <p><Link styleName="admin-nav-back-btn" className={showBackBtn ? 'btn' : 'btn hide'} to="/admin"><i className="material-icons left">arrow_back</i>Dashboard</Link></p>
-        </div>
-        <div className="col s6 l2">
-          <button onClick={onClick} styleName="logout-btn" className={auth.logoutLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} disabled={auth.logoutLoading}><i className="material-icons">settings</i><span>Logout</span></button>
+      <div styleName="admin-nav">
+        <div className="row">
+          <div className="col s12 l8">
+            <p styleName="logout-messages">{auth.logoutError && auth.logoutErrMessage}</p>
+          </div>
+          <div className="col s6 l2">
+            <p><Link styleName="admin-nav-back-btn" className={showBackBtn ? 'btn' : 'btn hide'} to="/admin"><i className="material-icons left">arrow_back</i>Dashboard</Link></p>
+          </div>
+          <div className="col s6 l2">
+            <button onClick={onClick} styleName="logout-btn" className={auth.logoutLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} disabled={auth.logoutLoading}><i className="material-icons">settings</i><span>Logout</span></button>
+          </div>
         </div>
       </div>
     )

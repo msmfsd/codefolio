@@ -54,13 +54,14 @@ export default class Api {
    * @param password : string
    * @returns {object}
    */
-  static async Login (username, password) {
+  static async Login (formData) {
+    const serialized = JSON.stringify(formData)
     const opts = {
       method: 'post',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        'Content-type': 'application/json'
       },
-      body: 'email=' + username + '&password=' + password
+      body: serialized
     }
     return await fetch(API_URL + '/api/admin/authenticate', opts)
         .then(response => {
@@ -93,13 +94,14 @@ export default class Api {
    * @param password : string
    * @returns {object}
    */
-  static async Register (username, password) {
+  static async Register (formData) {
+    const serialized = JSON.stringify(formData)
     const opts = {
       method: 'post',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        'Content-type': 'application/json'
       },
-      body: 'email=' + username + '&password=' + password
+      body: serialized
     }
     return await fetch(API_URL + '/api/admin/register', opts)
         .then(response => {
@@ -112,14 +114,15 @@ export default class Api {
    * @param username : string
    * @returns {object}
    */
-  static async Forgot (username) {
-    const reseturl = window.location.protocol + '//' + window.location.host + '/reset'
+  static async Forgot (formData) {
+    formData.reseturl = window.location.protocol + '//' + window.location.host + '/reset'
+    const serialized = JSON.stringify(formData)
     const opts = {
       method: 'post',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        'Content-type': 'application/json'
       },
-      body: 'email=' + username + '&reseturl=' + reseturl
+      body: serialized
     }
     return await fetch(API_URL + '/api/admin/forgotpassword', opts)
         .then(response => {
@@ -131,17 +134,63 @@ export default class Api {
    * Reset admin password to Codefolio API
    * @param password : string
    * @param confirm : string
+   * @param resetToken : string
    * @returns {object}
    */
-  static async Reset (password, confirm, resetToken) {
+  static async Reset (formData, resetToken) {
+    const serialized = JSON.stringify(formData)
     const opts = {
       method: 'post',
       headers: {
-        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        'Content-type': 'application/json'
       },
-      body: 'password=' + password + '&confirm=' + confirm
+      body: serialized
     }
     return await fetch(API_URL + '/api/admin/resetpassword/' + resetToken, opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
+   * Edit admin password to Codefolio API
+   * @param password : string
+   * @param token : string
+   * @returns {object}
+   */
+  static async EditAdmin (formData, token) {
+    const serialized = JSON.stringify(formData)
+    const opts = {
+      method: 'put',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': token
+      },
+      body: serialized
+    }
+    return await fetch(API_URL + '/api/admin', opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
+   * Edit profile to Codefolio API
+   * @param formData : object
+   * @param token : string
+   * @returns {object}
+   */
+  static async EditProfile (formData, token) {
+    const serialized = JSON.stringify(formData)
+    const opts = {
+      method: 'put',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': token
+      },
+      body: serialized
+    }
+    return await fetch(API_URL + '/api/profile', opts)
         .then(response => {
           return response.json()
         })

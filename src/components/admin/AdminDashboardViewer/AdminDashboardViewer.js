@@ -18,7 +18,7 @@ class AdminDashboardViewer extends Component {
   render () {
     const { auth, logoutAsync } = this.props
     return (
-      <div styleName="cf-content-admin">
+      <div>
         <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} showBackBtn={false} />
         <div className="row">
           <div className="col s12">
@@ -29,18 +29,18 @@ class AdminDashboardViewer extends Component {
           <div className="col s12 m6 l4">
             <div className="card hoverable">
               <div className="card-content">
-                <span className="card-title">Manage Admin</span>
-                <p>Manage administrator settings to update your admin username and password.</p>
+                <span className="card-title">Admin settings</span>
+                <p>View administrator username and last logged in date and change your admin password.</p>
               </div>
               <div className="card-action">
-                <Link styleName="admin-btn" className="btn" to={'/admin/edit-administrator'}>Edit</Link>
+                <Link styleName="admin-btn" className="btn" to={'/admin/edit-administrator'}>VIEW</Link>
               </div>
             </div>
           </div>
           <div className="col s12 m6 l4">
             <div className="card hoverable">
               <div className="card-content">
-                <span className="card-title">Manage Profile</span>
+                <span className="card-title">Profile settings</span>
                 <p>Manage your public folio profile to update your avatar, details, technology set, contacts and bio.</p>
               </div>
               <div className="card-action">
@@ -51,8 +51,8 @@ class AdminDashboardViewer extends Component {
           <div className="col s12 m6 l4">
             <div className="card hoverable">
               <div className="card-content">
-                <span className="card-title">Manage Projects</span>
-                  <p>Manage your public folio projects to add, edit or remove showcases of your development work.</p>
+                <span className="card-title">Projects</span>
+                  <p>Manage your public folio projects to display showcases of your development work.</p>
               </div>
               <div className="card-action">
                 <Link styleName="admin-btn" className="btn" to={'/admin/edit-projects'}>Edit</Link>

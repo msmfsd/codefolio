@@ -1,7 +1,3 @@
-.cf-content-admin {
-  composes: cf-content-admin-global from '../../../assets/css/Global.css';
-}
-
 .admin-btn {
   composes: cf-form-btn from '../../../assets/css/Global.css';
 }

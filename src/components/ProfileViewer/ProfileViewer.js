@@ -20,7 +20,6 @@ import styles from './ProfileViewer.css'
 class ProfileViewer extends Component {
 
   componentDidMount () {
-    //console.log(this.props)
     if(!this.props.profile.hasLoaded) {
       this.props.fetchProfileAsync()
     }

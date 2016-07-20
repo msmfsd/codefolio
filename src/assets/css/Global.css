@@ -53,6 +53,10 @@ a {
   }
 }
 
+button[disabled] {
+  opacity: 0.65 !important;
+}
+
 h1 {
   font-weight: 700;
   font-size: 2.8rem;
@@ -153,7 +157,6 @@ input:-webkit-autofill:active {
 }
 
 :global .btn-loading {
-  opacity: 0.8 !important;
   & i {
     display: block !important;
   }
@@ -164,6 +167,10 @@ input:-webkit-autofill:active {
 
 :global .cf-icon-left {
   transform: translateY(-1px);
+}
+
+:global .padding {
+  padding: $padding;
 }
 
 /* ------------------ MAIN STYLES TO COMPOSE */
@@ -222,7 +229,7 @@ input:-webkit-autofill:active {
 .cf-btn {
   text-transform: uppercase;
   font-size: 14px;
-  padding: 0 14px;
+  padding: 0;
   margin: 0;
   height: 28px;
   line-height: 28px;
@@ -239,6 +246,7 @@ input:-webkit-autofill:active {
   }
 
   & i {
+    color: $lightGrey;
     transition: margin $duration ease-in-out;
     margin-right: 6px;
   }
@@ -383,6 +391,11 @@ input:-webkit-autofill:active {
   color: $lightGrey;
 }
 
+:global .card .activator i {
+  color: $lightGrey;
+  margin-top: 10px;
+}
+
 :global .spinner-red-only {
   border-color: $coralPink;
 }
@@ -443,9 +456,26 @@ input:-webkit-autofill:active {
 }
 
 /* override form elements */
-input[type=password]:focus:not([readonly]), input[type=text]:focus:not([readonly]) {
+textarea {
+  padding: 6px 12px;
+  height: auto;
+  border: 1px solid $lightGrey;
+}
+
+input[type=password]:focus:not([readonly]),
+input[type=text]:focus:not([readonly]) {
     border-bottom: 1px solid $coralPink;
     box-shadow: 0 1px 0 0 $coralPink;
+}
+
+input[type=text]:focus:not([readonly])+label,
+input[type=password]:focus:not([readonly])+label {
+    color: $coralPink;
+}
+
+:global .input-field label {
+  text-transform: uppercase;
+  color: white;
 }
 
 /* validation errors */

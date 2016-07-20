@@ -12,7 +12,6 @@ import { createValidator, email, required, minLength, maxLength, alphaNumeric, m
 import styles from './RegisterForm.css'
 
 // client validation
-// TODO match password to passwordMatch
 const loginValidation = createValidator({
   username: [required, email],
   password: [required, minLength(6), maxLength(14), alphaNumeric],

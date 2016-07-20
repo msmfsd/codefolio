@@ -32,6 +32,13 @@ export const FORGOT_FAIL = 'FORGOT_FAIL'
 export const RESET = 'RESET'
 export const RESET_SUCCESS = 'RESET_SUCCESS'
 export const RESET_FAIL = 'RESET_FAIL'
+// admin
+export const EDIT_ADMIN = 'EDIT_ADMIN'
+export const EDIT_ADMIN_SUCCESS = 'EDIT_ADMIN_SUCCESS'
+export const EDIT_ADMIN_FAIL = 'EDIT_ADMIN_FAIL'
+export const EDIT_PROFILE = 'EDIT_PROFILE'
+export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS'
+export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
 
 /*
  * private action creators
@@ -155,6 +162,33 @@ const resetFail = (err) => ({
   payload: err
 })
 
+// admin
+const editAdmin = () => ({
+  type: EDIT_ADMIN
+})
+
+const editAdminSuccess = () => ({
+  type: EDIT_ADMIN_SUCCESS
+})
+
+const editAdminFail = (err) => ({
+  type: EDIT_ADMIN_FAIL,
+  payload: err
+})
+
+const editProfile = () => ({
+  type: EDIT_PROFILE
+})
+
+const editProfileSuccess = () => ({
+  type: EDIT_PROFILE_SUCCESS
+})
+
+const editProfileFail = (err) => ({
+  type: EDIT_PROFILE_FAIL,
+  payload: err
+})
+
 /*
  * public action methods
  */
@@ -163,22 +197,25 @@ const resetFail = (err) => ({
 export const fetchProfileAsync = () => {
   return dispatch => {
     dispatch(fetchProfileRequest())
-    API.FetchCodefolioProfile()
-        .then(response => {
-          if(!response.success) {
-            dispatch(fetchProfileError(response.message))
-          } else {
-            // success!
-            dispatch(fetchProfileResult({
-              loading: false,
-              hasLoaded: true,
-              error: false,
-              errMesage: '',
-              data: response.data
-            }))
-          }
-        })
-        .catch((reason) => dispatch(fetchProfileError(reason)))
+    // TODO dev only
+    setTimeout(() => {
+      API.FetchCodefolioProfile()
+          .then(response => {
+            if(!response.success) {
+              dispatch(fetchProfileError(response.message))
+            } else {
+              // success!
+              dispatch(fetchProfileResult({
+                loading: false,
+                hasLoaded: true,
+                error: false,
+                errMesage: '',
+                data: response.data
+              }))
+            }
+          })
+          .catch((reason) => dispatch(fetchProfileError(reason)))
+    }, 1500)
   }
 }
 
@@ -186,22 +223,25 @@ export const fetchProfileAsync = () => {
 export const fetchProjectsAsync = () => {
   return dispatch => {
     dispatch(fetchProjectsRequest())
-    API.FetchCodefolioProjects()
-        .then(response => {
-          if(!response.success) {
-            dispatch(fetchProjectsError(response.message))
-          } else {
-            // success!
-            dispatch(fetchProjectsResult({
-              loading: false,
-              hasLoaded: true,
-              error: false,
-              errMesage: '',
-              data: response.data
-            }))
-          }
-        })
-        .catch((reason) => dispatch(fetchProjectsError(reason)))
+    // TODO dev only
+    setTimeout(() => {
+      API.FetchCodefolioProjects()
+          .then(response => {
+            if(!response.success) {
+              dispatch(fetchProjectsError(response.message))
+            } else {
+              // success!
+              dispatch(fetchProjectsResult({
+                loading: false,
+                hasLoaded: true,
+                error: false,
+                errMesage: '',
+                data: response.data
+              }))
+            }
+          })
+          .catch((reason) => dispatch(fetchProjectsError(reason)))
+    }, 1500)
   }
 }
 
@@ -213,22 +253,22 @@ export const authInit = () => (dispatch) => {
     clearStorage()
   } else {
     dispatch(auth(storageResult.username))
-    dispatch(authSuccess({ token: storageResult.token }))
+    dispatch(authSuccess({ token: storageResult.token, lastLoggedIn: storageResult.lastLoggedIn }))
   }
 }
 
-export const loginAsync = ({username, password}) => {
+export const loginAsync = (formData) => {
   return (dispatch) => {
-    dispatch(auth(username))
+    dispatch(auth(formData.username))
     // TODO dev only
     setTimeout(() => {
-      API.Login(username, password)
+      API.Login(formData)
       .then((response) => {
         if(!response.success) {
           dispatch(authFail(response.message))
         } else {
           dispatch(authSuccess(response))
-          setStorage(response.token, username)
+          setStorage(response.token, response.lastLoggedIn, formData.username)
           browserHistory.push('/admin')
         }
       })
@@ -255,12 +295,12 @@ export const logoutAsync = (token) => (dispatch) => {
   }, 1500)
 }
 
-export const registerAsync = ({username, password}) => {
+export const registerAsync = (formData) => {
   return (dispatch) => {
     dispatch(register())
     // TODO dev only
     setTimeout(() => {
-      API.Register(username, password)
+      API.Register(formData)
       .then((response) => {
         if(!response.success) {
           dispatch(registerFail(response.message))
@@ -273,12 +313,12 @@ export const registerAsync = ({username, password}) => {
   }
 }
 
-export const forgotAsync = ({username}) => {
+export const forgotAsync = (formData) => {
   return (dispatch) => {
     dispatch(forgot())
     // TODO dev only
     setTimeout(() => {
-      API.Forgot(username)
+      API.Forgot(formData)
       .then((response) => {
         if(!response.success) {
           dispatch(forgotFail(response.message))
@@ -291,12 +331,12 @@ export const forgotAsync = ({username}) => {
   }
 }
 
-export const resetAsync = ({password, confirm}, resetToken) => {
+export const resetAsync = (formData, resetToken) => {
   return (dispatch) => {
     dispatch(reset())
     // TODO dev only
     setTimeout(() => {
-      API.Reset(password, confirm, resetToken)
+      API.Reset(formData, resetToken)
       .then((response) => {
         if(!response.success) {
           dispatch(resetFail(response.message))
@@ -305,6 +345,49 @@ export const resetAsync = ({password, confirm}, resetToken) => {
         }
       })
       .catch((reason) => dispatch(resetFail(reason.message)))
+    }, 1500)
+  }
+}
+
+// admin
+export const editAdminAsync = (formData, token) => {
+  return (dispatch) => {
+    dispatch(editAdmin())
+    // TODO dev only
+    setTimeout(() => {
+      API.EditAdmin(formData, token)
+      .then((response) => {
+        if(!response.success) {
+          dispatch(editAdminFail(response.message))
+        } else {
+          dispatch(editAdminSuccess())
+          // API will logout on server so logout app and reset form
+          dispatch(authLogoutSuccess())
+          clearStorage()
+          browserHistory.push('/login')
+        }
+      })
+      .catch((reason) => dispatch(editAdminFail(reason.message)))
+    }, 1500)
+  }
+}
+
+export const editProfileAsync = (formData, token) => {
+  return (dispatch) => {
+    dispatch(editProfile())
+    // TODO dev only
+    setTimeout(() => {
+      API.EditProfile(formData, token)
+      .then((response) => {
+        if(!response.success) {
+          dispatch(editProfileFail(response.message))
+        } else {
+          dispatch(editProfileSuccess())
+          // now update profile store
+          dispatch(fetchProfileAsync())
+        }
+      })
+      .catch((reason) => dispatch(editProfileFail(reason.message)))
     }, 1500)
   }
 }

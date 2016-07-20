@@ -4,10 +4,17 @@
  * MIT Licensed
  */
 import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import { reduxForm } from 'redux-form'
 import CssModules from 'react-css-modules'
 import AdminNav from '../AdminNav/AdminNav'
+import { createValidator, required, minLength, maxLength, alphaNumeric, match } from '../../../utils/validate'
 import styles from './EditAdministratorForm.css'
+
+// client validation
+const editadminValidation = createValidator({
+  password: [required, minLength(6), maxLength(14), alphaNumeric],
+  confirm: [required, minLength(6), maxLength(14), alphaNumeric, match('password')]
+})
 
 /**
  * @class EditAdministratorForm
@@ -16,13 +23,38 @@ import styles from './EditAdministratorForm.css'
 class EditAdministratorForm extends Component {
 
   render () {
-    const { auth, logoutAsync } = this.props
+    const { auth, logoutAsync, admin, editAdminAsync, fields: { password, confirm }, handleSubmit } = this.props
+    const lastLoggedIn = String(new Date(auth.lastLoggedIn))
     return (
-      <div styleName="cf-content-admin">
+      <div>
         <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} showBackBtn={true} />
-        <h4>EditAdministratorForm component</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-        <Link to={'/admin'}>Back to Admin Dashboard</Link>
+        <div styleName="form-container">
+          <div className="row">
+            <div styleName="card-padding" className="card-panel">
+              <span><b>Username</b>: {auth.username}<br /><b>Last login</b>: {lastLoggedIn}</span>
+            </div>
+          </div>
+          <div className="row">
+            <form onSubmit={handleSubmit(data => editAdminAsync(data, auth.token))}>
+              <div className="col s12">
+                <h3>Edit admin password</h3>
+                <p>Note that you will be automatically logged out when your password is successfully updated.</p>
+              </div>
+              <div className="input-field col s12">
+                <input type="password" placeholder="Password must be alphanumeric" {...password}/>
+                {password.touched && password.error && <div>{password.error}</div>}
+              </div>
+              <div className="input-field col s12">
+                <input type="password" placeholder="Re-enter your password" {...confirm}/>
+                {confirm.touched && confirm.error && <div>{confirm.error}</div>}
+              </div>
+              <div styleName="form-messages" className="col s12">{admin.editAdminError && admin.editAdminErrMessage}</div>
+              <div className="input-field col s12">
+                <button styleName="form-btn" className={admin.editAdminLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={admin.editAdminLoading}><i className="material-icons">settings</i><span>Update</span></button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     )
   }
@@ -30,7 +62,15 @@ class EditAdministratorForm extends Component {
 
 EditAdministratorForm.propTypes = {
   auth: PropTypes.object.isRequired,
-  logoutAsync: PropTypes.func.isRequired
+  logoutAsync: PropTypes.func.isRequired,
+  admin: PropTypes.object.isRequired,
+  editAdminAsync: PropTypes.func,
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired
 }
 
-export default CssModules(EditAdministratorForm, styles)
+export default reduxForm({
+  form: 'editadmin',
+  fields: [ 'password', 'confirm' ],
+  validate: editadminValidation
+})(CssModules(EditAdministratorForm, styles))

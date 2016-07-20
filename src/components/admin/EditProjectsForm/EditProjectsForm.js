@@ -18,7 +18,7 @@ class EditProjectsForm extends Component {
   render () {
     const { auth, logoutAsync } = this.props
     return (
-      <div styleName="cf-content-admin">
+      <div>
         <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} showBackBtn={true} />
         <h4>EditProjectsForm component</h4>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>

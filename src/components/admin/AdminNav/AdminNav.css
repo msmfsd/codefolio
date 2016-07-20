@@ -1,11 +1,12 @@
 .admin-nav {
   margin-bottom: $padding;
+  padding-bottom: 2px;
+  composes: border-bottom-gradient-to-left from '../../../assets/css/Global.css';
 }
+
 
 .admin-nav-back-btn {
   composes: cf-btn from '../../../assets/css/Global.css';
-  padding-left: 0;
-  padding-right: 0;
   @media (max-width: 320px) {
     font-size: 11px;
     & i {
