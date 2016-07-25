@@ -101,4 +101,55 @@ describe('profile reducer', () => {
       }
     }))
   })
+  // EDIT_PROFILE
+  it('Handles EDIT_PROFILE', () => {
+    const newState = reducer(initialState, {
+      type: 'EDIT_PROFILE',
+      payload: {
+        editProfileLoading: true,
+        editProfileSuccess: null,
+        editProfileErrMessage: null,
+        editProfileError: null
+      }
+    })
+    expect(newState).to.eql(Object.assign({}, initialState, {
+      editProfileLoading: true,
+      editProfileSuccess: null,
+      editProfileErrMessage: null,
+      editProfileError: null
+    }))
+  })
+  // EDIT_PROFILE_SUCCESS
+  it('Handles EDIT_PROFILE_SUCCESS', () => {
+    const newState = reducer(initialState, {
+      type: 'EDIT_PROFILE_SUCCESS',
+      payload: {
+        editProfileLoading: false,
+        editProfileErrMessage: null,
+        editProfileError: null,
+        editProfileSuccess: true
+      }
+    })
+    expect(newState).to.eql(Object.assign({}, initialState, {
+      editProfileLoading: false,
+      editProfileErrMessage: null,
+      editProfileError: null,
+      editProfileSuccess: true
+    }))
+  })
+  // EDIT_PROFILE_FAIL
+  it('Handles EDIT_PROFILE_FAIL', () => {
+    const error = 'Some Error'
+    const newState = reducer(initialState, {
+      type: 'EDIT_PROFILE_FAIL',
+      payload: error
+    })
+    expect(newState).to.eql(Object.assign({}, initialState, {
+      editProfileErrMessage: 'Some Error',
+      editProfileLoading: false,
+      editProfileError: true,
+      editProfileSuccess: null
+    }))
+  })
+
 })

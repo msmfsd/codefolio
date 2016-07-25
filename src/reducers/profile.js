@@ -13,7 +13,10 @@ import {
   UPDATE_LAYOUT_FIELD,
   ADD_PROFILE_TECHICON,
   ADD_PROFILE_LINK,
-  REMOVE_PROFILE_ITEM
+  REMOVE_PROFILE_ITEM,
+  EDIT_PROFILE,
+  EDIT_PROFILE_SUCCESS,
+  EDIT_PROFILE_FAIL
 } from '../actions/index'
 
 const profile = (state = {}, action) => {
@@ -80,6 +83,27 @@ const profile = (state = {}, action) => {
         data: {
           [action.linkGroup]: {$splice: [[action.index, 1]]}
         }
+      })
+    case EDIT_PROFILE:
+      return Object.assign({}, state, {
+        editProfileLoading: true,
+        editProfileSuccess: null,
+        editProfileErrMessage: null,
+        editProfileError: null
+      })
+    case EDIT_PROFILE_SUCCESS:
+      return Object.assign({}, state, {
+        editProfileLoading: false,
+        editProfileErrMessage: null,
+        editProfileError: null,
+        editProfileSuccess: true
+      })
+    case EDIT_PROFILE_FAIL:
+      return Object.assign({}, state, {
+        editProfileErrMessage: action.payload,
+        editProfileLoading: false,
+        editProfileError: true,
+        editProfileSuccess: null
       })
     default:
       return state

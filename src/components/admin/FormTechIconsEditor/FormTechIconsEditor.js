@@ -45,7 +45,7 @@ class FormTechIconsEditor extends Component {
     const text = this.refs.selectIcon.options[this.refs.selectIcon.selectedIndex].text
     const name = text[0].toUpperCase() + text.slice(1)
     const icon = this.refs.selectIcon.value
-    const duplicate = false
+    let duplicate = false
     // already added?
     for(let obj of this.props.fields.value) {
       if(obj.icon === icon) {

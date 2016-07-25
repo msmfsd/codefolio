@@ -71,7 +71,6 @@ class EditProfileForm extends Component {
   render () {
     const {
       profile,
-      editProfile,
       auth,
       logoutAsync,
       editProfileAsync,
@@ -104,7 +103,7 @@ class EditProfileForm extends Component {
         <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} showBackBtn={true} />
         <div styleName="form-container">
           <div className="row">
-            <div styleName="card-padding" className={editProfile.editProfileSuccess ? 'card-panel show' : 'card-panel hide'}>
+            <div styleName="card-padding" className={profile.editProfileSuccess ? 'card-panel show' : 'card-panel hide'}>
               <span>Profile updated successfully: <a href="/profile" target="_blank">View profile</a></span>
             </div>
           </div>
@@ -169,10 +168,10 @@ class EditProfileForm extends Component {
                 <input type="radio" {...displayBgImage} value="yes" checked={displayBgImage.value === 'yes'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Yes
                 <input type="radio" {...displayBgImage} value="no" checked={displayBgImage.value === 'no'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;No
               </div>
-              <div styleName="form-messages" className="col s12">{editProfile.editProfileError && editProfile.editProfileErrMessage}</div>
+              <div styleName="form-messages" className="col s12">{profile.editProfileError && profile.editProfileErrMessage}</div>
               <div styleName="form-messages" className="col s12">{submitFailed && <span>Validation errors found, fix them and re-submit.</span>}</div>
               <div className={defaultInputClasses}>
-                <button styleName="form-btn" className={editProfile.editProfileLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={editProfile.editProfileLoading}><i className="material-icons">settings</i><span>Save profile updates</span></button>
+                <button styleName="form-btn" className={profile.editProfileLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={profile.editProfileLoading}><i className="material-icons">settings</i><span>Save profile updates</span></button>
               </div>
             </form>
           </div>
@@ -186,7 +185,6 @@ EditProfileForm.propTypes = {
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   logoutAsync: PropTypes.func.isRequired,
-  editProfile: PropTypes.object.isRequired,
   editProfileAsync: PropTypes.func,
   fetchProfileAsync: PropTypes.func,
   addProfileTechicon: PropTypes.func,
