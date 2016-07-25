@@ -6,7 +6,7 @@ import RepoLink from '../RepoLink/RepoLink'
 
 describe('RepoLink component', () => {
   const data = {
-    display: 'no',
+    display: 'yes',
     repoUrl: 'http://github.com/Automattic/mongoose',
     repoUser: 'Automattic',
     repoName: 'mongoose'
@@ -15,8 +15,8 @@ describe('RepoLink component', () => {
   it('renders into document', () => {
     expect(repolink).toExist()
   })
-  it('hides if display property is false', () => {
-    const hasClass = TestUtils.findRenderedDOMComponentWithClass(repolink, 'hide')
+  it('shows if display property is yes', () => {
+    const hasClass = TestUtils.findRenderedDOMComponentWithClass(repolink, 'show')
     expect(hasClass).toExist()
   })
 })
