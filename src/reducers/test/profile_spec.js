@@ -5,98 +5,100 @@
  */
 import { expect } from 'chai'
 import reducer from '../profile'
+import appInitialState from '../../store/initial-state'
 
 /**
  * TEST PROFILE REDUCER
  */
 describe('profile reducer', () => {
+  //initial state
+  const initialState = appInitialState.profile
   // FETCH_PROFILE_REQUEST
   it('Handles FETCH_PROFILE_REQUEST', () => {
-    const initialState = {
-      loading: false,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: {}
-    }
     const newState = reducer(initialState, {
       type: 'FETCH_PROFILE_REQUEST',
       payload: {
-        loading: true
+        loading: true,
+        error: null,
+        errMesage: null
       }
     })
-    expect(newState).to.eql({
+    expect(newState).to.eql(Object.assign({}, initialState, {
       loading: true,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: {}
-    })
+      error: null,
+      errMesage: null
+    }))
   })
   // FETCH_PROFILE_RESULT
   it('Handles FETCH_PROFILE_RESULT', () => {
-    const initialState = {
-      loading: true,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: {}
-    }
+    const data = { name: 'Some name' }
     const newState = reducer(initialState, {
       type: 'FETCH_PROFILE_RESULT',
-      payload: {
-        loading: false,
-        hasLoaded: true,
-        data: {
-          success: true,
-          message: 'Profile found.',
-          data: {
-            name: 'Steve Wozniak'
-          }
-        }
-      }
+      payload: data
     })
-    expect(newState).to.eql({
+    expect(newState).to.eql(Object.assign({}, initialState, {
       loading: false,
       hasLoaded: true,
-      error: false,
-      errMesage: '',
-      data: {
-        success: true,
-        message: 'Profile found.',
-        data: {
-          name: 'Steve Wozniak'
-        }
-      }
-    })
+      error: null,
+      errMesage: null,
+      data: data
+    }))
   })
   // FETCH_PROFILE_ERROR
   it('Handles FETCH_PROFILE_ERROR', () => {
-    const initialState = {
-      loading: true,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: {}
-    }
     const error = { message: 'API Error' }
     const newState = reducer(initialState, {
       type: 'FETCH_PROFILE_ERROR',
-      payload: {
-        loading: false,
-        hasLoaded: false,
-        error: true,
-        errMesage: error.message,
-        data: {}
-      }
+      payload: error.message
     })
-    expect(newState).to.eql({
+    expect(newState).to.eql(Object.assign({}, initialState, {
       loading: false,
       hasLoaded: false,
       error: true,
-      errMesage: 'API Error',
-      data: {}
-    })
+      errMesage: 'API Error'
+    }))
   })
-
+  // UPDATE_PROFILE_FIELD
+  it('Handles UPDATE_PROFILE_FIELD', () => {
+    const fieldName = 'bio'
+    const fieldValue = '<p>Lorem Ipsum</p>'
+    const newState = reducer(initialState, {
+      type: 'UPDATE_PROFILE_FIELD',
+      fieldName,
+      fieldValue
+    })
+    expect(newState).to.eql(Object.assign({}, initialState, {
+      data: {
+        bio: fieldValue
+      }
+    }))
+  })
+  // UPDATE_AVATAR_FIELDS
+  it('Handles UPDATE_AVATAR_FIELDS', () => {
+    const use = 'gravitarEmail'
+    const gravitarEmail = 'email@email.com'
+    const customAvatarFile = ''
+    initialState.data = {
+      avatar: {
+        use: '',
+        gravitarEmail: ''
+      },
+      customAvatarFile: ''
+    }
+    const newState = reducer(initialState, {
+      type: 'UPDATE_AVATAR_FIELDS',
+      use,
+      gravitarEmail,
+      customAvatarFile
+    })
+    expect(newState).to.eql(Object.assign({}, initialState, {
+      data: {
+        avatar: {
+          use: use,
+          gravitarEmail: gravitarEmail
+        },
+        customAvatarFile: customAvatarFile
+      }
+    }))
+  })
 })

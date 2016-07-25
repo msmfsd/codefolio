@@ -1,0 +1,10 @@
+.form-techicons-editor {
+  & select {
+    max-width: 90%;
+    margin-bottom: 0;
+  }
+}
+
+.spacing {
+  margin-right: 10px;
+}

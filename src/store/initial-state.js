@@ -4,8 +4,8 @@
  * MIT Licensed
  */
 const initialState = {
-  profile: { loading: false, hasLoaded: false, error: false, errMesage: '', data: {} },
-  projects: { loading: false, hasLoaded: false, error: false, errMesage: '', data: [] },
+  profile: { loading: false, hasLoaded: false, error: null, errMesage: null, data: {} },
+  projects: { loading: false, hasLoaded: false, error: null, errMesage: null, data: [] },
   editProfile: { editProfileLoading: false, editProfileErrMessage: null, editProfileError: null, editProfileSuccess: null },
   admin: { editAdminLoading: false, editAdminErrMessage: null, editAdminError: null },
   auth: {

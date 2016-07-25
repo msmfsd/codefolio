@@ -42,7 +42,7 @@ class ResetForm extends Component {
   }
 
   render () {
-    const { auth, resetAsync, fields: { password, confirm }, handleSubmit } = this.props
+    const { auth, resetAsync, fields: { password, confirm }, handleSubmit, defaultInputClasses } = this.props
     return (
       <div styleName="cf-container" className="container">
         <div className="row">
@@ -64,16 +64,16 @@ class ResetForm extends Component {
                     <h3>Reset admin password</h3>
                     <p>Enter your new password.</p>
                   </div>
-                  <div className="input-field col s12">
+                  <div className={defaultInputClasses}>
                     <input type="password" placeholder="Enter your new password" {...password}/>
-                    {password.touched && password.error && <div>{password.error}</div>}
+                    {password.touched && password.error && <div className="input-field-message">{password.error}</div>}
                   </div>
-                  <div className="input-field col s12">
+                  <div className={defaultInputClasses}>
                     <input type="password" placeholder="Confirm your new password" {...confirm}/>
-                    {confirm.touched && confirm.error && <div>{confirm.error}</div>}
+                    {confirm.touched && confirm.error && <div className="input-field-message">{confirm.error}</div>}
                   </div>
                   <div styleName="form-messages" className="col s12">{auth.resetError && auth.resetErrMessage}</div>
-                  <div className="input-field col s12">
+                  <div className={defaultInputClasses}>
                     <button styleName="form-btn" className={auth.resetLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={auth.resetLoading}><i className="material-icons">settings</i><span>Reset password</span></button>
                   </div>
                 </form>
@@ -91,7 +91,12 @@ ResetForm.propTypes = {
   resetAsync: PropTypes.func,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  params: PropTypes.object
+  params: PropTypes.object,
+  defaultInputClasses: PropTypes.string
+}
+
+ResetForm.defaultProps = {
+  defaultInputClasses: 'input-field col s12'
 }
 
 export default reduxForm({

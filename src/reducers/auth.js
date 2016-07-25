@@ -16,7 +16,7 @@ import {
   FORGOT,
   FORGOT_SUCCESS,
   FORGOT_FAIL,
-  RESET,
+  RESET_INIT,
   RESET_SUCCESS,
   RESET_FAIL
 } from '../actions/index'
@@ -26,7 +26,9 @@ const auth = (state = {}, action) => {
     case AUTH:
       return Object.assign({}, state, {
         authLoading: true,
-        username: action.payload
+        username: action.payload,
+        errMessage: null,
+        error: null
       })
     case AUTH_SUCCESS:
       return Object.assign({}, state, {
@@ -44,7 +46,9 @@ const auth = (state = {}, action) => {
       })
     case AUTH_LOGOUT:
       return Object.assign({}, state, {
-        logoutLoading: true
+        logoutLoading: true,
+        logoutErrMessage: null,
+        logoutError: null
       })
     case AUTH_LOGOUT_SUCCESS:
       return Object.assign({}, state, {
@@ -63,7 +67,9 @@ const auth = (state = {}, action) => {
       })
     case REGISTER:
       return Object.assign({}, state, {
-        registerLoading: true
+        registerLoading: true,
+        registerErrMessage: null,
+        registerError: null
       })
     case REGISTER_SUCCESS:
       return Object.assign({}, state, {
@@ -81,7 +87,9 @@ const auth = (state = {}, action) => {
       })
     case FORGOT:
       return Object.assign({}, state, {
-        forgotLoading: true
+        forgotLoading: true,
+        forgotErrMessage: null,
+        forgotError: null
       })
     case FORGOT_SUCCESS:
       return Object.assign({}, state, {
@@ -97,9 +105,11 @@ const auth = (state = {}, action) => {
         forgotLoading: false,
         forgotSuccess: false
       })
-    case RESET:
+    case RESET_INIT:
       return Object.assign({}, state, {
-        resetLoading: true
+        resetLoading: true,
+        resetErrMessage: null,
+        resetError: null
       })
     case RESET_SUCCESS:
       return Object.assign({}, state, {

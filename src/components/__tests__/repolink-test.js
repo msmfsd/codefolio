@@ -6,7 +6,7 @@ import RepoLink from '../RepoLink/RepoLink'
 
 describe('RepoLink component', () => {
   const data = {
-    display: false,
+    display: 'no',
     repoUrl: 'http://github.com/Automattic/mongoose',
     repoUser: 'Automattic',
     repoName: 'mongoose'

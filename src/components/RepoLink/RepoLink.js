@@ -16,22 +16,18 @@ class RepoLink extends Component {
   render () {
     // TODO get stars - https://www.npmjs.com/package/github-api
     const stars = 0
-    if(!this.props.data.display) {
-      return (<div className="hide"></div>)
-    } else {
-      return (
-        <div styleName="cf-repolink">
-          <i className="material-icons left cf-icon-left">storage</i>
-          <span styleName="repolink-group">
-            <a target="_blank" href={this.props.data.repoUrl}>{this.props.data.repoUrl}</a>
-          </span>
-          <span className={stars === 0 ? 'hide' : ''} styleName="repolink-watchers">
-            <i className="material-icons left">star rate</i>
-            {stars}
-          </span>
-        </div>
-      )
-    }
+    return (
+      <div className={this.props.data.display === 'yes' ? 'show' : 'hide'} styleName="cf-repolink">
+        <i className="material-icons left cf-icon-left">storage</i>
+        <span styleName="repolink-group">
+          <a target="_blank" href={this.props.data.repoUrl}>{this.props.data.repoUrl}</a>
+        </span>
+        <span className={stars === 0 ? 'hide' : ''} styleName="repolink-watchers">
+          <i className="material-icons left">star rate</i>
+          {stars}
+        </span>
+      </div>
+    )
   }
 
 }

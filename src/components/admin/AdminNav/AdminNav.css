@@ -4,6 +4,12 @@
   composes: border-bottom-gradient-to-left from '../../../assets/css/Global.css';
 }
 
+.admin-nav-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
 
 .admin-nav-back-btn {
   composes: cf-btn from '../../../assets/css/Global.css';
@@ -13,16 +19,15 @@
       margin-right: 2px;
     }
   }
-  @media (min-width: $medium) {
-    float: right;
-  }
 }
 
 .logout-messages {
   composes: cf-form-messages-global from '../../../assets/css/Global.css';
+  line-height: 2;
+  margin-left: calc($padding * 0.5);
 }
 
 .logout-btn {
   composes: cf-form-btn from '../../../assets/css/Global.css';
-  float: right;
+  margin-left: calc($padding * 0.5);
 }

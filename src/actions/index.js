@@ -4,18 +4,29 @@
  * MIT Licensed
  */
 import API from '../utils/api'
+import { convertToBase64Async, formatProfileData } from '../utils/helpers'
 import { setStorage, getStorage, clearStorage } from '../utils/storage'
 import { browserHistory } from 'react-router'
 
 /*
  * action types
  */
+
+// profile
 export const FETCH_PROFILE_REQUEST = 'FETCH_PROFILE_REQUEST'
 export const FETCH_PROFILE_RESULT = 'FETCH_PROFILE_RESULT'
 export const FETCH_PROFILE_ERROR = 'FETCH_PROFILE_ERROR'
+export const UPDATE_PROFILE_FIELD = 'UPDATE_PROFILE_FIELD'
+export const UPDATE_AVATAR_FIELDS = 'UPDATE_AVATAR_FIELDS'
+export const UPDATE_LAYOUT_FIELD = 'UPDATE_LAYOUT_FIELD'
+export const ADD_PROFILE_TECHICON = 'ADD_PROFILE_TECHICON'
+export const ADD_PROFILE_LINK = 'ADD_PROFILE_LINK'
+export const REMOVE_PROFILE_ITEM = 'REMOVE_PROFILE_ITEM'
+// projects
 export const FETCH_PROJECTS_REQUEST = 'FETCH_PROJECTS_REQUEST'
 export const FETCH_PROJECTS_RESULT = 'FETCH_PROJECTS_RESULT'
 export const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR'
+// auth
 export const AUTH = 'AUTH'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
@@ -29,7 +40,7 @@ export const REGISTER_FAIL = 'REGISTER_FAIL'
 export const FORGOT = 'FORGOT'
 export const FORGOT_SUCCESS = 'FORGOT_SUCCESS'
 export const FORGOT_FAIL = 'FORGOT_FAIL'
-export const RESET = 'RESET'
+export const RESET_INIT = 'RESET_INIT'
 export const RESET_SUCCESS = 'RESET_SUCCESS'
 export const RESET_FAIL = 'RESET_FAIL'
 // admin
@@ -46,10 +57,7 @@ export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
 
 // PROFILE
 const fetchProfileRequest = () => ({
-  type: FETCH_PROFILE_REQUEST,
-  payload: {
-    loading: true
-  }
+  type: FETCH_PROFILE_REQUEST
 })
 const fetchProfileResult = (data) => ({
   type: FETCH_PROFILE_RESULT,
@@ -57,39 +65,20 @@ const fetchProfileResult = (data) => ({
 })
 const fetchProfileError = (err) => ({
   type: FETCH_PROFILE_ERROR,
-  payload: {
-    loading: false,
-    hasLoaded: false,
-    error: true,
-    errMesage: err.message
-  }
+  payload: err
 })
 
 // PROJECTS
 const fetchProjectsRequest = () => ({
-  type: FETCH_PROJECTS_REQUEST,
-  payload: {
-    loading: true
-  }
+  type: FETCH_PROJECTS_REQUEST
 })
-const fetchProjectsResult = (result) => ({
+const fetchProjectsResult = (data) => ({
   type: FETCH_PROJECTS_RESULT,
-  payload: {
-    loading: false,
-    hasLoaded: true,
-    error: false,
-    errMesage: '',
-    data: result.data
-  }
+  payload: data
 })
 const fetchProjectsError = (err) => ({
   type: FETCH_PROJECTS_ERROR,
-  payload: {
-    loading: false,
-    hasLoaded: false,
-    error: true,
-    errMesage: err.message
-  }
+  payload: err
 })
 
 // AUTH
@@ -148,8 +137,8 @@ const forgotFail = (err) => ({
   payload: err
 })
 
-const reset = () => ({
-  type: RESET
+const resetInit = () => ({
+  type: RESET_INIT
 })
 
 const resetSuccess = (data) => ({
@@ -194,6 +183,45 @@ const editProfileFail = (err) => ({
  */
 
 // PROFILE
+export const updateProfileField = (fieldName, fieldValue) => ({
+  type: UPDATE_PROFILE_FIELD,
+  fieldName,
+  fieldValue
+})
+
+export const updateAvatarFields = (use, gravitarEmail, customAvatarFile) => ({
+  type: UPDATE_AVATAR_FIELDS,
+  use,
+  gravitarEmail,
+  customAvatarFile
+})
+
+export const updateLayoutField = (fieldName, fieldValue) => ({
+  type: UPDATE_LAYOUT_FIELD,
+  fieldName,
+  fieldValue
+})
+
+export const addProfileTechicon = (linkGroup, linkName, linkIcon) => ({
+  type: ADD_PROFILE_TECHICON,
+  linkGroup,
+  linkName,
+  linkIcon
+})
+
+export const addProfileLink = (linkGroup, linkName, linkUrl) => ({
+  type: ADD_PROFILE_LINK,
+  linkGroup,
+  linkName,
+  linkUrl
+})
+
+export const removeProfileItem = (linkGroup, index) => ({
+  type: REMOVE_PROFILE_ITEM,
+  linkGroup,
+  index
+})
+
 export const fetchProfileAsync = () => {
   return dispatch => {
     dispatch(fetchProfileRequest())
@@ -205,17 +233,11 @@ export const fetchProfileAsync = () => {
               dispatch(fetchProfileError(response.message))
             } else {
               // success!
-              dispatch(fetchProfileResult({
-                loading: false,
-                hasLoaded: true,
-                error: false,
-                errMesage: '',
-                data: response.data
-              }))
+              dispatch(fetchProfileResult(response.data))
             }
           })
-          .catch((reason) => dispatch(fetchProfileError(reason)))
-    }, 1500)
+          .catch((reason) => dispatch(fetchProfileError(reason.message + '. API server unreachable.')))
+    }, 500)
   }
 }
 
@@ -231,17 +253,11 @@ export const fetchProjectsAsync = () => {
               dispatch(fetchProjectsError(response.message))
             } else {
               // success!
-              dispatch(fetchProjectsResult({
-                loading: false,
-                hasLoaded: true,
-                error: false,
-                errMesage: '',
-                data: response.data
-              }))
+              dispatch(fetchProjectsResult(response.data))
             }
           })
-          .catch((reason) => dispatch(fetchProjectsError(reason)))
-    }, 1500)
+          .catch((reason) => dispatch(fetchProjectsError(reason.message + '. API server unreachable.')))
+    }, 500)
   }
 }
 
@@ -272,8 +288,8 @@ export const loginAsync = (formData) => {
           browserHistory.push('/admin')
         }
       })
-      .catch((reason) => dispatch(authFail(reason.message)))
-    }, 1500)
+      .catch((reason) => dispatch(authFail(reason.message + '. API server unreachable.')))
+    }, 500)
   }
 }
 
@@ -291,8 +307,8 @@ export const logoutAsync = (token) => (dispatch) => {
         browserHistory.push('/login')
       }
     })
-    .catch((reason) => dispatch(authLogoutFail(reason.message)))
-  }, 1500)
+    .catch((reason) => dispatch(authLogoutFail(reason.message + '. API server unreachable.')))
+  }, 500)
 }
 
 export const registerAsync = (formData) => {
@@ -308,8 +324,8 @@ export const registerAsync = (formData) => {
           dispatch(registerSuccess())
         }
       })
-      .catch((reason) => dispatch(registerFail(reason.message)))
-    }, 1500)
+      .catch((reason) => dispatch(registerFail(reason.message + '. API server unreachable.')))
+    }, 500)
   }
 }
 
@@ -326,14 +342,14 @@ export const forgotAsync = (formData) => {
           dispatch(forgotSuccess(response))
         }
       })
-      .catch((reason) => dispatch(forgotFail(reason.message)))
-    }, 1500)
+      .catch((reason) => dispatch(forgotFail(reason.message + '. API server unreachable.')))
+    }, 500)
   }
 }
 
 export const resetAsync = (formData, resetToken) => {
   return (dispatch) => {
-    dispatch(reset())
+    dispatch(resetInit())
     // TODO dev only
     setTimeout(() => {
       API.Reset(formData, resetToken)
@@ -344,8 +360,8 @@ export const resetAsync = (formData, resetToken) => {
           dispatch(resetSuccess(response))
         }
       })
-      .catch((reason) => dispatch(resetFail(reason.message)))
-    }, 1500)
+      .catch((reason) => dispatch(resetFail(reason.message + '. API server unreachable.')))
+    }, 500)
   }
 }
 
@@ -361,14 +377,14 @@ export const editAdminAsync = (formData, token) => {
           dispatch(editAdminFail(response.message))
         } else {
           dispatch(editAdminSuccess())
-          // API will logout on server so logout app and reset form
+          // logout app and reset form
           dispatch(authLogoutSuccess())
           clearStorage()
           browserHistory.push('/login')
         }
       })
-      .catch((reason) => dispatch(editAdminFail(reason.message)))
-    }, 1500)
+      .catch((reason) => dispatch(editAdminFail(reason.message + '. API server unreachable.')))
+    }, 500)
   }
 }
 
@@ -377,17 +393,20 @@ export const editProfileAsync = (formData, token) => {
     dispatch(editProfile())
     // TODO dev only
     setTimeout(() => {
-      API.EditProfile(formData, token)
-      .then((response) => {
-        if(!response.success) {
-          dispatch(editProfileFail(response.message))
-        } else {
-          dispatch(editProfileSuccess())
-          // now update profile store
-          dispatch(fetchProfileAsync())
-        }
-      })
-      .catch((reason) => dispatch(editProfileFail(reason.message)))
-    }, 1500)
+      convertToBase64Async(formData)
+      .then((base64) => {
+        API.EditProfile(formatProfileData(formData, base64), token)
+        .then((response) => {
+          if(!response.success) {
+            dispatch(editProfileFail(response.message))
+          } else {
+            dispatch(editProfileSuccess())
+            // now update profile store
+            dispatch(fetchProfileAsync())
+          }
+        })
+        .catch((reason) => dispatch(editProfileFail(reason.message + '. API server unreachable.')))
+      }).catch((reason) => dispatch(editProfileFail(reason.message)))
+    }, 500)
   }
 }

@@ -1,5 +1,5 @@
 .form-container {
-  composes: cf-form-global from '../../../assets/css/Global.css';
+  composes: cf-form-wide-global from '../../../assets/css/Global.css';
 
   & h6 {
     color: $coralPink;

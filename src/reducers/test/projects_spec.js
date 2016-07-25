@@ -5,102 +5,59 @@
  */
 import { expect } from 'chai'
 import reducer from '../projects'
-
-/*
-projects: {
-  loading: false,
-  hasLoaded: false,
-  error: false,
-  errMesage: '',
-  data: []
-}
-*/
+import appInitialState from '../../store/initial-state'
 
 /**
  * TEST PROJECTS REDUCER
  */
 describe('projects reducer', () => {
+  //initial state
+  const initialState = appInitialState.projects
   // FETCH_PROJECTS_REQUEST
   it('Handles FETCH_PROJECTS_REQUEST', () => {
-    const initialState = {
-      loading: false,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: []
-    }
     const newState = reducer(initialState, {
       type: 'FETCH_PROJECTS_REQUEST',
       payload: {
         loading: true
       }
     })
-    expect(newState).to.eql({
+    expect(newState).to.eql(Object.assign({}, initialState, {
       loading: true,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: []
-    })
+      error: null,
+      errMesage: null
+    }))
   })
   // FETCH_PROJECTS_RESULT
   it('Handles FETCH_PROJECTS_RESULT', () => {
-    const initialState = {
-      loading: true,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: []
-    }
+    const projects = [
+      { name: 'Some Project' },
+      { name: 'Another Project' }
+    ]
     const newState = reducer(initialState, {
       type: 'FETCH_PROJECTS_RESULT',
-      payload: {
-        loading: false,
-        hasLoaded: true,
-        data: [
-          { name: 'Some Project' },
-          { name: 'Another Project' }
-        ]
-      }
+      payload: projects
     })
-    expect(newState).to.eql({
+    expect(newState).to.eql(Object.assign({}, initialState, {
       loading: false,
       hasLoaded: true,
-      error: false,
-      errMesage: '',
-      data: [
-        { name: 'Some Project' },
-        { name: 'Another Project' }
-      ]
-    })
+      error: null,
+      errMesage: null,
+      data: projects
+    }))
   })
   // FETCH_PROJECTS_ERROR
   it('Handles FETCH_PROJECTS_ERROR', () => {
-    const initialState = {
-      loading: true,
-      hasLoaded: false,
-      error: false,
-      errMesage: '',
-      data: []
-    }
     const error = { message: 'API Error' }
     const newState = reducer(initialState, {
       type: 'FETCH_PROJECTS_ERROR',
-      payload: {
-        loading: false,
-        hasLoaded: false,
-        error: true,
-        errMesage: error.message,
-        data: []
-      }
+      payload: error.message
     })
-    expect(newState).to.eql({
+    expect(newState).to.eql(Object.assign({}, initialState, {
       loading: false,
       hasLoaded: false,
       error: true,
-      errMesage: 'API Error',
-      data: []
-    })
+      errMesage: 'API Error'
+    }))
   })
 
 })

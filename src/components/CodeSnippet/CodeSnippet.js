@@ -27,12 +27,10 @@ class CodeSnippet extends Component {
   }
 
   render () {
-    let hideShowClass = this.props.data.display ? 'show' : 'hide'
-    let styleClass = this.props.data.language
     return (
-      <div className={hideShowClass} styleName="cf-code-snippet">
+      <div className={this.props.data.display === 'yes' ? 'show' : 'hide'} styleName="cf-code-snippet">
         <p><strong>Code excerpt:</strong></p>
-        <pre><code className={styleClass}>{this.props.data.code}</code></pre>
+        <pre><code className={this.props.data.language}>{this.props.data.code}</code></pre>
       </div>
     )
   }

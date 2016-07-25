@@ -30,7 +30,7 @@ class ForgotForm extends Component {
   }
 
   render () {
-    const { auth, forgotAsync, fields: { username }, handleSubmit } = this.props
+    const { auth, forgotAsync, fields: { username }, handleSubmit, defaultInputClasses } = this.props
     return (
       <div styleName="cf-container" className="container">
         <div className="row">
@@ -53,15 +53,15 @@ class ForgotForm extends Component {
                     <h3>Reset admin password</h3>
                     <p>Enter your email address and we will send you a link to reset your password.</p>
                   </div>
-                  <div className="input-field col s12">
+                  <div className={defaultInputClasses}>
                     <input type="text" placeholder="Enter your email address" {...username}/>
-                    {username.touched && username.error && <div>{username.error}</div>}
+                    {username.touched && username.error && <div className="input-field-message">{username.error}</div>}
                   </div>
                   <div styleName="form-messages" className="col s12">{auth.forgotError && auth.forgotErrMessage}</div>
-                  <div className="input-field col s12">
+                  <div className={defaultInputClasses}>
                     <button styleName="form-btn" className={auth.forgotLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={auth.forgotLoading}><i className="material-icons">settings</i><span>Send reset email</span></button>
                   </div>
-                  <div className="input-field col s12" styleName="login-links">
+                  <div className={defaultInputClasses} styleName="login-links">
                     <Link to="/login">return to login page</Link>
                   </div>
                 </form>
@@ -78,7 +78,12 @@ ForgotForm.propTypes = {
   auth: PropTypes.object.isRequired,
   forgotAsync: PropTypes.func,
   fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  defaultInputClasses: PropTypes.string
+}
+
+ForgotForm.defaultProps = {
+  defaultInputClasses: 'input-field col s12'
 }
 
 export default reduxForm({

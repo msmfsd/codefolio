@@ -6,15 +6,39 @@
 import React, { Component, PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
 import CssModules from 'react-css-modules'
+import Avatar from '../../Avatar/Avatar'
 import AdminNav from '../AdminNav/AdminNav'
-import { createValidator, required, maxLength } from '../../../utils/validate'
+import AvatarEditor from '../AvatarEditor/AvatarEditor'
+import FormLinksEditor from '../FormLinksEditor/FormLinksEditor'
+import FormTechIconsEditor from '../FormTechIconsEditor/FormTechIconsEditor'
+import { createValidator, required, maxLength, ifAvatarGravitar, ifAvatarCustom } from '../../../utils/validate'
 import styles from './EditProfileForm.css'
 
-// client validation
+// fields & client validation
+const fields = [
+  'name',
+  'description',
+  'bio',
+  'theme',
+  'displayBgImage',
+  'use',
+  'gravitarEmail',
+  'customAvatar',
+  'customAvatarFile',
+  'techIcons',
+  'links',
+  'contacts',
+  'location'
+]
 const editProfileValidation = createValidator({
   name: [required, maxLength(36)],
   description: [required, maxLength(72)],
-  bio: [required]
+  bio: [required],
+  theme: [required],
+  displayBgImage: [required],
+  use: [required],
+  gravitarEmail: [ifAvatarGravitar('use', 'gravitarEmail')],
+  customAvatarFile: [ifAvatarCustom('use', 'customAvatar')]
 })
 
 /**
@@ -31,8 +55,50 @@ class EditProfileForm extends Component {
     }
   }
 
+  /**
+   * Allow live form edits to update profile state on blur
+   * Why? So other state updates dont reset their values pre submit
+   * @param e : object
+   */
+  onBlurUpdate (e) {
+    if(e.currentTarget.name === 'theme' || e.currentTarget.name === 'displayBgImage') {
+      this.props.updateLayoutField(e.currentTarget.name, e.currentTarget.value)
+    } else {
+      this.props.updateProfileField(e.currentTarget.name, e.currentTarget.value)
+    }
+  }
+
   render () {
-    const { profile, editProfile, auth, logoutAsync, editProfileAsync, fields: { name, description, bio }, handleSubmit } = this.props
+    const {
+      profile,
+      editProfile,
+      auth,
+      logoutAsync,
+      editProfileAsync,
+      addProfileTechicon,
+      addProfileLink,
+      removeProfileItem,
+      updateAvatarFields,
+      handleSubmit,
+      submitFailed,
+      defaultInputClasses,
+      fields: {
+        name,
+        description,
+        bio,
+        theme,
+        displayBgImage,
+        use,
+        gravitarEmail,
+        customAvatar,
+        customAvatarFile,
+        techIcons,
+        links,
+        contacts,
+        location
+      }
+    } = this.props
+
     return (
       <div>
         <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} showBackBtn={true} />
@@ -44,31 +110,69 @@ class EditProfileForm extends Component {
           </div>
           <div className="row">
             <div className={profile.loading || profile.error ? 'col s12 show' : 'col s12 hide'}>
-              {profile.error ? 'Profile fetch error' : <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>}
+              {profile.error ? <div styleName="card-padding" className="card-panel">Profile failed to fetch. API server unreachable.</div> : <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>}
             </div>
-            <form className={profile.loading && !profile.error ? 'hide' : 'show'} onSubmit={handleSubmit(data => editProfileAsync(data, auth.token))}>
+            <form className={profile.loading || profile.error ? 'hide' : 'show'} onSubmit={handleSubmit(data => editProfileAsync(data, auth.token))}>
               <div className="col s12">
                 <h3>Edit profile</h3>
-                <p>Edit your public profile fields.</p>
+                <p>Your public profile appears on the main page of your folio.</p>
               </div>
-              <div className="input-field col s12">
-                <h6>Name:</h6>
-                <input type="text" placeholder="Full name" {...name}/>
-                {name.touched && name.error && <div>{name.error}</div>}
+              <div className={defaultInputClasses}><h5>Avatar</h5></div>
+              <div styleName="admin-avatar-display" className={defaultInputClasses}>
+                <Avatar data={profile.data.avatar} />
               </div>
-              <div className="input-field col s12">
-                <h6>Description:</h6>
-                <input type="text" placeholder="Quick description" {...description}/>
-                {description.touched && description.error && <div>{description.error}</div>}
+              <AvatarEditor use={use} gravitarEmail={gravitarEmail} customAvatar={customAvatar} customAvatarFile={customAvatarFile} updateAvatarFields={updateAvatarFields} />
+              <div className={defaultInputClasses}><h5>Personal</h5></div>
+              <div className={defaultInputClasses}>
+                <h6>Name:<div className="hint">eg. Linus Torvalds</div></h6>
+                <input type="text" placeholder="Enter your full name" {...name} onBlur={(e) => this.onBlurUpdate(e)}/>
+                {name.touched && name.error && <div className="input-field-message">{name.error}</div>}
               </div>
-              <div className="input-field col s12">
-                <h6>Bio:</h6>
-                <textarea rows="8" placeholder="Full biography" {...bio}/>
-                {bio.touched && bio.error && <div>{bio.error}</div>}
+              <div className={defaultInputClasses}>
+                <h6>Description:<div className="hint">eg. C++, FORTRAN developer and creator of Linux</div></h6>
+                <input type="text" placeholder="Enter a description" {...description} onBlur={(e) => this.onBlurUpdate(e)}/>
+                {description.touched && description.error && <div className="input-field-message">{description.error}</div>}
+              </div>
+              <div className={defaultInputClasses}>
+                <h6>Bio:<div className="hint">Bio text must be manually wrapped in &lt;p&gt; tags</div></h6>
+                <textarea rows="8" placeholder="Enter your bio" {...bio} onBlur={(e) => this.onBlurUpdate(e)}/>
+                {bio.touched && bio.error && <div className="input-field-message">{bio.error}</div>}
+              </div>
+              <div className={defaultInputClasses}><h5>Tech icons</h5></div>
+              <div className={defaultInputClasses}>
+                <h6>Set your fave technologies:</h6>
+                <FormTechIconsEditor fields={techIcons} linkGroup={'techIcons'} addLinkFunc={addProfileTechicon} removeLinkFunc={removeProfileItem} max={20} />
+              </div>
+              <div className={defaultInputClasses}><h5>Contacts</h5></div>
+              <div className={defaultInputClasses}>
+                <h6>Add up to 4 contact links:<div className="hint">eg. @my_gitter_handle &#126; http://gitter.im/my_gitter_handle</div></h6>
+                <FormLinksEditor fields={contacts} linkGroup={'contacts'} addLinkFunc={addProfileLink} removeLinkFunc={removeProfileItem} max={4} />
+              </div>
+              <div className={defaultInputClasses}><h5>Location</h5></div>
+              <div className={defaultInputClasses}>
+                <h6>Add up to 2 location links:<div className="hint">eg. Helsinki &#126; https://goo.gl/maps/Helsinki</div></h6>
+                <FormLinksEditor fields={location} linkGroup={'location'} addLinkFunc={addProfileLink} removeLinkFunc={removeProfileItem} max={2} />
+              </div>
+              <div className={defaultInputClasses}><h5>Web links</h5></div>
+              <div className={defaultInputClasses}>
+                <h6>Add up to 4 web links:<div className="hint">eg. github/torvalds &#126; https://github.com/torvalds</div></h6>
+                <FormLinksEditor fields={links} linkGroup={'links'} addLinkFunc={addProfileLink} removeLinkFunc={removeProfileItem} max={4} />
+              </div>
+              <div className={defaultInputClasses}><h5>Folio layout</h5></div>
+              <div className={defaultInputClasses}>
+                <h6>Theme:<div className="hint">Choose the theme Luke!</div></h6>
+                <input type="radio" {...theme} value="dark" checked={theme.value === 'dark'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Dark
+                <input type="radio" {...theme} value="light" checked={theme.value === 'light'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Light
+              </div>
+              <div className={defaultInputClasses}>
+                <h6>Display background image:<div className="hint">Show body background image on large screens?</div></h6>
+                <input type="radio" {...displayBgImage} value="yes" checked={displayBgImage.value === 'yes'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Yes
+                <input type="radio" {...displayBgImage} value="no" checked={displayBgImage.value === 'no'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;No
               </div>
               <div styleName="form-messages" className="col s12">{editProfile.editProfileError && editProfile.editProfileErrMessage}</div>
-              <div className="input-field col s12">
-                <button styleName="form-btn" className={editProfile.editProfileLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={editProfile.editProfileLoading}><i className="material-icons">settings</i><span>Update</span></button>
+              <div styleName="form-messages" className="col s12">{submitFailed && <span>Validation errors found, fix them and re-submit.</span>}</div>
+              <div className={defaultInputClasses}>
+                <button styleName="form-btn" className={editProfile.editProfileLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={editProfile.editProfileLoading}><i className="material-icons">settings</i><span>Save profile updates</span></button>
               </div>
             </form>
           </div>
@@ -85,14 +189,26 @@ EditProfileForm.propTypes = {
   editProfile: PropTypes.object.isRequired,
   editProfileAsync: PropTypes.func,
   fetchProfileAsync: PropTypes.func,
+  addProfileTechicon: PropTypes.func,
+  addProfileLink: PropTypes.func,
+  removeProfileItem: PropTypes.func,
+  updateProfileField: PropTypes.func.isRequired,
+  updateAvatarFields: PropTypes.func.isRequired,
+  updateLayoutField: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  submitFailed: PropTypes.boolean,
+  defaultInputClasses: PropTypes.string
+}
+
+EditProfileForm.defaultProps = {
+  defaultInputClasses: 'input-field col s12'
 }
 
 export default reduxForm({
   form: 'editprofile',
-  fields: [ 'name', 'description', 'bio' ],
+  fields,
   validate: editProfileValidation
 }, state => ({
-  initialValues: state.profile.data
+  initialValues: Object.assign({}, state.profile.data, state.profile.data.layout, state.profile.data.avatar, state.profile.techIcons, state.profile.links, state.profile.contacts, state.profile.location)
 }))(CssModules(EditProfileForm, styles))

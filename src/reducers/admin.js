@@ -13,7 +13,9 @@ const admin = (state = {}, action) => {
   switch (action.type) {
     case EDIT_ADMIN:
       return Object.assign({}, state, {
-        editAdminLoading: true
+        editAdminLoading: true,
+        editAdminErrMessage: null,
+        editAdminError: null
       })
     case EDIT_ADMIN_SUCCESS:
       return Object.assign({}, state, {

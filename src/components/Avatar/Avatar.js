@@ -6,7 +6,6 @@
 import React, { Component, PropTypes } from 'react'
 import CssModules from 'react-css-modules'
 import md5 from 'md5'
-import __CONFIG__ from '../../../cf.config'
 import styles from './Avatar.css'
 
 /**
@@ -17,7 +16,6 @@ class Avatar extends Component {
 
   render () {
     // map data
-    const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_URL : __CONFIG__.production.API_URL
     const inlineStyle = {}
     let imgSrc = ''
     // wait for data to update and re render
@@ -30,7 +28,7 @@ class Avatar extends Component {
           imgSrc = 'http://www.gravatar.com/avatar/' + md5(this.props.data.gravitarEmail) + '.jpg'
           break
         case 'customAvatar':
-          imgSrc = API_URL + '/uploads/avatar/' + this.props.data.customAvatar
+          imgSrc = this.props.data.customAvatar
           break
         default:
           imgSrc = this.props.data.defaultAvatar

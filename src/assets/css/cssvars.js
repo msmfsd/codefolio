@@ -44,6 +44,7 @@ const padding = '28px'
 const avatarSize = '80px'
 /* forms */
 const formWidth = '420px'
+const formWidthWide = '680px'
 
 module.exports = {
   dirGlobal,
@@ -74,5 +75,6 @@ module.exports = {
   mobileMenuIconSize,
   padding,
   avatarSize,
-  formWidth
+  formWidth,
+  formWidthWide
 }

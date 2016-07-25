@@ -132,12 +132,13 @@ input:-webkit-autofill:active {
 }
 
 /* profile set active background image */
-:global .background-image-true {
+:global .background-image-yes {
   @media (min-width: $medium) {
     background-image: url('$dirDark/background-image.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center top;
+    background-attachment: fixed;
   }
 }
 
@@ -171,6 +172,23 @@ input:-webkit-autofill:active {
 
 :global .padding {
   padding: $padding;
+}
+
+:global .coralpink {
+  color: $coralPink;
+}
+
+:global .hint {
+  display: inline;
+  font-style: italic;
+  font-weight: 200;
+  font-size: 14px;
+  color: #ffffcc !important;
+  margin-left: 10px;
+  &::before {
+    content: ' ✎ ';
+    color: #ffffcc;
+  }
 }
 
 /* ------------------ MAIN STYLES TO COMPOSE */
@@ -262,20 +280,56 @@ input:-webkit-autofill:active {
   }
 }
 
-.cf-form-global {
+@define-placeholder global-form {
   display: block;
   position: relative;
   width: 100%;
   height: auto;
   margin: 0 auto;
   padding: 0;
+}
+
+.cf-form-global {
+  @extend global-form;
   @media (min-width: $medium) {
     max-width: $formWidth;
   }
-  & input {
-    background-color: transparent;
-    font-size: 17px;
-    color: $lightGrey;
+  & input:not([type]),
+  & input[type=text],
+  & input[type=password],
+  & input[type=email],
+  & input[type=url],
+  & input[type=number],
+  & textarea {
+    background-color: color($darkGreyBlue alpha(50%));
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.cf-form-wide-global {
+  @extend global-form;
+  @media (min-width: $medium) {
+    max-width: $formWidthWide;
+  }
+  & h6 {
+    display: block;
+    width: 100%;
+    height: 22px;
+    color: color($lightGrey alpha(60%));
+    font-size: 16px;
+    line-height: 1;
+  }
+  & input:not([type]),
+  & input[type=text],
+  & input[type=password],
+  & input[type=email],
+  & input[type=url],
+  & input[type=number],
+  & textarea {
+    background-color: color($darkGreyBlue alpha(50%));
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
@@ -409,12 +463,19 @@ input:-webkit-autofill:active {
 }
 
 :global .btn,
-:global .btn-large {
+:global .btn-large,
+:global .btn-small {
   background-color: $coralPink;
   &:hover,
   &:active,
   &:focus {
     background-color: $lightCoralPink;
+  }
+}
+
+:global .btn-floating {
+  & i {
+    color: $lightGrey;
   }
 }
 
@@ -455,34 +516,85 @@ input:-webkit-autofill:active {
   background-color: $lightGrey;
 }
 
+:global table.highlight>tbody>tr:hover {
+  background-color: color($darkGreyBlue alpha(50%));
+}
+
 /* override form elements */
-textarea {
-  padding: 6px 12px;
-  height: auto;
-  border: 1px solid $lightGrey;
-}
-
-input[type=password]:focus:not([readonly]),
-input[type=text]:focus:not([readonly]) {
-    border-bottom: 1px solid $coralPink;
-    box-shadow: 0 1px 0 0 $coralPink;
-}
-
-input[type=text]:focus:not([readonly])+label,
-input[type=password]:focus:not([readonly])+label {
-    color: $coralPink;
-}
-
 :global .input-field label {
   text-transform: uppercase;
   color: white;
 }
 
+:global .input-field h5 {
+  text-transform: lowercase;
+  font-family: monospace;
+  width: 100%;
+  text-align: right;
+  margin-top: calc($padding * 2);
+  padding-bottom: 4px;
+  color: color($lightCoralPink alpha(100%));
+  border-bottom: 2px solid color($lightCoralPink alpha(100%));
+}
+
 /* validation errors */
-:global .input-field div {
+:global .input-field-message {
   color: $coralPink;
   font-size: 13px;
   font-family: monospace;
-  line-height: 1;
+  line-height: 1.4;
   padding: 0;
+}
+
+textarea {
+  margin-top: 10px;
+  padding: 6px 12px;
+  height: auto;
+  border: 1px solid color($lightGrey alpha(80%));
+}
+
+input:not([type]),
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=number] {
+  background-color: transparent;
+  font-size: 17px;
+  color: $lightGrey;
+  border-bottom-color: color($lightGrey alpha(80%));
+}
+input[type=password]:focus:not([readonly]),
+input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid $coralPink;
+    box-shadow: 0 1px 0 0 $coralPink;
+}
+input[type=text]:focus:not([readonly])+label,
+input[type=password]:focus:not([readonly])+label {
+    color: $coralPink;
+}
+input[type=file] {
+  font-size: 16px;
+  padding: 10px 0;
+}
+
+/* Materialize Radio input override to work with react forms */
+[type="radio"]:not(:checked),
+[type="radio"]:checked {
+  position: relative;
+  left: 0;
+  opacity: 1;
+  margin: 20px 10px 20px 20px;
+}
+/* Materialize Select input override to work with react forms */
+select {
+  width: 100%;
+  padding: 3px 6px;
+  background-color: color($darkGreyBlue alpha(50%));
+  font-size: 17px;
+  color: $lightGrey;
+  border: 1px solid color($lightGrey alpha(80%));
+  &:focus {
+    outline: 1px solid $coralPink;
+  }
 }

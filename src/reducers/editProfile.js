@@ -14,7 +14,9 @@ const editProfile = (state = {}, action) => {
     case EDIT_PROFILE:
       return Object.assign({}, state, {
         editProfileLoading: true,
-        editProfileSuccess: null
+        editProfileSuccess: null,
+        editProfileErrMessage: null,
+        editProfileError: null
       })
     case EDIT_PROFILE_SUCCESS:
       return Object.assign({}, state, {
