@@ -8,3 +8,7 @@
 .spacing {
   margin-right: 10px;
 }
+
+.minwidth-th {
+  min-width: 90px;
+}

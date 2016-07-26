@@ -69,7 +69,7 @@ export function ifAvatarGravitar (field, ifValue) {
   return (value, data) => {
     if (data) {
       if (ifValue === data[field] && (isEmpty(value) || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value))) {
-        return 'If avatar type is Gravitar this field must be completed with a valid email'
+        return 'If avatar type is GRAVITAR this field must be completed with a valid email'
       }
     }
   }
@@ -78,9 +78,11 @@ export function ifAvatarGravitar (field, ifValue) {
 export function ifAvatarCustom (field, ifValue) {
   return (value, data) => {
     if (data) {
-      if(value && value[0]) {
+      if(ifValue === data[field] && value === '') {
+        return 'Please browse for a file'
+      } else if(value && value[0]) {
         if (ifValue === data[field] && (isEmpty(value[0].name) || !/\.(jpeg|jpg|png)\b/.test(value[0].name) || Math.floor(value[0].size / 1000) > 205)) {
-          return 'If avatar type is Custom select a valid jpeg or png less than 200kb'
+          return 'If avatar type is CUSTOM you must choose a valid JPG/PNG file under 200kb'
         }
       }
     }

@@ -112,13 +112,13 @@ class FormTechIconsEditor extends Component {
     }
 
     return (
-      <table styleName="form-techicons-editor" className="highlight">
+      <table styleName="form-techicons-editor" className="highlight bordered">
         <thead>
           <tr>
             <th data-field="name">Technology name</th>
             <th data-field="icon">Icon</th>
-            <th data-field="action">
-              <button disabled={this.state.editing || maxReached} onClick={this.createItem.bind(this)} className="btn waves-effect right">Add tech</button>
+            <th styleName="minwidth-th" data-field="action">
+              <button disabled={this.state.editing || maxReached} onClick={this.createItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">add_circle</i></button>
             </th>
           </tr>
         </thead>
@@ -137,7 +137,7 @@ class FormTechIconsEditor extends Component {
             </td>
             <td>&nbsp;</td>
             <td>
-              <button onClick={this.addItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">add_circle</i></button>
+              <button onClick={this.addItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">check_circle</i></button>
               <button onClick={this.cancelItem.bind(this)} styleName="spacing" className="btn-floating btn-small waves-effect right"><i className="material-icons">delete</i></button>
             </td>
           </tr>

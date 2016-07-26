@@ -43,3 +43,11 @@
     opacity: 0.6;
   }
 }
+
+.small-screen-message {
+  @media (min-width: 360px) {
+    display: none;
+    visibility: hidden;
+    height: 0;
+  }
+}

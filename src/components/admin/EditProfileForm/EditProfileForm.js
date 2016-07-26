@@ -138,22 +138,22 @@ class EditProfileForm extends Component {
                 {bio.touched && bio.error && <div className="input-field-message">{bio.error}</div>}
               </div>
               <div className={defaultInputClasses}><h5>Tech icons</h5></div>
-              <div className={defaultInputClasses}>
+              <div styleName="table-div" className={defaultInputClasses}>
                 <h6>Set your fave technologies:</h6>
                 <FormTechIconsEditor fields={techIcons} linkGroup={'techIcons'} addLinkFunc={addProfileTechicon} removeLinkFunc={removeProfileItem} max={20} />
               </div>
               <div className={defaultInputClasses}><h5>Contacts</h5></div>
-              <div className={defaultInputClasses}>
+              <div styleName="table-div" className={defaultInputClasses}>
                 <h6>Add up to 4 contact links:<div className="hint">eg. @my_gitter_handle &#126; http://gitter.im/my_gitter_handle</div></h6>
                 <FormLinksEditor fields={contacts} linkGroup={'contacts'} addLinkFunc={addProfileLink} removeLinkFunc={removeProfileItem} max={4} />
               </div>
               <div className={defaultInputClasses}><h5>Location</h5></div>
-              <div className={defaultInputClasses}>
+              <div styleName="table-div" className={defaultInputClasses}>
                 <h6>Add up to 2 location links:<div className="hint">eg. Helsinki &#126; https://goo.gl/maps/Helsinki</div></h6>
                 <FormLinksEditor fields={location} linkGroup={'location'} addLinkFunc={addProfileLink} removeLinkFunc={removeProfileItem} max={2} />
               </div>
               <div className={defaultInputClasses}><h5>Web links</h5></div>
-              <div className={defaultInputClasses}>
+              <div styleName="table-div" className={defaultInputClasses}>
                 <h6>Add up to 4 web links:<div className="hint">eg. github/torvalds &#126; https://github.com/torvalds</div></h6>
                 <FormLinksEditor fields={links} linkGroup={'links'} addLinkFunc={addProfileLink} removeLinkFunc={removeProfileItem} max={4} />
               </div>

@@ -8,6 +8,7 @@ import { Link } from 'react-router'
 import { browserHistory } from 'react-router'
 import { reduxForm } from 'redux-form'
 import CssModules from 'react-css-modules'
+import Panel from '../../Panel/Panel'
 import { createValidator, email, required, minLength, maxLength } from '../../../utils/validate'
 import styles from './LoginForm.css'
 
@@ -44,6 +45,7 @@ class LoginForm extends Component {
             </div>
             <div className="row">
               <div className="col s12" styleName="cf-content-admin">
+                <div styleName="small-screen-message"><Panel message={'Admin layout works best on screens wider than 360px'} /></div>
                 <form styleName="login-form" onSubmit={handleSubmit(data => loginAsync(data))}>
                   <div className="col s12"><h3>Log in to admin</h3></div>
                   <div className={defaultInputClasses}>

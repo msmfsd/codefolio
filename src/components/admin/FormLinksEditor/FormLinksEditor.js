@@ -104,13 +104,13 @@ class FormLinksEditor extends Component {
     }
 
     return (
-      <table styleName="form-links-editor" className="highlight">
+      <table styleName="form-links-editor" className="highlight bordered">
         <thead>
           <tr>
             <th data-field="name">Display name</th>
             <th data-field="url">Full URL</th>
-            <th data-field="action">
-              <button disabled={this.state.editing || maxReached} onClick={this.createItem.bind(this)} className="btn waves-effect right">Add link</button>
+            <th styleName="minwidth-th" data-field="action">
+              <button disabled={this.state.editing || maxReached} onClick={this.createItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">add_circle</i></button>
             </th>
           </tr>
         </thead>
@@ -133,7 +133,7 @@ class FormLinksEditor extends Component {
               }} ref="createItemUrl" type="text" placeholder="Full url" />
             </td>
             <td>
-              <button onClick={this.addItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">add_circle</i></button>
+              <button onClick={this.addItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">check_circle</i></button>
               <button onClick={this.cancelItem.bind(this)} styleName="spacing" className="btn-floating btn-small waves-effect right"><i className="material-icons">delete</i></button>
             </td>
           </tr>

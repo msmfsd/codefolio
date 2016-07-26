@@ -185,6 +185,7 @@ input:-webkit-autofill:active {
   font-size: 14px;
   color: #ffffcc !important;
   margin-left: 10px;
+  line-height: 1.2;
   &::before {
     content: ' ✎ ';
     color: #ffffcc;
@@ -283,17 +284,16 @@ input:-webkit-autofill:active {
 @define-placeholder global-form {
   display: block;
   position: relative;
-  width: 100%;
   height: auto;
   margin: 0 auto;
   padding: 0;
 }
 
-.cf-form-global {
+.cf-form-global,
+.cf-form-wide-global {
+  width: 100%;
   @extend global-form;
-  @media (min-width: $medium) {
-    max-width: $formWidth;
-  }
+
   & input:not([type]),
   & input[type=text],
   & input[type=password],
@@ -304,33 +304,35 @@ input:-webkit-autofill:active {
     background-color: color($darkGreyBlue alpha(50%));
     padding-left: 10px;
     padding-right: 10px;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+
+  @media (min-width: $small) {
+    max-width: $90%;
+  }
+
+  @media (min-width: $medium) {
+    max-width: $formWidth;
+    & input:not([type]),
+    & input[type=text],
+    & input[type=password],
+    & input[type=email],
+    & input[type=url],
+    & input[type=number],
+    & textarea {
+      box-sizing: content-box;
+    }
   }
 }
 
-.cf-form-wide-global {
-  @extend global-form;
-  @media (min-width: $medium) {
-    max-width: $formWidthWide;
-  }
-  & h6 {
-    display: block;
-    width: 100%;
-    height: 22px;
-    color: color($lightGrey alpha(60%));
-    font-size: 16px;
-    line-height: 1;
-  }
-  & input:not([type]),
-  & input[type=text],
-  & input[type=password],
-  & input[type=email],
-  & input[type=url],
-  & input[type=number],
-  & textarea {
-    background-color: color($darkGreyBlue alpha(50%));
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+.cf-form-wide-global h6 {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: color($lightGrey alpha(60%));
+  font-size: 16px;
+  line-height: 1.3;
 }
 
 .cf-form-btn {
@@ -469,13 +471,58 @@ input:-webkit-autofill:active {
   &:hover,
   &:active,
   &:focus {
-    background-color: $lightCoralPink;
+    background-color: $lightCoralPink !important;
   }
 }
 
 :global .btn-floating {
+  &:disabled {
+    background-color: $lightCoralPink !important;
+    color: color($lightGrey alpha(50%)) !important;
+  }
+
   & i {
     color: $lightGrey;
+  }
+}
+
+:global table.bordered>thead>tr {
+  border-bottom: 1px solid $lightGrey;
+}
+
+:global table.bordered>tbody>tr {
+  border-bottom: 1px solid color($midGrey alpha(80%));
+}
+
+:global table.highlight {
+  & th {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  & td,
+  & th {
+    /* These are technically the same, but use both */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    hyphens: auto;
+  }
+  & .btn {
+    height: 28px;
+    line-height: 28px;
+    font-size: 12px;
+    padding: 0 0.8rem;
+  }
+  & .btn-floating {
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    & i {
+      font-size: 1.3rem;
+      line-height: 28px;
+    }
   }
 }
 
