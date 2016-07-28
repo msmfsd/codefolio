@@ -68,7 +68,7 @@ class ProjectViewer extends Component {
           <Link styleName="projects-back-btn" className="btn" to="/"><i className="material-icons left">arrow_back</i>profile</Link>
           <h1 styleName="project-name">{project.name}</h1>
           <span styleName="project-client">{project.client}</span>
-          <div styleName="project-gallery">
+          <div styleName="project-gallery" className={images && images.length > 0 ? 'show' : 'hide'}>
             <ImageGallery ref={i => this._imageGallery = i} items={images} slideInterval={6000} autoPlay={true} showNav={false} showThumbnails={true}/>
           </div>
           <IconLinks icon="web" data={project.linkWeb} />

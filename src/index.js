@@ -7,7 +7,8 @@
 if (process.env.NODE_ENV !== 'production') { console.log('%c codefolio ', 'background: #171A1F; color: #EE6E73') }
 /*eslint-enable*/
 import React from 'react'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router'
+import { Router, Route, IndexRoute, browserHistory, applyRouterMiddleware } from 'react-router'
+import useScroll from 'react-router-scroll'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import { render } from 'react-dom'
@@ -23,7 +24,8 @@ import Reset from './containers/admin/Reset'
 import AdminDashboard from './containers/admin/AdminDashboard'
 import EditAdministrator from './containers/admin/EditAdministrator'
 import EditProfile from './containers/admin/EditProfile'
-import EditProjects from './containers/admin/EditProjects'
+import EditProject from './containers/admin/EditProject'
+import NewProject from './containers/admin/NewProject'
 import AdminLayout from './components/admin/AdminLayout/AdminLayout'
 import App from './components/App/App'
 import NotFound from './components/NotFound/NotFound'
@@ -44,7 +46,7 @@ const requireAuth = (nextState, replace) => {
 }
 
 render(<Provider store={store}>
-    <Router history={history}>
+    <Router history={history} render={applyRouterMiddleware(useScroll())}>
       <Route path={'/login'} component={Login}/>
       <Route path={'/register'} component={Register}/>
       <Route path={'/forgot'} component={Forgot}/>
@@ -53,7 +55,8 @@ render(<Provider store={store}>
         <IndexRoute component={AdminDashboard}/>
         <Route path={'edit-administrator'} component={EditAdministrator} />
         <Route path={'edit-profile'} component={EditProfile} />
-        <Route path={'edit-projects'} component={EditProjects} />
+        <Route path={'edit-project/:projectId'} component={EditProject} />
+        <Route path={'new-project'} component={NewProject} />
       </Route>
       <Route path={'/'} component={App}>
         <IndexRoute component={Profile} />

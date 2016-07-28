@@ -245,32 +245,6 @@ input:-webkit-autofill:active {
 }
 
 /* btns */
-.cf-btn {
-  text-transform: uppercase;
-  font-size: 14px;
-  padding: 0;
-  margin: 0;
-  height: 28px;
-  line-height: 28px;
-  box-shadow: none;
-  background-color: transparent !important;
-
-  &:hover,
-  &:active {
-    box-shadow: none;
-
-    & i {
-      margin-right: 9px;
-    }
-  }
-
-  & i {
-    color: $lightGrey;
-    transition: margin $duration ease-in-out;
-    margin-right: 6px;
-  }
-}
-
 .cf-content-admin-global {
   min-height: $mainContentHeightMin;
   position: relative;
@@ -291,9 +265,7 @@ input:-webkit-autofill:active {
 
 .cf-form-global,
 .cf-form-wide-global {
-  width: 100%;
   @extend global-form;
-
   & input:not([type]),
   & input[type=text],
   & input[type=password],
@@ -308,12 +280,7 @@ input:-webkit-autofill:active {
     max-width: 100%;
   }
 
-  @media (min-width: $small) {
-    max-width: $90%;
-  }
-
   @media (min-width: $medium) {
-    max-width: $formWidth;
     & input:not([type]),
     & input[type=text],
     & input[type=password],
@@ -326,13 +293,30 @@ input:-webkit-autofill:active {
   }
 }
 
-.cf-form-wide-global h6 {
-  display: block;
+.cf-form-global {
   width: 100%;
-  height: auto;
-  color: color($lightGrey alpha(60%));
-  font-size: 16px;
-  line-height: 1.3;
+  @media (min-width: $medium) {
+    max-width: $formWidth;
+  }
+}
+
+.cf-form-wide-global {
+  width: 100%;
+  @media (min-width: $small) {
+    max-width: $90%;
+  }
+  @media (min-width: $medium) {
+    max-width: $formWidthWide;
+  }
+
+  & h6 {
+    display: block;
+    width: 100%;
+    height:auto;
+    color: color($lightGrey alpha(60%));
+    font-size: 16px;
+    line-height: 1.3;
+  }
 }
 
 .cf-form-btn {
@@ -612,11 +596,13 @@ input[type=number] {
   border-bottom-color: color($lightGrey alpha(80%));
 }
 input[type=password]:focus:not([readonly]),
+input[type=number]:focus:not([readonly]),
 input[type=text]:focus:not([readonly]) {
     border-bottom: 1px solid $coralPink;
     box-shadow: 0 1px 0 0 $coralPink;
 }
 input[type=text]:focus:not([readonly])+label,
+input[type=number]:focus:not([readonly])+label,
 input[type=password]:focus:not([readonly])+label {
     color: $coralPink;
 }
@@ -643,5 +629,33 @@ select {
   border: 1px solid color($lightGrey alpha(80%));
   &:focus {
     outline: 1px solid $coralPink;
+  }
+}
+
+/* local styles that must be after materialize */
+.cf-btn {
+  text-transform: uppercase;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  height: 28px;
+  line-height: 28px;
+  box-shadow: none;
+  background-color: transparent !important;
+
+  &:hover,
+  &:active,
+  &:focus {
+    box-shadow: none;
+    background-color: transparent !important;
+    & i {
+      margin-right: 9px;
+    }
+  }
+
+  & i {
+    color: $lightGrey;
+    transition: margin $duration ease-in-out;
+    margin-right: 6px;
   }
 }

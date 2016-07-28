@@ -1,0 +1,14 @@
+.form-array-editor {
+  & input {
+    max-width: 90%;
+    margin-bottom: 0;
+  }
+}
+
+.spacing {
+  margin-right: 10px;
+}
+
+.minwidth-th {
+  min-width: 90px;
+}

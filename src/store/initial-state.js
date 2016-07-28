@@ -4,9 +4,37 @@
  * MIT Licensed
  */
 const initialState = {
-  profile: { loading: false, hasLoaded: false, error: null, errMesage: null, data: {}, editProfileLoading: false, editProfileErrMessage: null, editProfileError: null, editProfileSuccess: null },
-  projects: { loading: false, hasLoaded: false, error: null, errMesage: null, data: [] },
-  admin: { editAdminLoading: false, editAdminErrMessage: null, editAdminError: null },
+  profile: {
+    loading: false,
+    hasLoaded: false,
+    error: null,
+    errMesage: null,
+    data: {},
+    editProfileLoading: false,
+    editProfileErrMessage: null,
+    editProfileError: null,
+    editProfileSuccess: null
+  },
+  projects: {
+    loading: false,
+    hasLoaded: false,
+    error: null,
+    errMesage: null,
+    data: [],
+    newProjectLoading: false,
+    newProjectErrMessage: null,
+    newProjectError: null,
+    newProjectSuccess: null,
+    editProjectLoading: false,
+    editProjectErrMessage: null,
+    editProjectError: null,
+    editProjectSuccess: null
+  },
+  admin: {
+    editAdminLoading: false,
+    editAdminErrMessage: null,
+    editAdminError: null
+  },
   auth: {
     token: null,
     username: '',

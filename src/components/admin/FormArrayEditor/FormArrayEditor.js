@@ -5,20 +5,19 @@
  */
 import React, { Component, PropTypes } from 'react'
 import CssModules from 'react-css-modules'
-import styles from './FormLinksEditor.css'
+import styles from './FormArrayEditor.css'
 
 /**
- * @class FormLinksEditor
+ * @class FormArrayEditor
  * @extends Component
  */
-class FormLinksEditor extends Component {
+class FormArrayEditor extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
       editing: false,
       nameFieldValue: null,
-      urlFieldValue: null,
       message: null
     }
   }
@@ -30,12 +29,10 @@ class FormLinksEditor extends Component {
   createItem (e) {
     e.preventDefault()
     this.refs.createItemName.value = ''
-    this.refs.createItemUrl.value = ''
     this.setState(
       {
         editing: true,
         nameFieldValue: '',
-        urlFieldValue: '',
         message: null
       }
     )
@@ -47,13 +44,12 @@ class FormLinksEditor extends Component {
    */
   addItem (e) {
     e.preventDefault()
-    if(this.refs.createItemName.value !== '' && this.refs.createItemUrl.value !== '') {
+    if(this.refs.createItemName.value !== '') {
       this.setState({ editing: false, message: null })
-      this.props.addLinkFunc(this.props.linkGroup, this.state.nameFieldValue, this.state.urlFieldValue)
+      this.props.addItemFunc(this.props.linkGroup, this.state.nameFieldValue)
       this.refs.createItemName.value = ''
-      this.refs.createItemUrl.value = ''
     } else {
-      this.setState({ message: 'Both fields required' })
+      this.setState({ message: 'Name field required' })
     }
   }
 
@@ -64,12 +60,11 @@ class FormLinksEditor extends Component {
    */
   removeItem (index, e) {
     e.preventDefault()
-    this.props.removeLinkFunc(this.props.linkGroup, index)
+    this.props.removeItemFunc(this.props.linkGroup, index)
     this.setState(
       {
         editing: false,
         nameFieldValue: '',
-        urlFieldValue: '',
         message: null
       }
     )
@@ -85,7 +80,6 @@ class FormLinksEditor extends Component {
       {
         editing: false,
         nameFieldValue: '',
-        urlFieldValue: '',
         message: null
       }
     )
@@ -103,8 +97,7 @@ class FormLinksEditor extends Component {
         let boundClick = this.removeItem.bind(this, index)
         return (
           <tr key={index}>
-            <td>{obj.name}</td>
-            <td>{obj.url}</td>
+            <td>{obj}</td>
             <td><button data-index={index} onClick={boundClick} className="btn-floating btn-small waves-effect right"><i className="material-icons">delete</i></button></td>
           </tr>
         )
@@ -112,11 +105,10 @@ class FormLinksEditor extends Component {
     }
 
     return (
-      <table styleName="form-links-editor" className="highlight bordered">
+      <table styleName="form-array-editor" className="highlight bordered">
         <thead>
           <tr>
-            <th data-field="name">Display name</th>
-            <th data-field="url">Full URL</th>
+            <th data-field="name">Item name</th>
             <th styleName="minwidth-th" data-field="action">
               <button disabled={this.state.editing || maxReached} onClick={this.createItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">add_circle</i></button>
             </th>
@@ -127,18 +119,12 @@ class FormLinksEditor extends Component {
           <tr className={fields.value.length < 1 ? 'show' : 'hide'}>
             <td><p><i>No {linkGroup} found.</i></p></td>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
           </tr>
           <tr className={this.state.editing ? 'show' : 'hide'}>
             <td>
               <input onChange={(e) => {
                 this.state.nameFieldValue = e.target.value
-              }} ref="createItemName" type="text" placeholder="Link display name" />
-            </td>
-            <td>
-              <input onChange={(e) => {
-                this.state.urlFieldValue = e.target.value
-              }} ref="createItemUrl" type="text" placeholder="Full url" />
+              }} ref="createItemName" type="text" placeholder="Item name" />
             </td>
             <td>
               <button onClick={this.addItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">check_circle</i></button>
@@ -146,7 +132,7 @@ class FormLinksEditor extends Component {
             </td>
           </tr>
           <tr className={this.state.message ? 'show' : 'hide'}>
-            <td colSpan="3"><div className="input-field-message">{this.state.message}</div></td>
+            <td colSpan="2"><div className="input-field-message">{this.state.message}</div></td>
           </tr>
         </tbody>
       </table>
@@ -155,12 +141,12 @@ class FormLinksEditor extends Component {
 
 }
 
-FormLinksEditor.propTypes = {
+FormArrayEditor.propTypes = {
   fields: PropTypes.object.isRequired,
   linkGroup: PropTypes.string.isRequired,
-  addLinkFunc: PropTypes.func.isRequired,
-  removeLinkFunc: PropTypes.func.isRequired,
+  addItemFunc: PropTypes.func.isRequired,
+  removeItemFunc: PropTypes.func.isRequired,
   max: PropTypes.number.isRequired
 }
 
-export default CssModules(FormLinksEditor, styles)
+export default CssModules(FormArrayEditor, styles)

@@ -19,6 +19,12 @@ export function required (value) {
   }
 }
 
+export function requiredArr (value) {
+  if (Array.isArray(value) && value.length === 0) {
+    return 'Add at least 1 item'
+  }
+}
+
 export function minLength (min) {
   return value => {
     if (!isEmpty(value) && value.length < min) {
@@ -44,6 +50,12 @@ export function integer (value) {
 export function alphaNumeric (value) {
   if(typeof value !== 'undefined' && !value.match(/^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/)) {
     return 'Must contain a combination of numbers and letters only'
+  }
+}
+
+export function noSpecialCharacters (value) {
+  if(!/^[a-z0-9 ]+$/i.test(value)) {
+    return 'Must letters and/or numbers only'
   }
 }
 
@@ -84,6 +96,16 @@ export function ifAvatarCustom (field, ifValue) {
         if (ifValue === data[field] && (isEmpty(value[0].name) || !/\.(jpeg|jpg|png)\b/.test(value[0].name) || Math.floor(value[0].size / 1000) > 205)) {
           return 'If avatar type is CUSTOM you must choose a valid JPG/PNG file under 200kb'
         }
+      }
+    }
+  }
+}
+
+export function ifDisplayYes (field, ifValue) {
+  return (value, data) => {
+    if (data) {
+      if (ifValue === data[field] && isEmpty(value)) {
+        return 'If Display is yes this field must be completed'
       }
     }
   }

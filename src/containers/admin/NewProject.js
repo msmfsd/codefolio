@@ -6,14 +6,14 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as actionCreators from '../../actions'
-import EditProjectsForm from '../../components/admin/EditProjectsForm/EditProjectsForm'
+import NewProjectForm from '../../components/admin/NewProjectForm/NewProjectForm'
 
-const mapStateToProps = ({auth}) => ({auth})
+const mapStateToProps = ({auth, projects}) => ({auth, projects})
 
 function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-const EditProjects = connect(mapStateToProps, mapDispachToProps)(EditProjectsForm)
+const NewProject = connect(mapStateToProps, mapDispachToProps)(NewProjectForm)
 
-export default EditProjects
+export default NewProject

@@ -175,6 +175,28 @@ export default class Api {
   }
 
   /**
+   * Create new project to Codefolio API
+   * @param formData : object
+   * @param token : string
+   * @returns {object}
+   */
+  static async NewProject (formData, token) {
+    const serialized = JSON.stringify(formData)
+    const opts = {
+      method: 'post',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': token
+      },
+      body: serialized
+    }
+    return await fetch(API_URL + '/api/project', opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
    * Edit profile to Codefolio API
    * @param formData : object
    * @param token : string

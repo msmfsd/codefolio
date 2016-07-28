@@ -3,10 +3,10 @@
  * Copyright(c) 2016 MSMFSD
  * MIT Licensed
  */
-import API from '../utils/api'
-import { convertToBase64Async, formatProfileData } from '../utils/helpers'
-import { setStorage, getStorage, clearStorage } from '../utils/storage'
 import { browserHistory } from 'react-router'
+import API from '../utils/api'
+import { convertToBase64Async, formatProfileData, formatProjectData } from '../utils/helpers'
+import { setStorage, getStorage, clearStorage } from '../utils/storage'
 
 /*
  * action types
@@ -16,6 +16,9 @@ import { browserHistory } from 'react-router'
 export const FETCH_PROFILE_REQUEST = 'FETCH_PROFILE_REQUEST'
 export const FETCH_PROFILE_RESULT = 'FETCH_PROFILE_RESULT'
 export const FETCH_PROFILE_ERROR = 'FETCH_PROFILE_ERROR'
+export const EDIT_PROFILE = 'EDIT_PROFILE'
+export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS'
+export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
 export const UPDATE_PROFILE_FIELD = 'UPDATE_PROFILE_FIELD'
 export const UPDATE_AVATAR_FIELDS = 'UPDATE_AVATAR_FIELDS'
 export const UPDATE_LAYOUT_FIELD = 'UPDATE_LAYOUT_FIELD'
@@ -26,6 +29,14 @@ export const REMOVE_PROFILE_ITEM = 'REMOVE_PROFILE_ITEM'
 export const FETCH_PROJECTS_REQUEST = 'FETCH_PROJECTS_REQUEST'
 export const FETCH_PROJECTS_RESULT = 'FETCH_PROJECTS_RESULT'
 export const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR'
+export const NEW_PROJECT = 'NEW_PROJECT'
+export const NEW_PROJECT_RESET = 'NEW_PROJECT_RESET'
+export const NEW_PROJECT_SUCCESS = 'NEW_PROJECT_SUCCESS'
+export const NEW_PROJECT_FAIL = 'NEW_PROJECT_FAIL'
+export const EDIT_PROJECT = 'EDIT_PROJECT'
+export const EDIT_PROJECT_SUCCESS = 'EDIT_PROJECT_SUCCESS'
+export const EDIT_PROJECT_FAIL = 'EDIT_PROJECT_FAIL'
+
 // auth
 export const AUTH = 'AUTH'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
@@ -47,9 +58,6 @@ export const RESET_FAIL = 'RESET_FAIL'
 export const EDIT_ADMIN = 'EDIT_ADMIN'
 export const EDIT_ADMIN_SUCCESS = 'EDIT_ADMIN_SUCCESS'
 export const EDIT_ADMIN_FAIL = 'EDIT_ADMIN_FAIL'
-export const EDIT_PROFILE = 'EDIT_PROFILE'
-export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS'
-export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
 
 /*
  * private action creators
@@ -67,6 +75,16 @@ const fetchProfileError = (err) => ({
   type: FETCH_PROFILE_ERROR,
   payload: err
 })
+const editProfile = () => ({
+  type: EDIT_PROFILE
+})
+const editProfileSuccess = () => ({
+  type: EDIT_PROFILE_SUCCESS
+})
+const editProfileFail = (err) => ({
+  type: EDIT_PROFILE_FAIL,
+  payload: err
+})
 
 // PROJECTS
 const fetchProjectsRequest = () => ({
@@ -80,72 +98,78 @@ const fetchProjectsError = (err) => ({
   type: FETCH_PROJECTS_ERROR,
   payload: err
 })
+const newProject = () => ({
+  type: NEW_PROJECT
+})
+const newProjectSuccess = () => ({
+  type: NEW_PROJECT_SUCCESS
+})
+const newProjectFail = (err) => ({
+  type: NEW_PROJECT_FAIL,
+  payload: err
+})
+const editProject = () => ({
+  type: EDIT_PROJECT
+})
+const editProjectSuccess = () => ({
+  type: EDIT_PROJECT_SUCCESS
+})
+const editProjectFail = (err) => ({
+  type: EDIT_PROJECT_FAIL,
+  payload: err
+})
 
 // AUTH
 const auth = (username) => ({
   type: AUTH,
   payload: username
 })
-
 const authSuccess = (data) => ({
   type: AUTH_SUCCESS,
   payload: data
 })
-
 const authFail = (err) => ({
   type: AUTH_FAIL,
   payload: err
 })
-
 const authLogout = () => ({
   type: AUTH_LOGOUT
 })
-
 const authLogoutFail = (err) => ({
   type: AUTH_LOGOUT_FAIL,
   payload: err
 })
-
 const authLogoutSuccess = () => ({
   type: AUTH_LOGOUT_SUCCESS
 })
-
 const register = () => ({
   type: REGISTER
 })
-
 const registerSuccess = () => ({
   type: REGISTER_SUCCESS
 })
-
 const registerFail = (err) => ({
   type: REGISTER_FAIL,
   payload: err
 })
-
 const forgot = () => ({
   type: FORGOT
 })
-
 const forgotSuccess = (data) => ({
   type: FORGOT_SUCCESS,
   payload: data
 })
-
 const forgotFail = (err) => ({
   type: FORGOT_FAIL,
   payload: err
 })
-
 const resetInit = () => ({
   type: RESET_INIT
 })
-
 const resetSuccess = (data) => ({
   type: RESET_SUCCESS,
   payload: data
 })
-
 const resetFail = (err) => ({
   type: RESET_FAIL,
   payload: err
@@ -155,26 +179,11 @@ const resetFail = (err) => ({
 const editAdmin = () => ({
   type: EDIT_ADMIN
 })
-
 const editAdminSuccess = () => ({
   type: EDIT_ADMIN_SUCCESS
 })
-
 const editAdminFail = (err) => ({
   type: EDIT_ADMIN_FAIL,
-  payload: err
-})
-
-const editProfile = () => ({
-  type: EDIT_PROFILE
-})
-
-const editProfileSuccess = () => ({
-  type: EDIT_PROFILE_SUCCESS
-})
-
-const editProfileFail = (err) => ({
-  type: EDIT_PROFILE_FAIL,
   payload: err
 })
 
@@ -242,6 +251,11 @@ export const fetchProfileAsync = () => {
 }
 
 // PROJECTS
+
+export const newProjectReset = () => ({
+  type: NEW_PROJECT_RESET
+})
+
 export const fetchProjectsAsync = () => {
   return dispatch => {
     dispatch(fetchProjectsRequest())
@@ -257,6 +271,29 @@ export const fetchProjectsAsync = () => {
             }
           })
           .catch((reason) => dispatch(fetchProjectsError(reason.message + '. API server unreachable.')))
+    }, 500)
+  }
+}
+
+export const newProjectAsync = (formData, token) => {
+  return (dispatch) => {
+    dispatch(newProject())
+    // TODO dev only
+    setTimeout(() => {
+      API.NewProject(formatProjectData(formData), token)
+      .then((response) => {
+        if(!response.success) {
+          // duplicate name/slug error?
+          let message = response.message
+          if(message.indexOf('duplicate key error') !== -1) {
+            message = 'Database duplicate key error. Ensure project name is unique'
+          }
+          dispatch(newProjectFail(message))
+        } else {
+          dispatch(newProjectSuccess())
+        }
+      })
+      .catch((reason) => dispatch(newProjectFail(reason.message + '. API server unreachable.')))
     }, 500)
   }
 }

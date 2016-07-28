@@ -1,0 +1,20 @@
+.form-container {
+  composes: cf-form-wide-global from '../../../assets/css/Global.css';
+
+  & h6 {
+    color: $coralPink;
+    text-transform: uppercase;
+  }
+}
+
+.card-padding {
+  padding: calc($padding * 0.5) $padding;
+}
+
+.form-btn {
+  composes: cf-form-btn from '../../../assets/css/Global.css';
+}
+
+.form-messages {
+  composes: cf-form-messages-global from '../../../assets/css/Global.css';
+}

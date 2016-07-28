@@ -4,6 +4,8 @@
  * MIT Licensed
  */
 /* eslint no-spaced-func: "off" */
+import slugger from 'slugger'
+import jsesc from 'jsesc'
 
 /**
  * Helper method to convert custom avatar file stream to base64
@@ -53,5 +55,36 @@ export const formatProfileData = (formData, base64) => {
   delete formData.customAvatar
   delete formData.customAvatarFile
   delete formData.defaultAvatar
+  return formData
+}
+
+/**
+* Helper method to reformat redux form data to profile state
+* Why? Redux-form cannot map nested state props to fields
+* See: Bindings on /src/components/admin/NewProjectForm/NewProjectForm.js
+* @param formData - object
+*/
+export const formatProjectData = (formData) => {
+  // slug
+  formData.slug = slugger(formData.name)
+  // repo
+  formData.repo = {
+    display : formData.repoDisplay,
+    repoUrl : formData.repoUrl,
+    repoUser : formData.repoUser,
+    repoName : formData.repoName
+  }
+  // codeSnippet
+  formData.codeSnippet = {
+    display : formData.codeDisplay,
+    code : formData.code
+  }
+  // clean up object
+  delete formData.repoDisplay
+  delete formData.repoUrl
+  delete formData.repoUser
+  delete formData.repoName
+  delete formData.codeDisplay
+  delete formData.code
   return formData
 }

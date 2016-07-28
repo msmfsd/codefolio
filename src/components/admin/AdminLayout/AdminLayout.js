@@ -4,8 +4,12 @@
  * MIT Licensed
  */
 import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
+import * as actionCreators from '../../../actions'
+import AdminNav from '../AdminNav/AdminNav'
 import styles from './AdminLayout.css'
 
 /**
@@ -15,6 +19,7 @@ import styles from './AdminLayout.css'
 class AdminLayout extends Component {
 
   render () {
+    const { auth, location, logoutAsync } = this.props
     return (
       <div styleName="cf-container" className="container">
         <div className="row">
@@ -28,6 +33,7 @@ class AdminLayout extends Component {
             <div className="row">
               <div className="col s12">
                 <div styleName="cf-content-admin">
+                  <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} location={location} />
                   {this.props.children}
                 </div>
               </div>
@@ -40,7 +46,15 @@ class AdminLayout extends Component {
 }
 
 AdminLayout.propTypes = {
-  children: PropTypes.object.isRequired
+  children: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  logoutAsync: PropTypes.func.isRequired
 }
 
-export default CssModules(AdminLayout, styles)
+const mapStateToProps = ({auth}) => ({auth})
+
+function mapDispachToProps (dispatch) {
+  return bindActionCreators(actionCreators, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispachToProps)(CssModules(AdminLayout, styles))

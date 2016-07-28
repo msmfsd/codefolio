@@ -6,7 +6,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
-import AdminNav from '../AdminNav/AdminNav'
 import styles from './AdminDashboardViewer.css'
 
 /**
@@ -15,18 +14,25 @@ import styles from './AdminDashboardViewer.css'
  */
 class AdminDashboardViewer extends Component {
 
+  componentDidMount () {
+    // ensure API data and redux store sync
+    // by always refreshing data on mount
+    if(!this.props.projects.loading) {
+      this.props.fetchProjectsAsync()
+    }
+  }
+
   render () {
-    const { auth, logoutAsync } = this.props
+    const { projects } = this.props
     return (
       <div>
-        <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} showBackBtn={false} />
         <div className="row">
           <div className="col s12">
             <h3>Admin Dashboard</h3>
           </div>
         </div>
         <div className="row">
-          <div className="col s12 m6 l4">
+          <div className="col s12 m6">
             <div className="card hoverable">
               <div className="card-content">
                 <span className="card-title">Admin settings</span>
@@ -37,7 +43,7 @@ class AdminDashboardViewer extends Component {
               </div>
             </div>
           </div>
-          <div className="col s12 m6 l4">
+          <div className="col s12 m6">
             <div className="card hoverable">
               <div className="card-content">
                 <span className="card-title">Profile settings</span>
@@ -48,14 +54,31 @@ class AdminDashboardViewer extends Component {
               </div>
             </div>
           </div>
-          <div className="col s12 m6 l4">
+          <div className="col s12">
             <div className="card hoverable">
               <div className="card-content">
                 <span className="card-title">Projects</span>
-                  <p>Manage your public folio projects to display showcases of your development work.</p>
+                <p>Manage your public folio projects to showcase your development work. Edit current projects below or:<br /><br /><Link styleName="admin-btn" className="btn" to={'/admin/new-project'}>Create new project</Link></p>
               </div>
-              <div className="card-action">
-                <Link styleName="admin-btn" className="btn" to={'/admin/edit-projects'}>Edit</Link>
+              <div className="card-action left">
+                <div className={projects.loading || projects.error ? 'show' : 'hide'}>
+                  {projects.error ? <div styleName="card-padding" className="card-panel">Projects failed to fetch. API server unreachable.</div> : <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>}
+                </div>
+                <div className={projects.loading || projects.error ? 'hide' : 'show'}>
+                  <ul styleName="cf-projects-list">
+                    {
+                      projects.data.map((obj, index) => {
+                        return (<li key={index} styleName="cf-project-link-item">
+                          <Link className="hoverable" activeClassName="active-link" to={'/admin/edit-project/' + obj.slug}>
+                            <h6 className="truncate">{index + 1} - {obj.name}</h6>
+                            <span className="truncate">Order: {obj.viewOrder} | Sticky: {obj.sticky === 1 ? 'Yes' : 'No'}</span>
+                            <i className="material-icons">mode_edit</i>
+                          </Link>
+                        </li>)
+                      })
+                    }
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -66,8 +89,7 @@ class AdminDashboardViewer extends Component {
 }
 
 AdminDashboardViewer.propTypes = {
-  auth: PropTypes.object.isRequired,
-  logoutAsync: PropTypes.func.isRequired
+  projects: PropTypes.object.isRequired
 }
 
 export default CssModules(AdminDashboardViewer, styles)

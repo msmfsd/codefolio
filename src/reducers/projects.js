@@ -6,7 +6,14 @@
 import {
   FETCH_PROJECTS_REQUEST,
   FETCH_PROJECTS_RESULT,
-  FETCH_PROJECTS_ERROR
+  FETCH_PROJECTS_ERROR,
+  NEW_PROJECT,
+  NEW_PROJECT_RESET,
+  NEW_PROJECT_SUCCESS,
+  NEW_PROJECT_FAIL,
+  EDIT_PROJECT,
+  EDIT_PROJECT_SUCCESS,
+  EDIT_PROJECT_FAIL
 } from '../actions/index'
 
 const projects = (state = {}, action) => {
@@ -31,6 +38,55 @@ const projects = (state = {}, action) => {
         hasLoaded: false,
         error: true,
         errMesage: action.payload
+      })
+    case NEW_PROJECT:
+      return Object.assign({}, state, {
+        newProjectLoading: true,
+        newProjectErrMessage: null,
+        newProjectError: null,
+        newProjectSuccess: null
+      })
+    case NEW_PROJECT_RESET:
+      return Object.assign({}, state, {
+        newProjectLoading: false,
+        newProjectErrMessage: null,
+        newProjectError: null,
+        newProjectSuccess: null
+      })
+    case NEW_PROJECT_SUCCESS:
+      return Object.assign({}, state, {
+        newProjectLoading: false,
+        newProjectErrMessage: null,
+        newProjectError: null,
+        newProjectSuccess: true
+      })
+    case NEW_PROJECT_FAIL:
+      return Object.assign({}, state, {
+        newProjectLoading: false,
+        newProjectErrMessage: action.payload,
+        newProjectError: true,
+        newProjectSuccess: null
+      })
+    case EDIT_PROJECT:
+      return Object.assign({}, state, {
+        editProjectLoading: true,
+        editProjectSuccess: null,
+        editProjectErrMessage: null,
+        editProjectError: null
+      })
+    case EDIT_PROJECT_SUCCESS:
+      return Object.assign({}, state, {
+        editProjectLoading: false,
+        editProjectErrMessage: null,
+        editProjectError: null,
+        editProjectSuccess: true
+      })
+    case EDIT_PROJECT_FAIL:
+      return Object.assign({}, state, {
+        editProjectErrMessage: action.payload,
+        editProjectLoading: false,
+        editProjectError: true,
+        editProjectSuccess: null
       })
     default:
       return state

@@ -30,7 +30,7 @@ class CodeSnippet extends Component {
     return (
       <div className={this.props.data.display === 'yes' ? 'show' : 'hide'} styleName="cf-code-snippet">
         <p><strong>Code excerpt:</strong></p>
-        <pre><code className={this.props.data.language}>{this.props.data.code}</code></pre>
+        <pre><code>{this.props.data.code}</code></pre>
       </div>
     )
   }

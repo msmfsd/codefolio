@@ -6,7 +6,6 @@
 import React, { Component, PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
 import CssModules from 'react-css-modules'
-import AdminNav from '../AdminNav/AdminNav'
 import { createValidator, required, minLength, maxLength, alphaNumeric, match } from '../../../utils/validate'
 import styles from './EditAdministratorForm.css'
 
@@ -23,11 +22,10 @@ const editadminValidation = createValidator({
 class EditAdministratorForm extends Component {
 
   render () {
-    const { auth, logoutAsync, admin, editAdminAsync, fields: { password, confirm }, handleSubmit, defaultInputClasses } = this.props
+    const { auth, admin, editAdminAsync, fields: { password, confirm }, handleSubmit, defaultInputClasses } = this.props
     const lastLoggedIn = String(new Date(auth.lastLoggedIn))
     return (
       <div>
-        <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} showBackBtn={true} />
         <div styleName="form-container">
           <div className="row">
             <div styleName="card-padding" className="card-panel">
@@ -62,7 +60,6 @@ class EditAdministratorForm extends Component {
 
 EditAdministratorForm.propTypes = {
   auth: PropTypes.object.isRequired,
-  logoutAsync: PropTypes.func.isRequired,
   admin: PropTypes.object.isRequired,
   editAdminAsync: PropTypes.func,
   fields: PropTypes.object.isRequired,

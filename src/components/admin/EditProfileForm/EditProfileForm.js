@@ -7,7 +7,6 @@ import React, { Component, PropTypes } from 'react'
 import { reduxForm } from 'redux-form'
 import CssModules from 'react-css-modules'
 import Avatar from '../../Avatar/Avatar'
-import AdminNav from '../AdminNav/AdminNav'
 import AvatarEditor from '../AvatarEditor/AvatarEditor'
 import FormLinksEditor from '../FormLinksEditor/FormLinksEditor'
 import FormTechIconsEditor from '../FormTechIconsEditor/FormTechIconsEditor'
@@ -72,14 +71,12 @@ class EditProfileForm extends Component {
     const {
       profile,
       auth,
-      logoutAsync,
       editProfileAsync,
       addProfileTechicon,
       addProfileLink,
       removeProfileItem,
       updateAvatarFields,
       handleSubmit,
-      submitFailed,
       defaultInputClasses,
       fields: {
         name,
@@ -100,7 +97,6 @@ class EditProfileForm extends Component {
 
     return (
       <div>
-        <AdminNav onClick={() => logoutAsync(auth.token)} auth={auth} showBackBtn={true} />
         <div styleName="form-container">
           <div className="row">
             <div styleName="card-padding" className={profile.editProfileSuccess ? 'card-panel show' : 'card-panel hide'}>
@@ -168,10 +164,10 @@ class EditProfileForm extends Component {
                 <input type="radio" {...displayBgImage} value="yes" checked={displayBgImage.value === 'yes'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Yes
                 <input type="radio" {...displayBgImage} value="no" checked={displayBgImage.value === 'no'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;No
               </div>
+              <div className={defaultInputClasses}><h5>Save profile updates</h5></div>
               <div styleName="form-messages" className="col s12">{profile.editProfileError && profile.editProfileErrMessage}</div>
-              <div styleName="form-messages" className="col s12">{submitFailed && <span>Validation errors found, fix them and re-submit.</span>}</div>
               <div className={defaultInputClasses}>
-                <button styleName="form-btn" className={profile.editProfileLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={profile.editProfileLoading}><i className="material-icons">settings</i><span>Save profile updates</span></button>
+                <button styleName="form-btn" className={profile.editProfileLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={profile.editProfileLoading}><i className="material-icons">settings</i><span>Submit updates</span></button>
               </div>
             </form>
           </div>
@@ -184,7 +180,6 @@ class EditProfileForm extends Component {
 EditProfileForm.propTypes = {
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  logoutAsync: PropTypes.func.isRequired,
   editProfileAsync: PropTypes.func,
   fetchProfileAsync: PropTypes.func,
   addProfileTechicon: PropTypes.func,
@@ -195,7 +190,6 @@ EditProfileForm.propTypes = {
   updateLayoutField: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  submitFailed: PropTypes.boolean,
   defaultInputClasses: PropTypes.string
 }
 
