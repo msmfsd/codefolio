@@ -63,3 +63,7 @@
   text-align: center;
   color: $lightGrey;
 }
+
+.form-messages {
+  composes: cf-form-messages-global from '../../../assets/css/Global.css';
+}

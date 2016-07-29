@@ -10,6 +10,10 @@ import { createValidator, required, maxLength } from '../../../utils/validate'
 import styles from './EditProjectForm.css'
 
 // client validation
+const fields = [
+  'name'
+]
+
 const editProjectValidation = createValidator({
   name: [required, maxLength(40)]
 })
@@ -36,11 +40,11 @@ class EditProjectForm extends Component {
             <form onSubmit={handleSubmit(data => editProjectAsync(data, auth.token))}>
               <div className="col s12">
                 <h3>Edit project: {this.props.params.projectId}</h3>
-                <p>Complete fields and submit to create a project.</p>
+                <p>Project name {name}.</p>
               </div>
               <div styleName="form-messages" className="col s12">{projects.newProjectError && projects.newProjectErrMessage}</div>
               <div className={defaultInputClasses}>
-                <button styleName="form-btn" className={projects.newProjectLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={projects.newProjectLoading}><i className="material-icons">settings</i><span>Add new project</span></button>
+                <button styleName="form-btn" className={projects.newProjectLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={projects.newProjectLoading}><i className="material-icons">settings</i><span>Edit project</span></button>
               </div>
             </form>
           </div>
@@ -52,6 +56,7 @@ class EditProjectForm extends Component {
 
 EditProjectForm.propTypes = {
   auth: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
   projects: PropTypes.object.isRequired,
   editProjectAsync: PropTypes.func,
   fields: PropTypes.object.isRequired,
@@ -65,6 +70,6 @@ EditProjectForm.defaultProps = {
 
 export default reduxForm({
   form: 'editProject',
-  fields: [ 'name' ],
+  fields,
   validate: editProjectValidation
 })(CssModules(EditProjectForm, styles))

@@ -46,7 +46,7 @@ class FormArrayEditor extends Component {
     e.preventDefault()
     if(this.refs.createItemName.value !== '') {
       this.setState({ editing: false, message: null })
-      this.props.addItemFunc(this.props.linkGroup, this.state.nameFieldValue)
+      this.props.addItemFunc(this.props.fieldName, this.state.nameFieldValue)
       this.refs.createItemName.value = ''
     } else {
       this.setState({ message: 'Name field required' })
@@ -60,7 +60,7 @@ class FormArrayEditor extends Component {
    */
   removeItem (index, e) {
     e.preventDefault()
-    this.props.removeItemFunc(this.props.linkGroup, index)
+    this.props.removeItemFunc(this.props.fieldName, index)
     this.setState(
       {
         editing: false,
@@ -86,7 +86,7 @@ class FormArrayEditor extends Component {
   }
 
   render () {
-    const { fields, linkGroup, max } = this.props
+    const { fields, fieldName, max } = this.props
     let links = null
     let maxReached = false
     if(fields.value) {
@@ -117,7 +117,7 @@ class FormArrayEditor extends Component {
         <tbody>
           {links}
           <tr className={fields.value.length < 1 ? 'show' : 'hide'}>
-            <td><p><i>No {linkGroup} found.</i></p></td>
+            <td><p><i>No {fieldName} found.</i></p></td>
             <td>&nbsp;</td>
           </tr>
           <tr className={this.state.editing ? 'show' : 'hide'}>
@@ -143,7 +143,7 @@ class FormArrayEditor extends Component {
 
 FormArrayEditor.propTypes = {
   fields: PropTypes.object.isRequired,
-  linkGroup: PropTypes.string.isRequired,
+  fieldName: PropTypes.string.isRequired,
   addItemFunc: PropTypes.func.isRequired,
   removeItemFunc: PropTypes.func.isRequired,
   max: PropTypes.number.isRequired

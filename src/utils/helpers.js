@@ -5,7 +5,6 @@
  */
 /* eslint no-spaced-func: "off" */
 import slugger from 'slugger'
-import jsesc from 'jsesc'
 
 /**
  * Helper method to convert custom avatar file stream to base64
@@ -67,17 +66,18 @@ export const formatProfileData = (formData, base64) => {
 export const formatProjectData = (formData) => {
   // slug
   formData.slug = slugger(formData.name)
+  formData.active = 1
   // repo
   formData.repo = {
-    display : formData.repoDisplay,
-    repoUrl : formData.repoUrl,
-    repoUser : formData.repoUser,
-    repoName : formData.repoName
+    display: formData.repoDisplay,
+    repoUrl: formData.repoUrl,
+    repoUser: formData.repoUser,
+    repoName: formData.repoName
   }
   // codeSnippet
   formData.codeSnippet = {
-    display : formData.codeDisplay,
-    code : formData.code
+    display: formData.codeDisplay,
+    code: formData.code
   }
   // clean up object
   delete formData.repoDisplay

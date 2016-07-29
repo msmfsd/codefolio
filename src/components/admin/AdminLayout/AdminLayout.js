@@ -48,7 +48,8 @@ class AdminLayout extends Component {
 AdminLayout.propTypes = {
   children: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  logoutAsync: PropTypes.func.isRequired
+  logoutAsync: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired
 }
 
 const mapStateToProps = ({auth}) => ({auth})

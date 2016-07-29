@@ -197,6 +197,36 @@ export default class Api {
   }
 
   /**
+   * Upload files to Codefolio API
+   * @param files : array
+   * @returns {object}
+   */
+  static async UploadProjectFiles (files, token) {
+    const formData = new FormData()
+    if(files.length > 5) {
+      return { success: false, message: 'Error, maximum of 5 files at a time' }
+    }
+    files.map((obj, index) => {
+      let file = files[index]
+      if (!file.type.match('image.*') || Math.floor(file.size / 1000) > 1050) {
+        return { success: false, message: 'Error, files must be under 1MB and JPG, PNG, or GIF only' }
+      }
+      formData.append('media', file, file.name)
+    })
+    const opts = {
+      method: 'post',
+      headers: {
+        'Authorization': token
+      },
+      body: formData
+    }
+    return await fetch(API_URL + '/api/project/upload', opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
    * Edit profile to Codefolio API
    * @param formData : object
    * @param token : string

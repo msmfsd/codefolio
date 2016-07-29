@@ -10,12 +10,15 @@ describe('AdminNav component', () => {
     logoutError: true,
     logoutErrMessage: 'Error'
   }
+  const location = {
+    pathname: '/admin'
+  }
   let token = ''
   const newToken = 'AAABBB111222'
   const testFunc = (_token) => {
     token = _token
   }
-  const adminNav = TestUtils.renderIntoDocument(<AdminNav onClick={() => testFunc(newToken)} auth={auth} showBackBtn={false} />)
+  const adminNav = TestUtils.renderIntoDocument(<AdminNav onClick={() => testFunc(newToken)} auth={auth} location={location} />)
   it('renders into document', () => {
     expect(adminNav).toExist()
   })

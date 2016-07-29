@@ -16,12 +16,7 @@ class FormMediaEditor extends Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      loading: null,
-      uploadsComplete: null,
-      previews: [],
-      fileNames: []
-    }
+    this.state = { files: [] }
   }
 
   /**
@@ -29,46 +24,33 @@ class FormMediaEditor extends Component {
    * @param files : object
    */
   onDrop (files) {
-    console.log('Received files: ', files);
-    let fileNames = []
-    let previews = files.map((obj, index) => {
-      fileNames.push(obj.name)
-      return (
-        <li key={index}>
-          <figure>
-            <img src={obj.preview} width="60" />
-            <figcaption>{obj.name}</figcaption>
-          </figure>
-        </li>
-      )
-    })
-    this.setState({
-      loading: true,
-      previews: previews,
-      fileNames: fileNames
-    })
-    setTimeout(() => {
-      this.setState({
-        loading: false,
-        uploadsComplete: true
-      })
-      this.props.onUploadedFunc(this.state.fileNames)
-    }, 2000)
+    this.setState({ files: files })
+    this.props.uploadAsyncFunc(files, this.props.auth.token)
   }
 
   render () {
-
+    const { projects } = this.props
     return (
       <div styleName="form-media-editor">
         <div styleName="dropzone-loader">
-          <div className={this.state.loading ? 'show' : 'hide'} styleName="loading-div">
+          <div className={projects.newProjectLoadingFiles ? 'show' : 'hide'} styleName="loading-div">
             <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>
           </div>
           <Dropzone styleName="dropzone" onDrop={this.onDrop.bind(this)}>
             <div>Drop JPG/PNG file/s here, or click to browse your files.</div>
           </Dropzone>
         </div>
-        <ul className={this.state.previews ? 'show' : 'hide'}>{this.state.previews}</ul>
+        <ul className={this.state.files && !projects.newProjectLoadingFilesError ? 'show' : 'hide'}>{this.state.files.map((obj, index) => {
+          return (
+            <li key={index}>
+              <figure>
+                <img src={obj.preview} width="40" />
+              </figure>
+            </li>
+          )
+        })}</ul>
+        <div styleName="form-messages">{projects.newProjectLoadingFilesError && projects.newProjectLoadingFilesErrMessage}</div>
+        <div styleName="form-messages" className={projects.newProjectLoadingFilesSuccess ? 'show' : 'hide'}>Files uploaded successfully</div>
       </div>
     )
   }
@@ -76,7 +58,9 @@ class FormMediaEditor extends Component {
 }
 
 FormMediaEditor.propTypes = {
-  onUploadedFunc: PropTypes.func.isRequired
+  auth: PropTypes.object.isRequired,
+  projects: PropTypes.object.isRequired,
+  uploadAsyncFunc: PropTypes.func.isRequired
 }
 
 export default CssModules(FormMediaEditor, styles)

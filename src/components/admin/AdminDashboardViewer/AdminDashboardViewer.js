@@ -89,7 +89,8 @@ class AdminDashboardViewer extends Component {
 }
 
 AdminDashboardViewer.propTypes = {
-  projects: PropTypes.object.isRequired
+  projects: PropTypes.object.isRequired,
+  fetchProjectsAsync: PropTypes.func.isRequired
 }
 
 export default CssModules(AdminDashboardViewer, styles)
