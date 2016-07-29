@@ -29,19 +29,20 @@ export const REMOVE_PROFILE_ITEM = 'REMOVE_PROFILE_ITEM'
 export const FETCH_PROJECTS_REQUEST = 'FETCH_PROJECTS_REQUEST'
 export const FETCH_PROJECTS_RESULT = 'FETCH_PROJECTS_RESULT'
 export const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR'
+// new project
 export const NEW_PROJECT = 'NEW_PROJECT'
+export const NEW_PROJECT_SUCCESS = 'NEW_PROJECT_SUCCESS'
+export const NEW_PROJECT_FAIL = 'NEW_PROJECT_FAIL'
+export const NEW_PROJECT_RESET = 'NEW_PROJECT_RESET'
 export const NEW_PROJECT_UPLOADING_FILES = 'NEW_PROJECT_UPLOADING_FILES'
 export const NEW_PROJECT_UPLOADING_FILES_COMPLETE = 'NEW_PROJECT_UPLOADING_FILES_COMPLETE'
 export const NEW_PROJECT_UPLOADING_FILES_ERROR = 'NEW_PROJECT_UPLOADING_FILES_ERROR'
-export const NEW_PROJECT_RESET = 'NEW_PROJECT_RESET'
-export const NEW_PROJECT_SUCCESS = 'NEW_PROJECT_SUCCESS'
-export const NEW_PROJECT_FAIL = 'NEW_PROJECT_FAIL'
 export const NEW_PROJECT_UPDATE_MEDIA = 'NEW_PROJECT_UPDATE_MEDIA'
 export const NEW_PROJECT_ON_SPLICE_FIELD_ARRAY = 'NEW_PROJECT_ON_SPLICE_FIELD_ARRAY'
 export const NEW_PROJECT_ON_PUSH_FIELD_ARRAY = 'NEW_PROJECT_ON_PUSH_FIELD_ARRAY'
 export const NEW_PROJECT_ADD_LINK = 'NEW_PROJECT_ADD_LINK'
 export const NEW_PROJECT_REMOVE_LINK = 'NEW_PROJECT_REMOVE_LINK'
-export const UPDATE_NEW_PROJECT_FIELD = 'UPDATE_NEW_PROJECT_FIELD'
+export const NEW_PROJECT_UPDATE_FIELD = 'NEW_PROJECT_UPDATE_FIELD'
 
 // auth
 export const AUTH = 'AUTH'
@@ -104,6 +105,8 @@ const fetchProjectsError = (err) => ({
   type: FETCH_PROJECTS_ERROR,
   payload: err
 })
+
+// NEW PROJECT
 const newProject = () => ({
   type: NEW_PROJECT
 })
@@ -262,13 +265,32 @@ export const fetchProfileAsync = () => {
 }
 
 // PROJECTS
+export const fetchProjectsAsync = () => {
+  return dispatch => {
+    dispatch(fetchProjectsRequest())
+    // TODO dev only
+    setTimeout(() => {
+      API.FetchCodefolioProjects()
+          .then(response => {
+            if(!response.success) {
+              dispatch(fetchProjectsError(response.message))
+            } else {
+              // success!
+              dispatch(fetchProjectsResult(response.data))
+            }
+          })
+          .catch((reason) => dispatch(fetchProjectsError(reason.message + '. API server unreachable.')))
+    }, 500)
+  }
+}
 
+// NEW PROJECT
 export const newProjectReset = () => ({
   type: NEW_PROJECT_RESET
 })
 
-export const updateNewProjectField = (fieldName, fieldValue) => ({
-  type: UPDATE_NEW_PROJECT_FIELD,
+export const newProjectUpdateField = (fieldName, fieldValue) => ({
+  type: NEW_PROJECT_UPDATE_FIELD,
   fieldName,
   fieldValue
 })
@@ -314,25 +336,6 @@ export const newProjectUploadFilesAsync = (files, token) => {
             }
           })
           .catch((reason) => dispatch(newProjectUploadingFilesError(reason.message + '. API server unreachable.')))
-    }, 500)
-  }
-}
-
-export const fetchProjectsAsync = () => {
-  return dispatch => {
-    dispatch(fetchProjectsRequest())
-    // TODO dev only
-    setTimeout(() => {
-      API.FetchCodefolioProjects()
-          .then(response => {
-            if(!response.success) {
-              dispatch(fetchProjectsError(response.message))
-            } else {
-              // success!
-              dispatch(fetchProjectsResult(response.data))
-            }
-          })
-          .catch((reason) => dispatch(fetchProjectsError(reason.message + '. API server unreachable.')))
     }, 500)
   }
 }

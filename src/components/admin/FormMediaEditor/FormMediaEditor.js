@@ -29,18 +29,18 @@ class FormMediaEditor extends Component {
   }
 
   render () {
-    const { projects } = this.props
+    const { newProject } = this.props
     return (
       <div styleName="form-media-editor">
         <div styleName="dropzone-loader">
-          <div className={projects.newProjectLoadingFiles ? 'show' : 'hide'} styleName="loading-div">
+          <div className={newProject.newProjectFilesLoading ? 'show' : 'hide'} styleName="loading-div">
             <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>
           </div>
           <Dropzone styleName="dropzone" onDrop={this.onDrop.bind(this)}>
             <div>Drop JPG/PNG file/s here, or click to browse your files.</div>
           </Dropzone>
         </div>
-        <ul className={this.state.files && !projects.newProjectLoadingFilesError ? 'show' : 'hide'}>{this.state.files.map((obj, index) => {
+        <ul className={this.state.files && !newProject.newProjectFilesError ? 'show' : 'hide'}>{this.state.files.map((obj, index) => {
           return (
             <li key={index}>
               <figure>
@@ -49,8 +49,8 @@ class FormMediaEditor extends Component {
             </li>
           )
         })}</ul>
-        <div styleName="form-messages">{projects.newProjectLoadingFilesError && projects.newProjectLoadingFilesErrMessage}</div>
-        <div styleName="form-messages" className={projects.newProjectLoadingFilesSuccess ? 'show' : 'hide'}>Files uploaded successfully</div>
+        <div styleName="form-messages">{newProject.newProjectFilesError && newProject.newProjectFilesErrMessage}</div>
+        <div styleName="form-messages" className={newProject.newProjectFilesSuccess ? 'show' : 'hide'}>Files uploaded successfully</div>
       </div>
     )
   }
@@ -59,7 +59,7 @@ class FormMediaEditor extends Component {
 
 FormMediaEditor.propTypes = {
   auth: PropTypes.object.isRequired,
-  projects: PropTypes.object.isRequired,
+  newProject: PropTypes.object.isRequired,
   uploadAsyncFunc: PropTypes.func.isRequired
 }
 
