@@ -2,8 +2,17 @@
   composes: cf-form-btn from '../../../assets/css/Global.css';
 }
 
+.admin-btn-create {
+  composes: cf-form-btn from '../../../assets/css/Global.css';
+  margin-right: $padding;
+}
+
 .card-padding {
   padding: calc($padding * 0.5) $padding;
+}
+
+.card-action-full {
+  width: 100%;
 }
 
 .cf-progress {
@@ -26,76 +35,63 @@ $rowHeight: 62px;
 
 /* projects list */
 .cf-projects-list {
+  display: block;
+  float: left;
+  width: 100%;
+  margin: $padding 0;
   padding: 0;
-  margin: 0;
+  @media (min-width: $small) {
+    padding: 0 $padding;
+  }
 }
 
 .cf-project-link-item {
-  width: 92%;
+  width: 100%;
   height: $rowHeight;
   float: left;
   opacity: 1;
   padding: 0 0 0 10px;
-  margin: 0 4% 10px;
+  margin-bottom: 10px;
   border: 1px solid color($lightGrey alpha(30%));
   background-color: $midGreyBlue;
 
-  @media (min-width: $medium) {
-    width: 42%;
-  }
+  & h6 {
+    float: left;
+    max-width: 50%;
+    line-height: 1.2;
+    margin: 12px 0 0;
+    color: $lightGrey;
+    font-weight: 700;
 
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: $darkGreyBlue;
-    & i {
-      transform: translate(30px, -50%);
-      opacity: 1;
+    @media (min-width: $small) {
+      max-width: 80%;
+    }
+
+    & span {
+      display: block;
+      clear: both;
+      font-size: 0.9rem;
+      line-height: 1.2;
+      margin: 4px 0 0;
+      color: $midGrey;
     }
   }
 
   & a {
-    display: block;
-    position: relative;
-    float: left;
-    width: 100%;
-    height: $rowHeight;
+    margin: 12px 12px 0 0;
     padding: 0;
-    transition: all $duration linear;
-    color: $coralPink;
-
-    & h6 {
-      width: 100%;
-      line-height: 1.2;
-      margin: 12px 0 0;
-      padding-right: 40px;
-      color: $lightGrey;
-      font-weight: 700;
-      transition: all $duration ease-in-out;
-    }
-
-    & span {
-      width: 100%;
-      font-size: 0.9rem;
-      line-height: 1.2;
-      margin: 4px 0 0;
-      padding-right: 40px;
-      color: $midGrey;
-      transition: all $duration ease-in-out;
-    }
+    background-color: $coralPink;
+    opacity: 0.7;
 
     & i {
-      display: block;
-      position: absolute;
-      top: 50%;
-      transition: all $duration ease-in-out;
-      transform: translate(40px, -50%);
-      right: 10px;
-      padding-right: 40px;
-      color: $coralPink;
-      opacity: 0.7;
+      color: $lightGrey;
     }
 
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: 1;
+    }
   }
 
 }

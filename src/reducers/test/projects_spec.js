@@ -24,7 +24,7 @@ describe('projects reducer', () => {
     expect(newState).to.eql(Object.assign({}, initialState, {
       loading: true,
       error: null,
-      errMesage: null
+      errMessage: null
     }))
   })
   // FETCH_PROJECTS_RESULT
@@ -41,7 +41,7 @@ describe('projects reducer', () => {
       loading: false,
       hasLoaded: true,
       error: null,
-      errMesage: null,
+      errMessage: null,
       data: projects
     }))
   })
@@ -56,7 +56,45 @@ describe('projects reducer', () => {
       loading: false,
       hasLoaded: false,
       error: true,
-      errMesage: 'API Error'
+      errMessage: 'API Error'
+    }))
+  })
+  // DELETE_PROJECT_REQUEST
+  it('Handles DELETE_PROJECT_REQUEST', () => {
+    const newState = reducer(initialState, {
+      type: 'DELETE_PROJECT_REQUEST',
+      payload: {
+        loading: true
+      }
+    })
+    expect(newState).to.eql(Object.assign({}, initialState, {
+      loading: true,
+      error: null,
+      errMessage: null
+    }))
+  })
+  // DELETE_PROJECT_RESULT
+  it('Handles DELETE_PROJECT_RESULT', () => {
+    const newState = reducer(initialState, {
+      type: 'DELETE_PROJECT_RESULT'
+    })
+    expect(newState).to.eql(Object.assign({}, initialState, {
+      loading: false,
+      error: null,
+      errMessage: null
+    }))
+  })
+  // DELETE_PROJECT_FAIL
+  it('Handles DELETE_PROJECT_FAIL', () => {
+    const error = { message: 'API Error' }
+    const newState = reducer(initialState, {
+      type: 'DELETE_PROJECT_FAIL',
+      payload: error.message
+    })
+    expect(newState).to.eql(Object.assign({}, initialState, {
+      loading: false,
+      error: true,
+      errMessage: 'API Error'
     }))
   })
 

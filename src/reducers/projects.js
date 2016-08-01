@@ -6,7 +6,10 @@
 import {
   FETCH_PROJECTS_REQUEST,
   FETCH_PROJECTS_RESULT,
-  FETCH_PROJECTS_ERROR
+  FETCH_PROJECTS_ERROR,
+  DELETE_PROJECT_REQUEST,
+  DELETE_PROJECT_RESULT,
+  DELETE_PROJECT_FAIL
 } from '../actions/index'
 
 const projects = (state = {}, action) => {
@@ -15,14 +18,14 @@ const projects = (state = {}, action) => {
       return Object.assign({}, state, {
         loading: true,
         error: null,
-        errMesage: null
+        errMessage: null
       })
     case FETCH_PROJECTS_RESULT:
       return Object.assign({}, state, {
         loading: false,
         hasLoaded: true,
         error: null,
-        errMesage: null,
+        errMessage: null,
         data: action.payload
       })
     case FETCH_PROJECTS_ERROR:
@@ -30,7 +33,25 @@ const projects = (state = {}, action) => {
         loading: false,
         hasLoaded: false,
         error: true,
-        errMesage: action.payload
+        errMessage: action.payload
+      })
+    case DELETE_PROJECT_REQUEST:
+      return Object.assign({}, state, {
+        loading: true,
+        error: null,
+        errMessage: null
+      })
+    case DELETE_PROJECT_RESULT:
+      return Object.assign({}, state, {
+        loading: false,
+        error: null,
+        errMessage: null
+      })
+    case DELETE_PROJECT_FAIL:
+      return Object.assign({}, state, {
+        loading: false,
+        error: true,
+        errMessage: action.payload
       })
     default:
       return state

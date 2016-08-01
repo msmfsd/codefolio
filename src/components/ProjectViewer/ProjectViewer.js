@@ -53,7 +53,7 @@ class ProjectViewer extends Component {
     if(projects.loading || (!projects.hasLoaded && !projects.error)) {
       return (<div><Loader /></div>)
     } else if(projects.error) {
-      return (<div><Panel message={'Error: ' + projects.errMesage} /></div>)
+      return (<div><Panel message={'Error: ' + projects.errMessage} /></div>)
     } else {
       // async success - get project with route paramater
       project = projects.data.find((item) => item.slug === slug)

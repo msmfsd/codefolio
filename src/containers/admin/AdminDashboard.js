@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../../actions'
 import AdminDashboardViewer from '../../components/admin/AdminDashboardViewer/AdminDashboardViewer'
 
-const mapStateToProps = ({projects}) => ({projects})
+const mapStateToProps = ({auth, projects}) => ({auth, projects})
 
 function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)

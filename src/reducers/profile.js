@@ -25,14 +25,14 @@ const profile = (state = {}, action) => {
       return Object.assign({}, state, {
         loading: true,
         error: null,
-        errMesage: null
+        errMessage: null
       })
     case FETCH_PROFILE_RESULT:
       return Object.assign({}, state, {
         loading: false,
         hasLoaded: true,
         error: null,
-        errMesage: null,
+        errMessage: null,
         data: action.payload
       })
     case FETCH_PROFILE_ERROR:
@@ -40,7 +40,7 @@ const profile = (state = {}, action) => {
         loading: false,
         hasLoaded: false,
         error: true,
-        errMesage: action.payload
+        errMessage: action.payload
       })
     case UPDATE_PROFILE_FIELD:
       return update(state, {

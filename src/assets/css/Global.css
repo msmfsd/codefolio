@@ -307,7 +307,7 @@ input:-webkit-autofill:active {
 .cf-form-wide-global {
   width: 100%;
   @media (min-width: $small) {
-    max-width: $90%;
+    max-width: 90%;
   }
   @media (min-width: $medium) {
     max-width: $formWidthWide;
@@ -586,6 +586,15 @@ textarea {
   padding: 6px 12px;
   height: auto;
   border: 1px solid color($lightGrey alpha(80%));
+}
+
+input[type=text]:read-only,
+input[type=password]:read-only,
+input[type=email]:read-only,
+input[type=url]:read-only,
+input[type=number]:read-only {
+  color: $midGrey;
+  border-bottom-color: color($lightGrey alpha(0%));
 }
 
 input:not([type]),

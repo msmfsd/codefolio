@@ -25,9 +25,9 @@ const loginValidation = createValidator({
 class RegisterForm extends Component {
 
   componentWillMount () {
-    // if loggged in redirect to admin
+    // if logged in redirect to admin
     if(this.props.auth.token !== null) {
-      browserHistory.push('admin')
+      browserHistory.push('/admin')
     }
   }
 

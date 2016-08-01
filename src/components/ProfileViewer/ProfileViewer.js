@@ -64,7 +64,7 @@ class ProfileViewer extends Component {
     if(profile.loading || (!profile.hasLoaded && !profile.error)) {
       return (<div><Loader /></div>)
     } else if(profile.error) {
-      return (<div><Panel message={'Error: ' + profile.errMesage} /></div>)
+      return (<div><Panel message={'Error: ' + profile.errMessage} /></div>)
     } else {
       return (
         <div styleName="cf-profile">

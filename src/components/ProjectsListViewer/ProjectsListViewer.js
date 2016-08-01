@@ -66,7 +66,7 @@ class ProjectsListViewer extends Component {
     if(projects.loading || (!projects.hasLoaded && !projects.error)) {
       return (<div><Loader /></div>)
     } else if(projects.error) {
-      return (<div><Panel message={'Error: ' + projects.errMesage} /></div>)
+      return (<div><Panel message={'Error: ' + projects.errMessage} /></div>)
     } else {
       return (<ul styleName="cf-projects-list" id="cf-projects-list">{projectslist}</ul>)
     }

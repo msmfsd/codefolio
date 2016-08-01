@@ -1,10 +1,5 @@
 .form-container {
   composes: cf-form-wide-global from '../../../assets/css/Global.css';
-
-  & h6 {
-    color: $coralPink;
-    text-transform: uppercase;
-  }
 }
 
 .card-padding {
@@ -17,4 +12,12 @@
 
 .form-messages {
   composes: cf-form-messages-global from '../../../assets/css/Global.css';
+}
+
+.table-div {
+  display: table;
+}
+
+.hl {
+  color: $coralPink;
 }

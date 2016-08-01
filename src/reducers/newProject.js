@@ -9,10 +9,12 @@ import {
   NEW_PROJECT_SUCCESS,
   NEW_PROJECT_FAIL,
   NEW_PROJECT_RESET,
+  EDIT_PROJECT_RESET,
   NEW_PROJECT_UPLOADING_FILES,
   NEW_PROJECT_UPLOADING_FILES_COMPLETE,
   NEW_PROJECT_UPLOADING_FILES_ERROR,
   NEW_PROJECT_UPDATE_MEDIA,
+  NEW_PROJECT_REMOVE_MEDIA,
   NEW_PROJECT_ON_SPLICE_FIELD_ARRAY,
   NEW_PROJECT_ON_PUSH_FIELD_ARRAY,
   NEW_PROJECT_ADD_LINK,
@@ -67,6 +69,30 @@ const newProject = (state = {}, action) => {
         linkWeb: [],
         media: []
       })
+    case EDIT_PROJECT_RESET:
+      return Object.assign({}, state, {
+        newProjectFilesLoading: false,
+        newProjectFilesMessage: null,
+        newProjectLoading: false,
+        newProjectErrMessage: null,
+        newProjectError: null,
+        newProjectSuccess: null,
+        name: action.project.name,
+        role: action.project.role,
+        description: action.project.description,
+        client: action.project.client,
+        viewOrder: action.project.viewOrder,
+        sticky: action.project.sticky,
+        repoDisplay: action.project.repo.display,
+        repoUrl: action.project.repo.repoUrl,
+        repoUser: action.project.repo.repoUser,
+        repoName: action.project.repo.repoName,
+        codeDisplay: action.project.codeSnippet.display,
+        code: action.project.codeSnippet.code,
+        projectTech: action.project.projectTech,
+        linkWeb: action.project.linkWeb,
+        media: action.project.media
+      })
     case NEW_PROJECT_UPLOADING_FILES:
       return Object.assign({}, state, {
         newProjectFilesLoading: true,
@@ -91,7 +117,11 @@ const newProject = (state = {}, action) => {
       })
     case NEW_PROJECT_UPDATE_MEDIA:
       return update(state, {
-        media: { $set: action.filenames }
+        media: { $push: action.filenames }
+      })
+    case NEW_PROJECT_REMOVE_MEDIA:
+      return update(state, {
+        media: {$splice: [[action.index, 1]]}
       })
     case NEW_PROJECT_ON_PUSH_FIELD_ARRAY:
       return update(state, {

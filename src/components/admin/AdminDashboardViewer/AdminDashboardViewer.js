@@ -22,6 +22,16 @@ class AdminDashboardViewer extends Component {
     }
   }
 
+  /**
+   * Remove project by id
+   * @param id : string
+   * @param e : dom node event object
+   */
+  deleteProject (id, e) {
+    e.preventDefault()
+    this.props.deleteProjectAsync(id, this.props.auth.token)
+  }
+
   render () {
     const { projects } = this.props
     return (
@@ -58,22 +68,26 @@ class AdminDashboardViewer extends Component {
             <div className="card hoverable">
               <div className="card-content">
                 <span className="card-title">Projects</span>
-                <p>Manage your public folio projects to showcase your development work. Edit current projects below or:<br /><br /><Link styleName="admin-btn" className="btn" to={'/admin/new-project'}>Create new project</Link></p>
+                <p>Manage your public folio projects to showcase your development work. Edit current projects below or create a new project.</p>
               </div>
-              <div className="card-action left">
+              <div styleName="card-action-full" className="card-action left">
                 <div className={projects.loading || projects.error ? 'show' : 'hide'}>
-                  {projects.error ? <div styleName="card-padding" className="card-panel">Projects failed to fetch. API server unreachable.</div> : <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>}
+                  {projects.error ? <div styleName="card-padding" className="card-panel">{projects.errMessage}</div> : <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>}
                 </div>
-                <div className={projects.loading || projects.error ? 'hide' : 'show'}>
-                  <ul styleName="cf-projects-list">
+                <div className={projects.loading ? 'hide' : 'show'}>
+                  <Link styleName="admin-btn-create" className="btn right" to={'/admin/new-project'}>Create new project</Link>
+                  <ul styleName="cf-projects-list" className={projects.loading || projects.error ? 'hide' : 'show'}>
                     {
                       projects.data.map((obj, index) => {
                         return (<li key={index} styleName="cf-project-link-item">
-                          <Link className="hoverable" activeClassName="active-link" to={'/admin/edit-project/' + obj.slug}>
-                            <h6 className="truncate">{index + 1} - {obj.name}</h6>
-                            <span className="truncate">Order: {obj.viewOrder} | Sticky: {obj.sticky === 1 ? 'Yes' : 'No'}</span>
-                            <i className="material-icons">mode_edit</i>
-                          </Link>
+                          <div>
+                            <h6 className="truncate">
+                              {index + 1} - {obj.name}
+                              <span className="truncate">Order: {obj.viewOrder} | Sticky: {obj.sticky === 1 ? 'Yes' : 'No'}</span>
+                            </h6>
+                            <Link to={'/admin/edit-project/' + obj.slug} className="btn-floating right hoverable"><i className="material-icons">mode_edit</i></Link>
+                            <a href="#" onClick={this.deleteProject.bind(this, obj._id)} className="btn-floating right hoverable"><i className="material-icons">delete</i></a>
+                          </div>
                         </li>)
                       })
                     }
@@ -89,7 +103,9 @@ class AdminDashboardViewer extends Component {
 }
 
 AdminDashboardViewer.propTypes = {
+  auth: PropTypes.object.isRequired,
   projects: PropTypes.object.isRequired,
+  deleteProjectAsync: PropTypes.func.isRequired,
   fetchProjectsAsync: PropTypes.func.isRequired
 }
 

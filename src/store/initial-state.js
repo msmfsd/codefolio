@@ -8,7 +8,7 @@ const initialState = {
     loading: false,
     hasLoaded: false,
     error: null,
-    errMesage: null,
+    errMessage: null,
     data: {},
     editProfileLoading: false,
     editProfileErrMessage: null,
@@ -19,7 +19,7 @@ const initialState = {
     loading: false,
     hasLoaded: false,
     error: null,
-    errMesage: null,
+    errMessage: null,
     data: []
   },
   newProject: {

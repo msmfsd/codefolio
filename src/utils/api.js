@@ -197,6 +197,50 @@ export default class Api {
   }
 
   /**
+   * Create new project to Codefolio API
+   * @param formData : object
+   * @param token : string
+   * @param projectId : string
+   * @returns {object}
+   */
+  static async EditProject (formData, token, projectId) {
+    const serialized = JSON.stringify(formData)
+    const opts = {
+      method: 'put',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': token
+      },
+      body: serialized
+    }
+    return await fetch(API_URL + '/api/project/' + projectId.trim(), opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
+   * Delete project to Codefolio API
+   * @param formData : object
+   * @param token : string
+   * @param projectId : string
+   * @returns {object}
+   */
+  static async DeleteProject (projectId, token) {
+    const opts = {
+      method: 'delete',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': token
+      }
+    }
+    return await fetch(API_URL + '/api/project/' + projectId.trim(), opts)
+        .then(response => {
+          return response.json()
+        })
+  }
+
+  /**
    * Upload files to Codefolio API
    * @param files : array
    * @returns {object}

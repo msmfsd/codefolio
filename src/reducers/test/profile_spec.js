@@ -20,13 +20,13 @@ describe('profile reducer', () => {
       payload: {
         loading: true,
         error: null,
-        errMesage: null
+        errMessage: null
       }
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
       loading: true,
       error: null,
-      errMesage: null
+      errMessage: null
     }))
   })
   // FETCH_PROFILE_RESULT
@@ -40,7 +40,7 @@ describe('profile reducer', () => {
       loading: false,
       hasLoaded: true,
       error: null,
-      errMesage: null,
+      errMessage: null,
       data: data
     }))
   })
@@ -55,7 +55,7 @@ describe('profile reducer', () => {
       loading: false,
       hasLoaded: false,
       error: true,
-      errMesage: 'API Error'
+      errMessage: 'API Error'
     }))
   })
   // UPDATE_PROFILE_FIELD

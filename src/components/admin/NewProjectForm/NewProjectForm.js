@@ -73,6 +73,7 @@ class NewProjectForm extends Component {
       newProjectOnSpliceFieldArray,
       newProjectAddLink,
       newProjectRemoveLink,
+      newProjectRemoveMedia,
       newProjectUploadFilesAsync,
       fields: {
         name,
@@ -130,18 +131,18 @@ class NewProjectForm extends Component {
               </div>
               <div className={defaultInputClasses + ' m6'}>
                 <h6>View Order:<div className="hint">Project order</div></h6>
-                <input type="number" min="0" {...viewOrder}/>
+                <input type="number" min="0" {...viewOrder} onBlur={(e) => this.onBlurUpdate(e)}/>
                   {viewOrder.touched && viewOrder.error && <div className="input-field-message">{viewOrder.error}</div>}
               </div>
               <div className={defaultInputClasses + ' m6'}>
                 <h6>Feature project?:<div className="hint">0 = no, 1 = yes</div></h6>
-                <input type="number" min="0" max="1" {...sticky}/>
+                <input type="number" min="0" max="1" {...sticky} onBlur={(e) => this.onBlurUpdate(e)}/>
                   {sticky.touched && sticky.error && <div className="input-field-message">{sticky.error}</div>}
               </div>
               <div className={defaultInputClasses}><h5>Project media</h5></div>
               <div className={defaultInputClasses}>
                 <h6>Upload project screenshots:<div className="hint">Max 1MB image files allowed</div></h6>
-                <FormMediaEditor auth={auth} newProject={newProject} uploadAsyncFunc={newProjectUploadFilesAsync} />
+                <FormMediaEditor auth={auth} newProject={newProject} uploadAsyncFunc={newProjectUploadFilesAsync} removeMediaItemFunc={newProjectRemoveMedia} />
               </div>
               <div className={defaultInputClasses}><h5>Project repo</h5></div>
               <div className={defaultInputClasses + ' m6'}>
@@ -214,6 +215,7 @@ NewProjectForm.propTypes = {
   newProjectAddLink: PropTypes.func,
   newProjectRemoveLink: PropTypes.func,
   newProjectUpdateField: PropTypes.func.isRequired,
+  newProjectRemoveMedia: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   defaultInputClasses: PropTypes.string

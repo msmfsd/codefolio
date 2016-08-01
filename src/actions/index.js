@@ -29,11 +29,15 @@ export const REMOVE_PROFILE_ITEM = 'REMOVE_PROFILE_ITEM'
 export const FETCH_PROJECTS_REQUEST = 'FETCH_PROJECTS_REQUEST'
 export const FETCH_PROJECTS_RESULT = 'FETCH_PROJECTS_RESULT'
 export const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR'
+export const DELETE_PROJECT_REQUEST = 'DELETE_PROJECT_REQUEST'
+export const DELETE_PROJECT_RESULT = 'DELETE_PROJECT_RESULT'
+export const DELETE_PROJECT_FAIL = 'DELETE_PROJECT_FAIL'
 // new project
 export const NEW_PROJECT = 'NEW_PROJECT'
 export const NEW_PROJECT_SUCCESS = 'NEW_PROJECT_SUCCESS'
 export const NEW_PROJECT_FAIL = 'NEW_PROJECT_FAIL'
 export const NEW_PROJECT_RESET = 'NEW_PROJECT_RESET'
+export const EDIT_PROJECT_RESET = 'EDIT_PROJECT_RESET'
 export const NEW_PROJECT_UPLOADING_FILES = 'NEW_PROJECT_UPLOADING_FILES'
 export const NEW_PROJECT_UPLOADING_FILES_COMPLETE = 'NEW_PROJECT_UPLOADING_FILES_COMPLETE'
 export const NEW_PROJECT_UPLOADING_FILES_ERROR = 'NEW_PROJECT_UPLOADING_FILES_ERROR'
@@ -43,6 +47,7 @@ export const NEW_PROJECT_ON_PUSH_FIELD_ARRAY = 'NEW_PROJECT_ON_PUSH_FIELD_ARRAY'
 export const NEW_PROJECT_ADD_LINK = 'NEW_PROJECT_ADD_LINK'
 export const NEW_PROJECT_REMOVE_LINK = 'NEW_PROJECT_REMOVE_LINK'
 export const NEW_PROJECT_UPDATE_FIELD = 'NEW_PROJECT_UPDATE_FIELD'
+export const NEW_PROJECT_REMOVE_MEDIA = 'NEW_PROJECT_REMOVE_MEDIA'
 
 // auth
 export const AUTH = 'AUTH'
@@ -103,6 +108,16 @@ const fetchProjectsResult = (data) => ({
 })
 const fetchProjectsError = (err) => ({
   type: FETCH_PROJECTS_ERROR,
+  payload: err
+})
+const deleteProjectRequest = () => ({
+  type: DELETE_PROJECT_REQUEST
+})
+const deleteProjectResult = () => ({
+  type: DELETE_PROJECT_RESULT
+})
+const deleteProjectFail = (err) => ({
+  type: DELETE_PROJECT_FAIL,
   payload: err
 })
 
@@ -284,7 +299,33 @@ export const fetchProjectsAsync = () => {
   }
 }
 
+export const deleteProjectAsync = (id, token) => {
+  return dispatch => {
+    dispatch(deleteProjectRequest())
+    // TODO dev only
+    setTimeout(() => {
+      API.DeleteProject(id, token)
+          .then(response => {
+            if(!response.success) {
+              dispatch(deleteProjectFail(response.message))
+            } else {
+              // success!
+              dispatch(deleteProjectResult())
+              // ensure sync state to db
+              dispatch(fetchProjectsAsync())
+            }
+          })
+          .catch((reason) => dispatch(deleteProjectFail(reason.message + '. API server unreachable.')))
+    }, 500)
+  }
+}
+
 // NEW PROJECT
+export const editProjectReset = (project) => ({
+  type: EDIT_PROJECT_RESET,
+  project
+})
+
 export const newProjectReset = () => ({
   type: NEW_PROJECT_RESET
 })
@@ -317,6 +358,11 @@ export const newProjectAddLink = (linkGroup, linkName, linkUrl) => ({
 export const newProjectRemoveLink = (linkGroup, index) => ({
   type: NEW_PROJECT_REMOVE_LINK,
   linkGroup,
+  index
+})
+
+export const newProjectRemoveMedia = (index) => ({
+  type: NEW_PROJECT_REMOVE_MEDIA,
   index
 })
 
@@ -354,6 +400,24 @@ export const newProjectAsync = (formData, token) => {
             message = 'Database duplicate key error. Ensure project name is unique'
           }
           dispatch(newProjectFail(message))
+        } else {
+          dispatch(newProjectSuccess())
+        }
+      })
+      .catch((reason) => dispatch(newProjectFail(reason.message + '. API server unreachable.')))
+    }, 500)
+  }
+}
+
+export const editProjectAsync = (formData, token, projectId) => {
+  return (dispatch) => {
+    dispatch(newProject())
+    // TODO dev only
+    setTimeout(() => {
+      API.EditProject(formatProjectData(formData), token, projectId)
+      .then((response) => {
+        if(!response.success) {
+          dispatch(newProjectFail(response.message))
         } else {
           dispatch(newProjectSuccess())
         }

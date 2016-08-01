@@ -183,6 +183,22 @@ describe('new project reducer', () => {
     expect(newState).to.eql(reducerState)
   })
 
+  // NEW_PROJECT_REMOVE_MEDIA
+  it('Handles NEW_PROJECT_REMOVE_MEDIA', () => {
+    const filenames = ['img1.png', 'img2.png']
+    const initialStateMedia = initialState
+    initialStateMedia.media = filenames
+    const index = 0;
+    const newState = reducer(initialStateMedia, {
+      type: 'NEW_PROJECT_REMOVE_MEDIA',
+      index
+    })
+    const reducerState = update(initialState, {
+      media: {$splice: [[index, 1]]}
+    })
+    expect(newState).to.eql(reducerState)
+  })
+
   // NEW_PROJECT_ON_PUSH_FIELD_ARRAY
   it('Handles NEW_PROJECT_ON_PUSH_FIELD_ARRAY', () => {
     const fieldName = 'projectTech'
