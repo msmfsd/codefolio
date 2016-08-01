@@ -4,6 +4,7 @@
  * MIT Licensed
  */
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import CssModules from 'react-css-modules'
 import styles from './FormArrayEditor.css'
 
@@ -48,6 +49,7 @@ class FormArrayEditor extends Component {
       this.setState({ editing: false, message: null })
       this.props.addItemFunc(this.props.fieldName, this.state.nameFieldValue)
       this.refs.createItemName.value = ''
+      ReactDOM.findDOMNode(this.refs.createItemName).focus()
     } else {
       this.setState({ message: 'Name field required' })
     }
@@ -68,6 +70,7 @@ class FormArrayEditor extends Component {
         message: null
       }
     )
+    ReactDOM.findDOMNode(this.refs.createItemName).focus()
   }
 
   /**
@@ -86,7 +89,7 @@ class FormArrayEditor extends Component {
   }
 
   render () {
-    const { fields, fieldName, max } = this.props
+    const { fields, max } = this.props
     let links = null
     let maxReached = false
     if(fields.value) {
@@ -116,11 +119,7 @@ class FormArrayEditor extends Component {
         </thead>
         <tbody>
           {links}
-          <tr className={fields.value.length < 1 ? 'show' : 'hide'}>
-            <td><p><i>No {fieldName} found.</i></p></td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr className={this.state.editing ? 'show' : 'hide'}>
+          <tr className={maxReached ? 'hide' : 'show'}>
             <td>
               <input onChange={(e) => {
                 this.state.nameFieldValue = e.target.value
@@ -128,7 +127,6 @@ class FormArrayEditor extends Component {
             </td>
             <td>
               <button onClick={this.addItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">check_circle</i></button>
-              <button onClick={this.cancelItem.bind(this)} styleName="spacing" className="btn-floating btn-small waves-effect right"><i className="material-icons">delete</i></button>
             </td>
           </tr>
           <tr className={this.state.message ? 'show' : 'hide'}>

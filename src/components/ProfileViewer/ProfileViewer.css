@@ -3,7 +3,6 @@
 }
 
 .cf-profile {
-
   display: block;
   position: relative;
   float: left;
@@ -46,14 +45,7 @@
   display: block;
   float: left;
   width: 100%;
-  padding-top: 20px;
+  padding: $padding;
   margin-top: 1rem;
   composes: border-top-gradient-to-left from '../../assets/css/Global.css';
-
-  & p {
-    padding: 0 $padding;
-    margin-right: 22px;
-    line-height: 1.7;
-  }
-
 }

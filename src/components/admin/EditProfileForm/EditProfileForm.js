@@ -33,7 +33,6 @@ const editProfileValidation = createValidator({
   name: [required, maxLength(36)],
   description: [required, maxLength(72)],
   bio: [required],
-  theme: [required],
   displayBgImage: [required],
   use: [required],
   gravitarEmail: [ifAvatarGravitar('use', 'gravitarEmail')],
@@ -82,7 +81,6 @@ class EditProfileForm extends Component {
         name,
         description,
         bio,
-        theme,
         displayBgImage,
         use,
         gravitarEmail,
@@ -129,7 +127,7 @@ class EditProfileForm extends Component {
                 {description.touched && description.error && <div className="input-field-message">{description.error}</div>}
               </div>
               <div className={defaultInputClasses}>
-                <h6>Bio:<div className="hint">Bio text must be manually wrapped in &lt;p&gt; tags</div></h6>
+                <h6>Biography:<div className="hint">Paste in your bio, <a style={{textDecoration: 'underline'}} href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> is allowed</div></h6>
                 <textarea rows="8" placeholder="Enter your bio" {...bio} onBlur={(e) => this.onBlurUpdate(e)}/>
                 {bio.touched && bio.error && <div className="input-field-message">{bio.error}</div>}
               </div>
@@ -154,11 +152,6 @@ class EditProfileForm extends Component {
                 <FormLinksEditor fields={links} linkGroup={'links'} addLinkFunc={addProfileLink} removeLinkFunc={removeProfileItem} max={4} />
               </div>
               <div className={defaultInputClasses}><h5>Folio layout</h5></div>
-              <div className={defaultInputClasses}>
-                <h6>Theme:<div className="hint">Choose the theme Luke!</div></h6>
-                <input type="radio" {...theme} value="dark" checked={theme.value === 'dark'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Dark
-                <input type="radio" {...theme} value="light" checked={theme.value === 'light'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Light
-              </div>
               <div className={defaultInputClasses}>
                 <h6>Display background image:<div className="hint">Show body background image on large screens?</div></h6>
                 <input type="radio" {...displayBgImage} value="yes" checked={displayBgImage.value === 'yes'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Yes

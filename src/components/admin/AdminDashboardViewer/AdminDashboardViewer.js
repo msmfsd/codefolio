@@ -83,7 +83,7 @@ class AdminDashboardViewer extends Component {
                           <div>
                             <h6 className="truncate">
                               {index + 1} - {obj.name}
-                              <span className="truncate">Order: {obj.viewOrder} | Sticky: {obj.sticky === 1 ? 'Yes' : 'No'}</span>
+                              <span className="truncate">View order: {obj.viewOrder} | Featured: {obj.sticky === 1 ? 'Yes' : 'No'}</span>
                             </h6>
                             <Link to={'/admin/edit-project/' + obj.slug} className="btn-floating right hoverable"><i className="material-icons">mode_edit</i></Link>
                             <a href="#" onClick={this.deleteProject.bind(this, obj._id)} className="btn-floating right hoverable"><i className="material-icons">delete</i></a>

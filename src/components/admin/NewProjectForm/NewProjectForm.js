@@ -32,7 +32,7 @@ const fields = [
   'linkWeb',
   'media'
 ]
-const newProjectValidation = createValidator({
+const editProjectValidation = createValidator({
   name: [required, maxLength(40), noSpecialCharacters],
   role: [required, maxLength(40)],
   description: [required],
@@ -50,7 +50,7 @@ class NewProjectForm extends Component {
 
   componentDidMount () {
     // reset form
-    this.props.newProjectReset()
+    this.props.editProjectReset()
   }
 
   /**
@@ -59,22 +59,22 @@ class NewProjectForm extends Component {
    * @param e : object
    */
   onBlurUpdate (e) {
-    this.props.newProjectUpdateField(e.currentTarget.name, e.currentTarget.value)
+    this.props.editProjectUpdateField(e.currentTarget.name, e.currentTarget.value)
   }
 
   render () {
     const {
       auth,
-      newProject,
+      editProject,
       newProjectAsync,
       handleSubmit,
       defaultInputClasses,
-      newProjectOnPushFieldArray,
-      newProjectOnSpliceFieldArray,
-      newProjectAddLink,
-      newProjectRemoveLink,
-      newProjectRemoveMedia,
-      newProjectUploadFilesAsync,
+      editProjectOnPushFieldArray,
+      editProjectOnSpliceFieldArray,
+      editProjectAddLink,
+      editProjectRemoveLink,
+      editProjectRemoveMedia,
+      editProjectUploadFilesAsync,
       fields: {
         name,
         role,
@@ -98,12 +98,12 @@ class NewProjectForm extends Component {
       <div>
         <div styleName="form-container">
           <div className="row">
-            <div styleName="card-padding" className={newProject.newProjectSuccess ? 'card-panel show' : 'card-panel hide'}>
+            <div styleName="card-padding" className={editProject.editProjectSuccess ? 'card-panel show' : 'card-panel hide'}>
               <span>Project created successfully: <a href={'/projects/' + slugger(name.value)} target="_blank">View project</a></span>
             </div>
           </div>
           <div className="row">
-            <form className={newProject.newProjectSuccess ? 'hide' : 'show'} onSubmit={handleSubmit(data => newProjectAsync(data, auth.token))}>
+            <form className={editProject.editProjectSuccess ? 'hide' : 'show'} onSubmit={handleSubmit(data => newProjectAsync(data, auth.token))}>
               <div className="col s12">
                 <h3>Create new project</h3>
                 <p>Complete fields and submit to create a project.</p>
@@ -125,7 +125,7 @@ class NewProjectForm extends Component {
                 {client.touched && client.error && <div className="input-field-message">{client.error}</div>}
               </div>
               <div className={defaultInputClasses}>
-                <h6>Project description:<div className="hint">Optional. Text must be manually wrapped in &lt;p&gt; tags</div></h6>
+                <h6>Project description:<div className="hint">Paste in your bio, <a style={{textDecoration: 'underline'}} href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> is allowed</div></h6>
                 <textarea rows="8" placeholder="Enter project description" {...description} onBlur={(e) => this.onBlurUpdate(e)}/>
                 {description.touched && description.error && <div className="input-field-message">{description.error}</div>}
               </div>
@@ -135,14 +135,14 @@ class NewProjectForm extends Component {
                   {viewOrder.touched && viewOrder.error && <div className="input-field-message">{viewOrder.error}</div>}
               </div>
               <div className={defaultInputClasses + ' m6'}>
-                <h6>Feature project?:<div className="hint">0 = no, 1 = yes</div></h6>
+                <h6>Featured:<div className="hint">Always appear at top?</div></h6>
                 <input type="number" min="0" max="1" {...sticky} onBlur={(e) => this.onBlurUpdate(e)}/>
                   {sticky.touched && sticky.error && <div className="input-field-message">{sticky.error}</div>}
               </div>
               <div className={defaultInputClasses}><h5>Project media</h5></div>
               <div className={defaultInputClasses}>
                 <h6>Upload project screenshots:<div className="hint">Max 1MB image files allowed</div></h6>
-                <FormMediaEditor auth={auth} newProject={newProject} uploadAsyncFunc={newProjectUploadFilesAsync} removeMediaItemFunc={newProjectRemoveMedia} />
+                <FormMediaEditor auth={auth} editProject={editProject} uploadAsyncFunc={editProjectUploadFilesAsync} removeMediaItemFunc={editProjectRemoveMedia} />
               </div>
               <div className={defaultInputClasses}><h5>Project repo</h5></div>
               <div className={defaultInputClasses + ' m6'}>
@@ -183,18 +183,18 @@ class NewProjectForm extends Component {
               <div className={defaultInputClasses}><h5>Project links</h5></div>
               <div styleName="table-div" className={defaultInputClasses}>
                 <h6>Add up to 2 project links:<div className="hint">eg. linux.org &#126; http://linux.org/v2</div></h6>
-                <FormLinksEditor fields={linkWeb} linkGroup={'linkWeb'} addLinkFunc={newProjectAddLink} removeLinkFunc={newProjectRemoveLink} max={2} />
+                <FormLinksEditor fields={linkWeb} linkGroup={'linkWeb'} addLinkFunc={editProjectAddLink} removeLinkFunc={editProjectRemoveLink} max={2} />
               </div>
               <div className={defaultInputClasses}><h5>Project tech</h5></div>
               <div styleName="table-div" className={defaultInputClasses}>
                 <h6>Add up to 10 project technologies:<div className="hint">eg. C++, NoSQL, jQuery, CSS, UX, Elm, Nginx, Docker, React</div></h6>
-                <FormArrayEditor fields={projectTech} fieldName={'projectTech'} addItemFunc={newProjectOnPushFieldArray} removeItemFunc={newProjectOnSpliceFieldArray} max={10} />
+                <FormArrayEditor fields={projectTech} fieldName={'projectTech'} addItemFunc={editProjectOnPushFieldArray} removeItemFunc={editProjectOnSpliceFieldArray} max={10} />
                 {projectTech.touched && projectTech.error && <div className="input-field-message">{projectTech.error}</div>}
               </div>
               <div className={defaultInputClasses}><h5>Create new project</h5></div>
-              <div styleName="form-messages" className="col s12">{newProject.newProjectError && newProject.newProjectErrMessage}</div>
+              <div styleName="form-messages" className="col s12">{editProject.editProjectError && editProject.editProjectErrMessage}</div>
               <div className={defaultInputClasses}>
-                <button styleName="form-btn" className={newProject.newProjectLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={newProject.newProjectLoading || newProject.newProjectFilesLoading}><i className="material-icons">settings</i><span>Create project</span></button>
+                <button styleName="form-btn" className={editProject.editProjectLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={editProject.editProjectLoading || editProject.editProjectFilesLoading}><i className="material-icons">settings</i><span>Create project</span></button>
               </div>
             </form>
           </div>
@@ -206,16 +206,16 @@ class NewProjectForm extends Component {
 
 NewProjectForm.propTypes = {
   auth: PropTypes.object.isRequired,
-  newProject: PropTypes.object.isRequired,
+  editProject: PropTypes.object.isRequired,
   newProjectAsync: PropTypes.func,
-  newProjectReset: PropTypes.func,
-  newProjectUploadFilesAsync: PropTypes.func,
-  newProjectOnPushFieldArray: PropTypes.func,
-  newProjectOnSpliceFieldArray: PropTypes.func,
-  newProjectAddLink: PropTypes.func,
-  newProjectRemoveLink: PropTypes.func,
-  newProjectUpdateField: PropTypes.func.isRequired,
-  newProjectRemoveMedia: PropTypes.func.isRequired,
+  editProjectReset: PropTypes.func,
+  editProjectUploadFilesAsync: PropTypes.func,
+  editProjectOnPushFieldArray: PropTypes.func,
+  editProjectOnSpliceFieldArray: PropTypes.func,
+  editProjectAddLink: PropTypes.func,
+  editProjectRemoveLink: PropTypes.func,
+  editProjectUpdateField: PropTypes.func.isRequired,
+  editProjectRemoveMedia: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   defaultInputClasses: PropTypes.string
@@ -228,5 +228,5 @@ NewProjectForm.defaultProps = {
 export default reduxForm({
   form: 'newproject',
   fields,
-  validate: newProjectValidation
-}, state => ({ initialValues: state.newProject }))(CssModules(NewProjectForm, styles))
+  validate: editProjectValidation
+}, state => ({ initialValues: state.editProject }))(CssModules(NewProjectForm, styles))

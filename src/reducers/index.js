@@ -8,14 +8,14 @@ import { routerReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 import profile from './profile'
 import projects from './projects'
-import newProject from './newProject'
+import editProject from './editProject'
 import admin from './admin'
 import auth from './auth'
 
 const reducers = combineReducers({
   profile,
   projects,
-  newProject,
+  editProject,
   admin,
   auth,
   routing: routerReducer,

@@ -1,7 +1,6 @@
 /* global */
 const dirGlobal = '../img/global'
-const dirDark = '../img/theme/dark'
-const dirLight = '../img/theme/light'
+const dirDefault = '../img/theme/default'
 /* breakpoints */
 const small = '600px'
 const medium = '992px'
@@ -48,8 +47,7 @@ const formWidthWide = '680px'
 
 module.exports = {
   dirGlobal,
-  dirDark,
-  dirLight,
+  dirDefault,
   small,
   medium,
   large,

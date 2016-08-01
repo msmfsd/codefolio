@@ -87,7 +87,7 @@ class FormTechIconsEditor extends Component {
   }
 
   render () {
-    const { fields, linkGroup, max } = this.props
+    const { fields, max } = this.props
     let techicons = null
     let maxReached = false
     let deviconOptions = devicons.map((obj, index) => {
@@ -124,12 +124,7 @@ class FormTechIconsEditor extends Component {
         </thead>
         <tbody>
           {techicons}
-          <tr className={fields.value.length < 1 ? 'show' : 'hide'}>
-            <td><p><i>No {linkGroup} found.</i></p></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr className={this.state.editing ? 'show' : 'hide'}>
+          <tr>
             <td>
               <select ref="selectIcon" className="browser-default">
                 {deviconOptions}
@@ -138,7 +133,6 @@ class FormTechIconsEditor extends Component {
             <td>&nbsp;</td>
             <td>
               <button onClick={this.addItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">check_circle</i></button>
-              <button onClick={this.cancelItem.bind(this)} styleName="spacing" className="btn-floating btn-small waves-effect right"><i className="material-icons">delete</i></button>
             </td>
           </tr>
           <tr className={this.state.message ? 'show' : 'hide'}>

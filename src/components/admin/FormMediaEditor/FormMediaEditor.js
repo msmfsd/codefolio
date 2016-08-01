@@ -40,11 +40,11 @@ class FormMediaEditor extends Component {
   }
 
   render () {
-    const { newProject } = this.props
+    const { editProject } = this.props
     const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_URL : __CONFIG__.production.API_URL
     return (
       <div styleName="form-media-editor">
-        <ul styleName="media-items" className={newProject.media.length > 0 ? 'show' : 'hide'}>{newProject.media.map((obj, index) => {
+        <ul styleName="media-items" className={editProject.media.length > 0 ? 'show' : 'hide'}>{editProject.media.map((obj, index) => {
           return (
             <li key={index}>
               <figure>
@@ -55,14 +55,14 @@ class FormMediaEditor extends Component {
           )
         })}</ul>
         <div styleName="dropzone-loader">
-          <div className={newProject.newProjectFilesLoading ? 'show' : 'hide'} styleName="loading-div">
+          <div className={editProject.editProjectFilesLoading ? 'show' : 'hide'} styleName="loading-div">
             <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>
           </div>
           <Dropzone styleName="dropzone" onDrop={this.onDrop.bind(this)}>
             <div>Drop JPG/PNG file/s here, or click to browse your files.</div>
           </Dropzone>
         </div>
-        <ul className={this.state.files && !newProject.newProjectFilesError && !newProject.newProjectFilesSuccess ? 'show' : 'hide'}>{this.state.files.map((obj, index) => {
+        <ul className={this.state.files && !editProject.editProjectFilesError && !editProject.editProjectFilesSuccess ? 'show' : 'hide'}>{this.state.files.map((obj, index) => {
           return (
             <li key={index}>
               <figure>
@@ -71,8 +71,8 @@ class FormMediaEditor extends Component {
             </li>
           )
         })}</ul>
-        <div styleName="form-messages">{newProject.newProjectFilesError && newProject.newProjectFilesErrMessage}</div>
-        <div styleName="form-messages" className={newProject.newProjectFilesSuccess ? 'show' : 'hide'}>Files uploaded successfully</div>
+        <div styleName="form-messages">{editProject.editProjectFilesError && editProject.editProjectFilesErrMessage}</div>
+        <div styleName="form-messages" className={editProject.editProjectFilesSuccess ? 'show' : 'hide'}>Files uploaded successfully</div>
       </div>
     )
   }
@@ -81,7 +81,7 @@ class FormMediaEditor extends Component {
 
 FormMediaEditor.propTypes = {
   auth: PropTypes.object.isRequired,
-  newProject: PropTypes.object.isRequired,
+  editProject: PropTypes.object.isRequired,
   uploadAsyncFunc: PropTypes.func.isRequired,
   removeMediaItemFunc: PropTypes.func.isRequired
 }

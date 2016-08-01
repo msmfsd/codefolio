@@ -50,13 +50,7 @@
     display: block;
     float: left;
     width: 100%;
-
-    & p {
-      padding: 0 $padding;
-      margin-right: 22px;
-      line-height: 1.7;
-    }
-
+    padding: 0 $padding;
   }
 }
 

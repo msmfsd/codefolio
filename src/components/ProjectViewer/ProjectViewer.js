@@ -7,6 +7,7 @@
  /* eslint react/prop-types: "off" */
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import Markdown from 'react-markdown'
 import CssModules from 'react-css-modules'
 import ImageGallery from 'react-image-gallery'
 import __CONFIG__ from '../../../cf.config'
@@ -30,16 +31,6 @@ class ProjectViewer extends Component {
     if(typeof this._imageGallery !== 'undefined') {
       this._imageGallery.slideToIndex(0)
     }
-  }
-
-  /**
-   * Get html formatted
-   * @param html : string
-   * @returns {object}
-   */
-  getSanitisedHtml (html) {
-    // TODO: alt way of formatting html string
-    return {__html: html }
   }
 
   render () {
@@ -74,7 +65,9 @@ class ProjectViewer extends Component {
           <IconLinks icon="web" data={project.linkWeb} />
           <RepoLink data={project.repo} />
           <IconTechChips icon="code" data={project.projectTech} />
-          <div styleName="cf-project-description" dangerouslySetInnerHTML={this.getSanitisedHtml(project.description)}></div>
+          <div styleName="cf-project-description">
+            <Markdown source={project.description} />
+          </div>
           <CodeSnippet data={project.codeSnippet} />
           <ScrollTopButton />
         </div>

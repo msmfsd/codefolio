@@ -5,6 +5,7 @@
  */
 /* eslint react/prop-types: "off" */
 import React, { Component, PropTypes } from 'react'
+import Markdown from 'react-markdown'
 import CssModules from 'react-css-modules'
 import Loader from '../../components/Loader/Loader'
 import Panel from '../../components/Panel/Panel'
@@ -18,44 +19,6 @@ import styles from './ProfileViewer.css'
  * @extends React.Component
  */
 class ProfileViewer extends Component {
-
-  componentDidMount () {
-    if(!this.props.profile.hasLoaded) {
-      this.props.fetchProfileAsync()
-    }
-  }
-
-  componentDidUpdate () {
-    if(this.props.profile.hasLoaded && !this.props.profile.error) {
-      this.initialiseLayout(this.props.profile.data.layout)
-    }
-  }
-
-  /**
-   * Method to set theme & bg image
-   * & any dom manipulation
-   * @param layout : object
-   * @returns {}
-   */
-  initialiseLayout (layout) {
-    // set body classes
-    let classes = []
-    classes.push('cf-theme-' + layout.theme)
-    classes.push('background-image-' + String(layout.displayBgImage))
-    for (let value of classes) {
-      document.body.classList.add(value)
-    }
-  }
-
-  /**
-   * Get html formatted
-   * @param html : string
-   * @returns {object}
-   */
-  getSanitisedHtml (html) {
-    // TODO: alt way of formatting html string
-    return {__html: html }
-  }
 
   render () {
     // map data
@@ -75,7 +38,9 @@ class ProfileViewer extends Component {
           <IconLinks icon="perm_contact_calendar" data={profile.data.contacts} />
           <IconLinks icon="location_on" data={profile.data.location} />
           <IconLinks icon="link" data={profile.data.links} />
-          <div styleName="cf-bio" dangerouslySetInnerHTML={this.getSanitisedHtml(profile.data.bio)}></div>
+          <div styleName="cf-bio">
+            <Markdown source={profile.data.bio} />
+          </div>
         </div>
       )
     }

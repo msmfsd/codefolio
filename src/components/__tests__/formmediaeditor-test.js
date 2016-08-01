@@ -9,15 +9,15 @@ describe('FormMediaEditor component', () => {
   const auth = {
     logoutLoading: false
   }
-  const newProject = {
-    newProjectFilesLoading: true,
+  const editProject = {
+    editProjectFilesLoading: true,
     media: []
   }
   const uploadAsyncFunc = () => {
     return true
   }
 
-  const formMediaEditor = TestUtils.renderIntoDocument(<FormMediaEditor uploadAsyncFunc={() => uploadAsyncFunc()} auth={auth} newProject={newProject} removeMediaItemFunc={() => true} />)
+  const formMediaEditor = TestUtils.renderIntoDocument(<FormMediaEditor uploadAsyncFunc={() => uploadAsyncFunc()} auth={auth} editProject={editProject} removeMediaItemFunc={() => true} />)
   it('renders into document', () => {
     expect(formMediaEditor).toExist()
   })

@@ -5,7 +5,7 @@
  */
 import { expect } from 'chai'
 import update from 'react/lib/update'
-import reducer from '../newProject'
+import reducer from '../editProject'
 import appInitialState from '../../store/initial-state'
 
 /**
@@ -13,70 +13,70 @@ import appInitialState from '../../store/initial-state'
  */
 describe('new project reducer', () => {
   //initial state
-  const initialState = appInitialState.newProject
-  // NEW_PROJECT
-  it('Handles NEW_PROJECT', () => {
+  const initialState = appInitialState.editProject
+  // EDIT_PROJECT
+  it('Handles EDIT_PROJECT', () => {
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT',
+      type: 'EDIT_PROJECT',
       payload: {
-        newProjectLoading: true,
-        newProjectErrMessage: null,
-        newProjectError: null,
-        newProjectSuccess: null
+        editProjectLoading: true,
+        editProjectErrMessage: null,
+        editProjectError: null,
+        editProjectSuccess: null
       }
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
-      newProjectLoading: true,
-      newProjectErrMessage: null,
-      newProjectError: null,
-      newProjectSuccess: null
+      editProjectLoading: true,
+      editProjectErrMessage: null,
+      editProjectError: null,
+      editProjectSuccess: null
     }))
   })
-  // NEW_PROJECT_SUCCESS
-  it('Handles NEW_PROJECT_SUCCESS', () => {
+  // EDIT_PROJECT_SUCCESS
+  it('Handles EDIT_PROJECT_SUCCESS', () => {
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_SUCCESS',
+      type: 'EDIT_PROJECT_SUCCESS',
       payload: {
-        newProjectLoading: false,
-        newProjectErrMessage: null,
-        newProjectError: null,
-        newProjectSuccess: true
+        editProjectLoading: false,
+        editProjectErrMessage: null,
+        editProjectError: null,
+        editProjectSuccess: true
       }
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
-      newProjectLoading: false,
-      newProjectErrMessage: null,
-      newProjectError: null,
-      newProjectSuccess: true
+      editProjectLoading: false,
+      editProjectErrMessage: null,
+      editProjectError: null,
+      editProjectSuccess: true
     }))
   })
 
-  // NEW_PROJECT_FAIL
-  it('Handles NEW_PROJECT_FAIL', () => {
+  // EDIT_PROJECT_FAIL
+  it('Handles EDIT_PROJECT_FAIL', () => {
     const error = 'Some Error'
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_FAIL',
+      type: 'EDIT_PROJECT_FAIL',
       payload: error
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
-      newProjectLoading: false,
-      newProjectErrMessage: error,
-      newProjectError: true,
-      newProjectSuccess: null
+      editProjectLoading: false,
+      editProjectErrMessage: error,
+      editProjectError: true,
+      editProjectSuccess: null
     }))
   })
 
-  // NEW_PROJECT_RESET
-  it('Handles NEW_PROJECT_RESET', () => {
+  // EDIT_PROJECT_RESET
+  it('Handles EDIT_PROJECT_RESET', () => {
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_RESET',
+      type: 'EDIT_PROJECT_RESET',
       payload: {
-        newProjectFilesLoading: false,
-        newProjectFilesMessage: null,
-        newProjectLoading: false,
-        newProjectErrMessage: null,
-        newProjectError: null,
-        newProjectSuccess: null,
+        editProjectFilesLoading: false,
+        editProjectFilesMessage: null,
+        editProjectLoading: false,
+        editProjectErrMessage: null,
+        editProjectError: null,
+        editProjectSuccess: null,
         name: '',
         role: '',
         description: '',
@@ -95,12 +95,12 @@ describe('new project reducer', () => {
       }
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
-      newProjectFilesLoading: false,
-      newProjectFilesMessage: null,
-      newProjectLoading: false,
-      newProjectErrMessage: null,
-      newProjectError: null,
-      newProjectSuccess: null,
+      editProjectFilesLoading: false,
+      editProjectFilesMessage: null,
+      editProjectLoading: false,
+      editProjectErrMessage: null,
+      editProjectError: null,
+      editProjectSuccess: null,
       name: '',
       role: '',
       description: '',
@@ -118,63 +118,63 @@ describe('new project reducer', () => {
       media: []
     }))
   })
-  // NEW_PROJECT_UPLOADING_FILES
-  it('Handles NEW_PROJECT_UPLOADING_FILES', () => {
+  // EDIT_PROJECT_UPLOADING_FILES
+  it('Handles EDIT_PROJECT_UPLOADING_FILES', () => {
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_UPLOADING_FILES',
+      type: 'EDIT_PROJECT_UPLOADING_FILES',
       payload: {
-        newProjectFilesLoading: true,
-        newProjectFilesErrMessage: null,
-        newProjectFilesError: null,
-        newProjectFilesSuccess: null
+        editProjectFilesLoading: true,
+        editProjectFilesErrMessage: null,
+        editProjectFilesError: null,
+        editProjectFilesSuccess: null
       }
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
-      newProjectFilesLoading: true,
-      newProjectFilesErrMessage: null,
-      newProjectFilesError: null,
-      newProjectFilesSuccess: null
+      editProjectFilesLoading: true,
+      editProjectFilesErrMessage: null,
+      editProjectFilesError: null,
+      editProjectFilesSuccess: null
     }))
   })
-  // NEW_PROJECT_UPLOADING_FILES_COMPLETE
-  it('Handles NEW_PROJECT_UPLOADING_FILES_COMPLETE', () => {
+  // EDIT_PROJECT_UPLOADING_FILES_COMPLETE
+  it('Handles EDIT_PROJECT_UPLOADING_FILES_COMPLETE', () => {
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_UPLOADING_FILES_COMPLETE',
+      type: 'EDIT_PROJECT_UPLOADING_FILES_COMPLETE',
       payload: {
-        newProjectFilesLoading: false,
-        newProjectFilesErrMessage: null,
-        newProjectFilesError: null,
-        newProjectFilesSuccess: true
+        editProjectFilesLoading: false,
+        editProjectFilesErrMessage: null,
+        editProjectFilesError: null,
+        editProjectFilesSuccess: true
       }
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
-      newProjectFilesLoading: false,
-      newProjectFilesErrMessage: null,
-      newProjectFilesError: null,
-      newProjectFilesSuccess: true
+      editProjectFilesLoading: false,
+      editProjectFilesErrMessage: null,
+      editProjectFilesError: null,
+      editProjectFilesSuccess: true
     }))
   })
 
-  // NEW_PROJECT_UPLOADING_FILES_ERROR
-  it('Handles NEW_PROJECT_UPLOADING_FILES_ERROR', () => {
+  // EDIT_PROJECT_UPLOADING_FILES_ERROR
+  it('Handles EDIT_PROJECT_UPLOADING_FILES_ERROR', () => {
     const error = 'Some Error'
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_UPLOADING_FILES_ERROR',
+      type: 'EDIT_PROJECT_UPLOADING_FILES_ERROR',
       payload: error
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
-      newProjectFilesLoading: false,
-      newProjectFilesErrMessage: error,
-      newProjectFilesError: true,
-      newProjectFilesSuccess: null
+      editProjectFilesLoading: false,
+      editProjectFilesErrMessage: error,
+      editProjectFilesError: true,
+      editProjectFilesSuccess: null
     }))
   })
 
-  // NEW_PROJECT_UPDATE_MEDIA
-  it('Handles NEW_PROJECT_UPDATE_MEDIA', () => {
+  // EDIT_PROJECT_UPDATE_MEDIA
+  it('Handles EDIT_PROJECT_UPDATE_MEDIA', () => {
     const filenames = ['img1.png', 'img2.png']
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_UPDATE_MEDIA',
+      type: 'EDIT_PROJECT_UPDATE_MEDIA',
       filenames
     })
     const reducerState = update(initialState, {
@@ -183,14 +183,14 @@ describe('new project reducer', () => {
     expect(newState).to.eql(reducerState)
   })
 
-  // NEW_PROJECT_REMOVE_MEDIA
-  it('Handles NEW_PROJECT_REMOVE_MEDIA', () => {
+  // EDIT_PROJECT_REMOVE_MEDIA
+  it('Handles EDIT_PROJECT_REMOVE_MEDIA', () => {
     const filenames = ['img1.png', 'img2.png']
     const initialStateMedia = initialState
     initialStateMedia.media = filenames
     const index = 0;
     const newState = reducer(initialStateMedia, {
-      type: 'NEW_PROJECT_REMOVE_MEDIA',
+      type: 'EDIT_PROJECT_REMOVE_MEDIA',
       index
     })
     const reducerState = update(initialState, {
@@ -199,12 +199,12 @@ describe('new project reducer', () => {
     expect(newState).to.eql(reducerState)
   })
 
-  // NEW_PROJECT_ON_PUSH_FIELD_ARRAY
-  it('Handles NEW_PROJECT_ON_PUSH_FIELD_ARRAY', () => {
+  // EDIT_PROJECT_ON_PUSH_FIELD_ARRAY
+  it('Handles EDIT_PROJECT_ON_PUSH_FIELD_ARRAY', () => {
     const fieldName = 'projectTech'
     const fieldValue = 'php'
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_ON_PUSH_FIELD_ARRAY',
+      type: 'EDIT_PROJECT_ON_PUSH_FIELD_ARRAY',
       fieldName,
       fieldValue
     })
@@ -214,12 +214,12 @@ describe('new project reducer', () => {
     expect(newState).to.eql(reducerState)
   })
 
-  // NEW_PROJECT_ON_SPLICE_FIELD_ARRAY
-  it('Handles NEW_PROJECT_ON_SPLICE_FIELD_ARRAY', () => {
+  // EDIT_PROJECT_ON_SPLICE_FIELD_ARRAY
+  it('Handles EDIT_PROJECT_ON_SPLICE_FIELD_ARRAY', () => {
     const fieldName = 'projectTech'
     const index = 0
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_ON_SPLICE_FIELD_ARRAY',
+      type: 'EDIT_PROJECT_ON_SPLICE_FIELD_ARRAY',
       fieldName,
       index
     })
@@ -229,13 +229,13 @@ describe('new project reducer', () => {
     expect(newState).to.eql(reducerState)
   })
 
-  // NEW_PROJECT_ADD_LINK
-  it('Handles NEW_PROJECT_ADD_LINK', () => {
+  // EDIT_PROJECT_ADD_LINK
+  it('Handles EDIT_PROJECT_ADD_LINK', () => {
     const linkGroup = 'linkWeb'
     const linkName = 'linktosite.com'
     const linkUrl = 'http://linktosite.com'
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_ADD_LINK',
+      type: 'EDIT_PROJECT_ADD_LINK',
       linkGroup,
       linkName,
       linkUrl
@@ -246,12 +246,12 @@ describe('new project reducer', () => {
     expect(newState).to.eql(reducerState)
   })
 
-  // NEW_PROJECT_REMOVE_LINK
-  it('Handles NEW_PROJECT_REMOVE_LINK', () => {
+  // EDIT_PROJECT_REMOVE_LINK
+  it('Handles EDIT_PROJECT_REMOVE_LINK', () => {
     const linkGroup = 'linkWeb'
     const index = 0
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_REMOVE_LINK',
+      type: 'EDIT_PROJECT_REMOVE_LINK',
       linkGroup,
       index
     })
@@ -261,12 +261,12 @@ describe('new project reducer', () => {
     expect(newState).to.eql(reducerState)
   })
 
-  // NEW_PROJECT_UPDATE_FIELD
-  it('Handles NEW_PROJECT_UPDATE_FIELD', () => {
+  // EDIT_PROJECT_UPDATE_FIELD
+  it('Handles EDIT_PROJECT_UPDATE_FIELD', () => {
     const fieldName = 'projectTech'
     const fieldValue = 'php'
     const newState = reducer(initialState, {
-      type: 'NEW_PROJECT_UPDATE_FIELD',
+      type: 'EDIT_PROJECT_UPDATE_FIELD',
       fieldName,
       fieldValue
     })

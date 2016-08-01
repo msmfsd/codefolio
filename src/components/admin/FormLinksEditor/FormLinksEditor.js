@@ -4,6 +4,7 @@
  * MIT Licensed
  */
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import CssModules from 'react-css-modules'
 import styles from './FormLinksEditor.css'
 
@@ -52,6 +53,7 @@ class FormLinksEditor extends Component {
       this.props.addLinkFunc(this.props.linkGroup, this.state.nameFieldValue, this.state.urlFieldValue)
       this.refs.createItemName.value = ''
       this.refs.createItemUrl.value = ''
+      ReactDOM.findDOMNode(this.refs.createItemName).focus()
     } else {
       this.setState({ message: 'Both fields required' })
     }
@@ -73,6 +75,7 @@ class FormLinksEditor extends Component {
         message: null
       }
     )
+    ReactDOM.findDOMNode(this.refs.createItemName).focus()
   }
 
   /**
@@ -92,7 +95,7 @@ class FormLinksEditor extends Component {
   }
 
   render () {
-    const { fields, linkGroup, max } = this.props
+    const { fields, max } = this.props
     let links = null
     let maxReached = false
     if(fields.value) {
@@ -124,12 +127,7 @@ class FormLinksEditor extends Component {
         </thead>
         <tbody>
           {links}
-          <tr className={fields.value.length < 1 ? 'show' : 'hide'}>
-            <td><p><i>No {linkGroup} found.</i></p></td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-          </tr>
-          <tr className={this.state.editing ? 'show' : 'hide'}>
+          <tr className={maxReached ? 'hide' : 'show'}>
             <td>
               <input onChange={(e) => {
                 this.state.nameFieldValue = e.target.value
@@ -142,7 +140,6 @@ class FormLinksEditor extends Component {
             </td>
             <td>
               <button onClick={this.addItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">check_circle</i></button>
-              <button onClick={this.cancelItem.bind(this)} styleName="spacing" className="btn-floating btn-small waves-effect right"><i className="material-icons">delete</i></button>
             </td>
           </tr>
           <tr className={this.state.message ? 'show' : 'hide'}>

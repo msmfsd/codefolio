@@ -32,23 +32,22 @@ export const FETCH_PROJECTS_ERROR = 'FETCH_PROJECTS_ERROR'
 export const DELETE_PROJECT_REQUEST = 'DELETE_PROJECT_REQUEST'
 export const DELETE_PROJECT_RESULT = 'DELETE_PROJECT_RESULT'
 export const DELETE_PROJECT_FAIL = 'DELETE_PROJECT_FAIL'
-// new project
-export const NEW_PROJECT = 'NEW_PROJECT'
-export const NEW_PROJECT_SUCCESS = 'NEW_PROJECT_SUCCESS'
-export const NEW_PROJECT_FAIL = 'NEW_PROJECT_FAIL'
-export const NEW_PROJECT_RESET = 'NEW_PROJECT_RESET'
+// edit/new project
+export const EDIT_PROJECT = 'EDIT_PROJECT'
+export const EDIT_PROJECT_SUCCESS = 'EDIT_PROJECT_SUCCESS'
+export const EDIT_PROJECT_FAIL = 'EDIT_PROJECT_FAIL'
 export const EDIT_PROJECT_RESET = 'EDIT_PROJECT_RESET'
-export const NEW_PROJECT_UPLOADING_FILES = 'NEW_PROJECT_UPLOADING_FILES'
-export const NEW_PROJECT_UPLOADING_FILES_COMPLETE = 'NEW_PROJECT_UPLOADING_FILES_COMPLETE'
-export const NEW_PROJECT_UPLOADING_FILES_ERROR = 'NEW_PROJECT_UPLOADING_FILES_ERROR'
-export const NEW_PROJECT_UPDATE_MEDIA = 'NEW_PROJECT_UPDATE_MEDIA'
-export const NEW_PROJECT_ON_SPLICE_FIELD_ARRAY = 'NEW_PROJECT_ON_SPLICE_FIELD_ARRAY'
-export const NEW_PROJECT_ON_PUSH_FIELD_ARRAY = 'NEW_PROJECT_ON_PUSH_FIELD_ARRAY'
-export const NEW_PROJECT_ADD_LINK = 'NEW_PROJECT_ADD_LINK'
-export const NEW_PROJECT_REMOVE_LINK = 'NEW_PROJECT_REMOVE_LINK'
-export const NEW_PROJECT_UPDATE_FIELD = 'NEW_PROJECT_UPDATE_FIELD'
-export const NEW_PROJECT_REMOVE_MEDIA = 'NEW_PROJECT_REMOVE_MEDIA'
-
+export const EDIT_PROJECT_SET = 'EDIT_PROJECT_SET'
+export const EDIT_PROJECT_UPLOADING_FILES = 'EDIT_PROJECT_UPLOADING_FILES'
+export const EDIT_PROJECT_UPLOADING_FILES_COMPLETE = 'EDIT_PROJECT_UPLOADING_FILES_COMPLETE'
+export const EDIT_PROJECT_UPLOADING_FILES_ERROR = 'EDIT_PROJECT_UPLOADING_FILES_ERROR'
+export const EDIT_PROJECT_UPDATE_MEDIA = 'EDIT_PROJECT_UPDATE_MEDIA'
+export const EDIT_PROJECT_ON_SPLICE_FIELD_ARRAY = 'EDIT_PROJECT_ON_SPLICE_FIELD_ARRAY'
+export const EDIT_PROJECT_ON_PUSH_FIELD_ARRAY = 'EDIT_PROJECT_ON_PUSH_FIELD_ARRAY'
+export const EDIT_PROJECT_ADD_LINK = 'EDIT_PROJECT_ADD_LINK'
+export const EDIT_PROJECT_REMOVE_LINK = 'EDIT_PROJECT_REMOVE_LINK'
+export const EDIT_PROJECT_UPDATE_FIELD = 'EDIT_PROJECT_UPDATE_FIELD'
+export const EDIT_PROJECT_REMOVE_MEDIA = 'EDIT_PROJECT_REMOVE_MEDIA'
 // auth
 export const AUTH = 'AUTH'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
@@ -121,30 +120,30 @@ const deleteProjectFail = (err) => ({
   payload: err
 })
 
-// NEW PROJECT
-const newProject = () => ({
-  type: NEW_PROJECT
+// EDIT/NEW PROJECT
+const editProject = () => ({
+  type: EDIT_PROJECT
 })
-const newProjectUploadingFiles = () => ({
-  type: NEW_PROJECT_UPLOADING_FILES
+const editProjectUploadingFiles = () => ({
+  type: EDIT_PROJECT_UPLOADING_FILES
 })
-const newProjectUploadingFilesComplete = (data) => ({
-  type: NEW_PROJECT_UPLOADING_FILES_COMPLETE,
+const editProjectUploadingFilesComplete = (data) => ({
+  type: EDIT_PROJECT_UPLOADING_FILES_COMPLETE,
   payload: data
 })
-const newProjectUploadingFilesError = (err) => ({
-  type: NEW_PROJECT_UPLOADING_FILES_ERROR,
+const editProjectUploadingFilesError = (err) => ({
+  type: EDIT_PROJECT_UPLOADING_FILES_ERROR,
   payload: err
 })
-const newProjectUpdateMedia = (filenames) => ({
-  type: NEW_PROJECT_UPDATE_MEDIA,
+const editProjectUpdateMedia = (filenames) => ({
+  type: EDIT_PROJECT_UPDATE_MEDIA,
   filenames
 })
-const newProjectSuccess = () => ({
-  type: NEW_PROJECT_SUCCESS
+const editProjectSuccess = () => ({
+  type: EDIT_PROJECT_SUCCESS
 })
-const newProjectFail = (err) => ({
-  type: NEW_PROJECT_FAIL,
+const editProjectFail = (err) => ({
+  type: EDIT_PROJECT_FAIL,
   payload: err
 })
 
@@ -204,7 +203,7 @@ const resetFail = (err) => ({
   payload: err
 })
 
-// admin
+// ADMIN
 const editAdmin = () => ({
   type: EDIT_ADMIN
 })
@@ -320,75 +319,75 @@ export const deleteProjectAsync = (id, token) => {
   }
 }
 
-// NEW PROJECT
-export const editProjectReset = (project) => ({
-  type: EDIT_PROJECT_RESET,
+// EDIT/NEW PROJECT
+export const editProjectSet = (project) => ({
+  type: EDIT_PROJECT_SET,
   project
 })
 
-export const newProjectReset = () => ({
-  type: NEW_PROJECT_RESET
+export const editProjectReset = () => ({
+  type: EDIT_PROJECT_RESET
 })
 
-export const newProjectUpdateField = (fieldName, fieldValue) => ({
-  type: NEW_PROJECT_UPDATE_FIELD,
+export const editProjectUpdateField = (fieldName, fieldValue) => ({
+  type: EDIT_PROJECT_UPDATE_FIELD,
   fieldName,
   fieldValue
 })
 
-export const newProjectOnPushFieldArray = (fieldName, fieldValue) => ({
-  type: NEW_PROJECT_ON_PUSH_FIELD_ARRAY,
+export const editProjectOnPushFieldArray = (fieldName, fieldValue) => ({
+  type: EDIT_PROJECT_ON_PUSH_FIELD_ARRAY,
   fieldName,
   fieldValue
 })
 
-export const newProjectOnSpliceFieldArray = (fieldName, index) => ({
-  type: NEW_PROJECT_ON_SPLICE_FIELD_ARRAY,
+export const editProjectOnSpliceFieldArray = (fieldName, index) => ({
+  type: EDIT_PROJECT_ON_SPLICE_FIELD_ARRAY,
   fieldName,
   index
 })
 
-export const newProjectAddLink = (linkGroup, linkName, linkUrl) => ({
-  type: NEW_PROJECT_ADD_LINK,
+export const editProjectAddLink = (linkGroup, linkName, linkUrl) => ({
+  type: EDIT_PROJECT_ADD_LINK,
   linkGroup,
   linkName,
   linkUrl
 })
 
-export const newProjectRemoveLink = (linkGroup, index) => ({
-  type: NEW_PROJECT_REMOVE_LINK,
+export const editProjectRemoveLink = (linkGroup, index) => ({
+  type: EDIT_PROJECT_REMOVE_LINK,
   linkGroup,
   index
 })
 
-export const newProjectRemoveMedia = (index) => ({
-  type: NEW_PROJECT_REMOVE_MEDIA,
+export const editProjectRemoveMedia = (index) => ({
+  type: EDIT_PROJECT_REMOVE_MEDIA,
   index
 })
 
-export const newProjectUploadFilesAsync = (files, token) => {
+export const editProjectUploadFilesAsync = (files, token) => {
   return dispatch => {
-    dispatch(newProjectUploadingFiles())
+    dispatch(editProjectUploadingFiles())
     // TODO dev only
     setTimeout(() => {
       API.UploadProjectFiles(files, token)
           .then(response => {
             if(!response.success) {
-              dispatch(newProjectUploadingFilesError(response.message))
+              dispatch(editProjectUploadingFilesError(response.message))
             } else {
               // success!
-              dispatch(newProjectUploadingFilesComplete())
-              dispatch(newProjectUpdateMedia(response.data))
+              dispatch(editProjectUploadingFilesComplete())
+              dispatch(editProjectUpdateMedia(response.data))
             }
           })
-          .catch((reason) => dispatch(newProjectUploadingFilesError(reason.message + '. API server unreachable.')))
+          .catch((reason) => dispatch(editProjectUploadingFilesError(reason.message + '. API server unreachable.')))
     }, 500)
   }
 }
 
 export const newProjectAsync = (formData, token) => {
   return (dispatch) => {
-    dispatch(newProject())
+    dispatch(editProject())
     // TODO dev only
     setTimeout(() => {
       API.NewProject(formatProjectData(formData), token)
@@ -399,30 +398,30 @@ export const newProjectAsync = (formData, token) => {
           if(message.indexOf('duplicate key error') !== -1) {
             message = 'Database duplicate key error. Ensure project name is unique'
           }
-          dispatch(newProjectFail(message))
+          dispatch(editProjectFail(message))
         } else {
-          dispatch(newProjectSuccess())
+          dispatch(editProjectSuccess())
         }
       })
-      .catch((reason) => dispatch(newProjectFail(reason.message + '. API server unreachable.')))
+      .catch((reason) => dispatch(editProjectFail(reason.message + '. API server unreachable.')))
     }, 500)
   }
 }
 
 export const editProjectAsync = (formData, token, projectId) => {
   return (dispatch) => {
-    dispatch(newProject())
+    dispatch(editProject())
     // TODO dev only
     setTimeout(() => {
       API.EditProject(formatProjectData(formData), token, projectId)
       .then((response) => {
         if(!response.success) {
-          dispatch(newProjectFail(response.message))
+          dispatch(editProjectFail(response.message))
         } else {
-          dispatch(newProjectSuccess())
+          dispatch(editProjectSuccess())
         }
       })
-      .catch((reason) => dispatch(newProjectFail(reason.message + '. API server unreachable.')))
+      .catch((reason) => dispatch(editProjectFail(reason.message + '. API server unreachable.')))
     }, 500)
   }
 }
@@ -531,7 +530,7 @@ export const resetAsync = (formData, resetToken) => {
   }
 }
 
-// admin
+// ADMIN
 export const editAdminAsync = (formData, token) => {
   return (dispatch) => {
     dispatch(editAdmin())

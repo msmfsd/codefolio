@@ -4,8 +4,11 @@
  * MIT Licensed
  */
 import React, { Component, PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import CssModules from 'react-css-modules'
+import * as actionCreators from '../../actions'
 import ProjectsList from '../../containers/ProjectsList'
 import styles from './App.css'
 
@@ -25,6 +28,32 @@ class App extends Component {
   componentDidMount () {
     // initialise Materialize mobile menu widget
     $('#cf-button-collapse').sideNav({ closeOnClick: true })
+    // we load profile here so the app will always have user layout prefs
+    if(!this.props.profile.hasLoaded) {
+      this.props.fetchProfileAsync()
+    }
+  }
+
+  componentDidUpdate () {
+    if(this.props.profile.hasLoaded && !this.props.profile.error) {
+      this.initialiseLayout(this.props.profile.data.layout)
+    }
+  }
+
+  /**
+   * Method to set theme & bg image
+   * & any dom manipulation
+   * @param layout : object
+   * @returns {}
+   */
+  initialiseLayout (layout) {
+    // set body classes
+    let classes = []
+    classes.push('cf-theme-' + layout.theme)
+    classes.push('background-image-' + String(layout.displayBgImage))
+    for (let value of classes) {
+      document.body.classList.add(value)
+    }
   }
 
   render () {
@@ -56,7 +85,15 @@ class App extends Component {
 }
 
 App.propTypes = {
-  children: PropTypes.object.isRequired
+  children: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  fetchProfileAsync: PropTypes.func.isRequired
 }
 
-export default CssModules(App, styles)
+const mapStateToProps = ({profile}) => ({profile})
+
+function mapDispachToProps (dispatch) {
+  return bindActionCreators(actionCreators, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispachToProps)(CssModules(App, styles))

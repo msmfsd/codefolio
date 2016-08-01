@@ -42,8 +42,8 @@ class ProjectsListViewer extends Component {
    * @returns void
    */
   updateLayout () {
+    this.setState({ listShown: true })
     this.timer = setTimeout(() => {
-      this.setState({ listShown: true })
       Materialize.showStaggeredList('#cf-projects-list')
       clearTimeout(this.timer)
       this.timer = null
