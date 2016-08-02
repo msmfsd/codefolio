@@ -72,7 +72,9 @@ describe('new project reducer', () => {
       type: 'EDIT_PROJECT_RESET',
       payload: {
         editProjectFilesLoading: false,
-        editProjectFilesMessage: null,
+        editProjectFilesErrMessage: null,
+        editProjectFilesError: null,
+        editProjectFilesSuccess: null,
         editProjectLoading: false,
         editProjectErrMessage: null,
         editProjectError: null,
@@ -96,7 +98,9 @@ describe('new project reducer', () => {
     })
     expect(newState).to.eql(Object.assign({}, initialState, {
       editProjectFilesLoading: false,
-      editProjectFilesMessage: null,
+      editProjectFilesErrMessage: null,
+      editProjectFilesError: null,
+      editProjectFilesSuccess: null,
       editProjectLoading: false,
       editProjectErrMessage: null,
       editProjectError: null,

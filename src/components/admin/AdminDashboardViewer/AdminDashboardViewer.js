@@ -14,6 +14,11 @@ import styles from './AdminDashboardViewer.css'
  */
 class AdminDashboardViewer extends Component {
 
+  constructor (props) {
+    super(props)
+    this.state = { deleteId: null }
+  }
+
   componentDidMount () {
     // ensure API data and redux store sync
     // by always refreshing data on mount
@@ -23,13 +28,32 @@ class AdminDashboardViewer extends Component {
   }
 
   /**
-   * Remove project by id
+   * Prepare to remove project by id
    * @param id : string
    * @param e : dom node event object
    */
   deleteProject (id, e) {
     e.preventDefault()
-    this.props.deleteProjectAsync(id, this.props.auth.token)
+    this.setState({ deleteId: id })
+    $('#modal1').openModal()
+  }
+
+  /**
+   * Remove project by current deleteId
+   * @param e : dom node event object
+   */
+  deleteProjectConfirm (e) {
+    e.preventDefault()
+    this.props.deleteProjectAsync(this.state.deleteId, this.props.auth.token)
+  }
+
+  /**
+   * Cancel remove project by current deleteId
+   * @param e : dom node event object
+   */
+  deleteProjectCancel (e) {
+    e.preventDefault()
+    this.setState({ deleteId: null })
   }
 
   render () {
@@ -85,8 +109,8 @@ class AdminDashboardViewer extends Component {
                               {index + 1} - {obj.name}
                               <span className="truncate">View order: {obj.viewOrder} | Featured: {obj.sticky === 1 ? 'Yes' : 'No'}</span>
                             </h6>
-                            <Link to={'/admin/edit-project/' + obj.slug} className="btn-floating right hoverable"><i className="material-icons">mode_edit</i></Link>
-                            <a href="#" onClick={this.deleteProject.bind(this, obj._id)} className="btn-floating right hoverable"><i className="material-icons">delete</i></a>
+                            <Link to={'/admin/edit-project/' + obj.slug} className="btn-floating hoverable"><i className="material-icons">mode_edit</i></Link>
+                            <a href="#" onClick={(this.deleteProject.bind(this, obj._id))} className="btn-floating hoverable"><i className="material-icons">delete</i></a>
                           </div>
                         </li>)
                       })
@@ -95,6 +119,13 @@ class AdminDashboardViewer extends Component {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div id="modal1" className="modal">
+          <div className="modal-content"><p>Are you sure you want to delete this project?</p></div>
+          <div className="modal-footer">
+            <a href="#" onClick={this.deleteProjectConfirm.bind(this)} className="modal-action modal-close btn-flat">Delete</a>
+            <a href="#" onClick={this.deleteProjectCancel.bind(this)} className="modal-action modal-close btn-flat">Cancel</a>
           </div>
         </div>
       </div>

@@ -115,7 +115,7 @@ class FormTechIconsEditor extends Component {
       <table styleName="form-techicons-editor" className="highlight bordered">
         <thead>
           <tr>
-            <th data-field="name">Technology name</th>
+            <th data-field="name" styleName="maxwidth-th">Tech</th>
             <th data-field="icon">Icon</th>
             <th styleName="minwidth-th" data-field="action">
               <button disabled={this.state.editing || maxReached} onClick={this.createItem.bind(this)} className="btn-floating btn-small waves-effect right"><i className="material-icons">add_circle</i></button>

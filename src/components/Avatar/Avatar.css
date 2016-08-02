@@ -18,7 +18,7 @@
   animation-timing-function: ease-in;
   animation-duration: calc($duration * 2.6);
   animation-fill-mode: backwards;
-  animation-delay: $duration * 1;
+  animation-delay: calc($duration * 1);
   border-radius: calc($avatarSize / 2);
   border: 2px solid $lightGrey;
   background-size: 115%;

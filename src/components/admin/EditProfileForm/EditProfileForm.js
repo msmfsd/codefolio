@@ -45,6 +45,11 @@ const editProfileValidation = createValidator({
  */
 class EditProfileForm extends Component {
 
+  componentWillMount () {
+    // reset edit profile props
+    this.props.editProfileReset()
+  }
+
   componentDidMount () {
     // ensure API data and redux store sync
     // by always refreshing data on mount
@@ -174,6 +179,7 @@ EditProfileForm.propTypes = {
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   editProfileAsync: PropTypes.func,
+  editProfileReset: PropTypes.func,
   fetchProfileAsync: PropTypes.func,
   addProfileTechicon: PropTypes.func,
   addProfileLink: PropTypes.func,

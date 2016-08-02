@@ -5,6 +5,7 @@
  */
 /* eslint no-spaced-func: "off" */
 import slugger from 'slugger'
+import striptags from 'striptags'
 
 /**
  * Helper method to convert custom avatar file stream to base64
@@ -31,6 +32,8 @@ export const convertToBase64Async = (formData) => {
 * @param formData - object
 */
 export const formatProfileData = (formData, base64) => {
+  // sanitize
+  formData.bio = striptags(formData.bio)
   // layout
   formData.layout = {
     theme: formData.theme,
@@ -64,6 +67,9 @@ export const formatProfileData = (formData, base64) => {
 * @param formData - object
 */
 export const formatProjectData = (formData) => {
+  // sanitize
+  formData.description = striptags(formData.description)
+  formData.code = striptags(formData.code)
   // slug
   formData.slug = slugger(formData.name)
   formData.active = 1

@@ -48,7 +48,9 @@ const editProject = (state = {}, action) => {
     case EDIT_PROJECT_RESET:
       return Object.assign({}, state, {
         editProjectFilesLoading: false,
-        editProjectFilesMessage: null,
+        editProjectFilesErrMessage: null,
+        editProjectFilesError: null,
+        editProjectFilesSuccess: null,
         editProjectLoading: false,
         editProjectErrMessage: null,
         editProjectError: null,
@@ -72,7 +74,9 @@ const editProject = (state = {}, action) => {
     case EDIT_PROJECT_SET:
       return Object.assign({}, state, {
         editProjectFilesLoading: false,
-        editProjectFilesMessage: null,
+        editProjectFilesErrMessage: null,
+        editProjectFilesError: null,
+        editProjectFilesSuccess: null,
         editProjectLoading: false,
         editProjectErrMessage: null,
         editProjectError: null,

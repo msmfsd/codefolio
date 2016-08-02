@@ -8,6 +8,9 @@ import API from '../utils/api'
 import { convertToBase64Async, formatProfileData, formatProjectData } from '../utils/helpers'
 import { setStorage, getStorage, clearStorage } from '../utils/storage'
 
+// simulate server loading for dev environment only
+const devOnlySimulateDelay = process.env.NODE_ENV !== 'production' ? 1000 : 0
+
 /*
  * action types
  */
@@ -19,6 +22,7 @@ export const FETCH_PROFILE_ERROR = 'FETCH_PROFILE_ERROR'
 export const EDIT_PROFILE = 'EDIT_PROFILE'
 export const EDIT_PROFILE_SUCCESS = 'EDIT_PROFILE_SUCCESS'
 export const EDIT_PROFILE_FAIL = 'EDIT_PROFILE_FAIL'
+export const EDIT_PROFILE_RESET = 'EDIT_PROFILE_RESET'
 export const UPDATE_PROFILE_FIELD = 'UPDATE_PROFILE_FIELD'
 export const UPDATE_AVATAR_FIELDS = 'UPDATE_AVATAR_FIELDS'
 export const UPDATE_LAYOUT_FIELD = 'UPDATE_LAYOUT_FIELD'
@@ -259,10 +263,13 @@ export const removeProfileItem = (linkGroup, index) => ({
   index
 })
 
+export const editProfileReset = () => ({
+  type: EDIT_PROFILE_RESET
+})
+
 export const fetchProfileAsync = () => {
   return dispatch => {
     dispatch(fetchProfileRequest())
-    // TODO dev only
     setTimeout(() => {
       API.FetchCodefolioProfile()
           .then(response => {
@@ -274,7 +281,7 @@ export const fetchProfileAsync = () => {
             }
           })
           .catch((reason) => dispatch(fetchProfileError(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
@@ -282,7 +289,6 @@ export const fetchProfileAsync = () => {
 export const fetchProjectsAsync = () => {
   return dispatch => {
     dispatch(fetchProjectsRequest())
-    // TODO dev only
     setTimeout(() => {
       API.FetchCodefolioProjects()
           .then(response => {
@@ -294,14 +300,13 @@ export const fetchProjectsAsync = () => {
             }
           })
           .catch((reason) => dispatch(fetchProjectsError(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
 export const deleteProjectAsync = (id, token) => {
   return dispatch => {
     dispatch(deleteProjectRequest())
-    // TODO dev only
     setTimeout(() => {
       API.DeleteProject(id, token)
           .then(response => {
@@ -315,7 +320,7 @@ export const deleteProjectAsync = (id, token) => {
             }
           })
           .catch((reason) => dispatch(deleteProjectFail(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
@@ -368,7 +373,6 @@ export const editProjectRemoveMedia = (index) => ({
 export const editProjectUploadFilesAsync = (files, token) => {
   return dispatch => {
     dispatch(editProjectUploadingFiles())
-    // TODO dev only
     setTimeout(() => {
       API.UploadProjectFiles(files, token)
           .then(response => {
@@ -381,14 +385,13 @@ export const editProjectUploadFilesAsync = (files, token) => {
             }
           })
           .catch((reason) => dispatch(editProjectUploadingFilesError(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
 export const newProjectAsync = (formData, token) => {
   return (dispatch) => {
     dispatch(editProject())
-    // TODO dev only
     setTimeout(() => {
       API.NewProject(formatProjectData(formData), token)
       .then((response) => {
@@ -404,14 +407,13 @@ export const newProjectAsync = (formData, token) => {
         }
       })
       .catch((reason) => dispatch(editProjectFail(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
 export const editProjectAsync = (formData, token, projectId) => {
   return (dispatch) => {
     dispatch(editProject())
-    // TODO dev only
     setTimeout(() => {
       API.EditProject(formatProjectData(formData), token, projectId)
       .then((response) => {
@@ -422,7 +424,7 @@ export const editProjectAsync = (formData, token, projectId) => {
         }
       })
       .catch((reason) => dispatch(editProjectFail(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
@@ -441,7 +443,6 @@ export const authInit = () => (dispatch) => {
 export const loginAsync = (formData) => {
   return (dispatch) => {
     dispatch(auth(formData.username))
-    // TODO dev only
     setTimeout(() => {
       API.Login(formData)
       .then((response) => {
@@ -454,13 +455,12 @@ export const loginAsync = (formData) => {
         }
       })
       .catch((reason) => dispatch(authFail(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
 export const logoutAsync = (token) => (dispatch) => {
   dispatch(authLogout())
-  // TODO dev only
   setTimeout(() => {
     API.Logout(token)
     .then((response) => {
@@ -473,13 +473,12 @@ export const logoutAsync = (token) => (dispatch) => {
       }
     })
     .catch((reason) => dispatch(authLogoutFail(reason.message + '. API server unreachable.')))
-  }, 500)
+  }, devOnlySimulateDelay)
 }
 
 export const registerAsync = (formData) => {
   return (dispatch) => {
     dispatch(register())
-    // TODO dev only
     setTimeout(() => {
       API.Register(formData)
       .then((response) => {
@@ -490,14 +489,13 @@ export const registerAsync = (formData) => {
         }
       })
       .catch((reason) => dispatch(registerFail(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
 export const forgotAsync = (formData) => {
   return (dispatch) => {
     dispatch(forgot())
-    // TODO dev only
     setTimeout(() => {
       API.Forgot(formData)
       .then((response) => {
@@ -508,14 +506,13 @@ export const forgotAsync = (formData) => {
         }
       })
       .catch((reason) => dispatch(forgotFail(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
 export const resetAsync = (formData, resetToken) => {
   return (dispatch) => {
     dispatch(resetInit())
-    // TODO dev only
     setTimeout(() => {
       API.Reset(formData, resetToken)
       .then((response) => {
@@ -526,7 +523,7 @@ export const resetAsync = (formData, resetToken) => {
         }
       })
       .catch((reason) => dispatch(resetFail(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
@@ -534,7 +531,6 @@ export const resetAsync = (formData, resetToken) => {
 export const editAdminAsync = (formData, token) => {
   return (dispatch) => {
     dispatch(editAdmin())
-    // TODO dev only
     setTimeout(() => {
       API.EditAdmin(formData, token)
       .then((response) => {
@@ -549,14 +545,13 @@ export const editAdminAsync = (formData, token) => {
         }
       })
       .catch((reason) => dispatch(editAdminFail(reason.message + '. API server unreachable.')))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }
 
 export const editProfileAsync = (formData, token) => {
   return (dispatch) => {
     dispatch(editProfile())
-    // TODO dev only
     setTimeout(() => {
       convertToBase64Async(formData)
       .then((base64) => {
@@ -572,6 +567,6 @@ export const editProfileAsync = (formData, token) => {
         })
         .catch((reason) => dispatch(editProfileFail(reason.message + '. API server unreachable.')))
       }).catch((reason) => dispatch(editProfileFail(reason.message)))
-    }, 500)
+    }, devOnlySimulateDelay)
   }
 }

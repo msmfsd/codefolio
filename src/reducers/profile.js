@@ -16,7 +16,8 @@ import {
   REMOVE_PROFILE_ITEM,
   EDIT_PROFILE,
   EDIT_PROFILE_SUCCESS,
-  EDIT_PROFILE_FAIL
+  EDIT_PROFILE_FAIL,
+  EDIT_PROFILE_RESET
 } from '../actions/index'
 
 const profile = (state = {}, action) => {
@@ -104,6 +105,13 @@ const profile = (state = {}, action) => {
         editProfileLoading: false,
         editProfileError: true,
         editProfileSuccess: null
+      })
+    case EDIT_PROFILE_RESET:
+      return Object.assign({}, state, {
+        editProfileLoading: false,
+        editProfileSuccess: null,
+        editProfileErrMessage: null,
+        editProfileError: null
       })
     default:
       return state

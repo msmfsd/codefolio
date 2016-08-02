@@ -1,5 +1,6 @@
 {
   "presets": ["es2015", "stage-3", "react"],
+  "plugins": ["syntax-async-functions", "transform-runtime", "transform-regenerator"],
   "env": {
     "development": {
       "plugins": [["react-transform", {

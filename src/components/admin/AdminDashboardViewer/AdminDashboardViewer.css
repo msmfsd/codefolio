@@ -47,7 +47,7 @@ $rowHeight: 62px;
 
 .cf-project-link-item {
   width: 100%;
-  height: $rowHeight;
+  height: calc($rowHeight * 1.5);
   float: left;
   opacity: 1;
   padding: 0 0 0 10px;
@@ -55,29 +55,40 @@ $rowHeight: 62px;
   border: 1px solid color($lightGrey alpha(30%));
   background-color: $midGreyBlue;
 
+  @media (min-width: $small) {
+    height: $rowHeight;
+  }
+
   & h6 {
+    display: block;
     float: left;
-    max-width: 50%;
+    width: 100%;
     line-height: 1.2;
     margin: 12px 0 0;
     color: $lightGrey;
     font-weight: 700;
 
     @media (min-width: $small) {
-      max-width: 80%;
+      width: 60%;
     }
 
     & span {
-      display: block;
+      display: none;
       clear: both;
       font-size: 0.9rem;
       line-height: 1.2;
       margin: 4px 0 0;
       color: $midGrey;
+
+      @media (min-width: $small) {
+        display: block;
+      }
     }
   }
 
   & a {
+    float: left;
+    display: inline-block;
     margin: 12px 12px 0 0;
     padding: 0;
     background-color: $coralPink;
@@ -90,6 +101,10 @@ $rowHeight: 62px;
     &:focus,
     &:active {
       background-color: $lightCoralPink;
+    }
+
+    @media (min-width: $small) {
+      float: right;
     }
   }
 

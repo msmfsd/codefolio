@@ -10,5 +10,11 @@
 }
 
 .minwidth-th {
-  min-width: 90px;
+  min-width: 40px;
+}
+
+.maxwidth-th {
+  @media (max-width: $small) {
+    width: 50%;
+  }
 }

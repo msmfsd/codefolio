@@ -7,8 +7,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const DEV = process.env.NODE_ENV !== 'production'
 
 const config = {
-  entry: ['babel-polyfill', './src/index.js'],
-  devtool: DEV ? 'source-map' : 'source-map',
+  entry: ['babel-polyfill', 'whatwg-fetch', './src/index.js'],
+  devtool: DEV ? 'cheap-module-eval-source-map' : 'inline-source-map',
   target: 'web',
   output: {
     path: path.join(__dirname, 'dist'),
