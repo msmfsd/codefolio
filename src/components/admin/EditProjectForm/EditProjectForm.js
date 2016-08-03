@@ -65,6 +65,16 @@ class EditProjectForm extends Component {
     }
   }
 
+  componentDidUpdate () {
+    // scroll to first validation error
+    if(this.props.submitFailed) {
+      let div = document.getElementsByClassName('input-field-message')[0].offsetParent
+      if(div) {
+        window.scrollTo(0, div.offsetTop + 60)
+      }
+    }
+  }
+
   /**
    * Allow live form edits to update profile state on blur
    * Why? So other state updates dont reset their values pre submit
@@ -160,7 +170,7 @@ class EditProjectForm extends Component {
               </div>
               <div className={defaultInputClasses}><h5>Project repo</h5></div>
               <div className={defaultInputClasses + ' m6'}>
-                <h6>Display repo?:<div className="hint">Repo details are optional</div></h6>
+                <h6>Display Github repo?:<div className="hint">Repo display is optional</div></h6>
                 <input type="radio" {...repoDisplay} value="yes" checked={repoDisplay.value === 'yes'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;Yes
                 <input type="radio" {...repoDisplay} value="no" checked={repoDisplay.value === 'no'} onBlur={(e) => this.onBlurUpdate(e)}/>&nbsp;No
               </div>
@@ -234,6 +244,7 @@ EditProjectForm.propTypes = {
   editProjectRemoveMedia: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  submitFailed: PropTypes.boolean,
   defaultInputClasses: PropTypes.string,
   params: PropTypes.object
 }

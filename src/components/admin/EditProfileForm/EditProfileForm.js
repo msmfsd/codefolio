@@ -58,6 +58,16 @@ class EditProfileForm extends Component {
     }
   }
 
+  componentDidUpdate () {
+    // scroll to first validation error
+    if(this.props.submitFailed) {
+      let div = document.getElementsByClassName('input-field-message')[0].offsetParent
+      if(div) {
+        window.scrollTo(0, div.offsetTop + 60)
+      }
+    }
+  }
+
   /**
    * Allow live form edits to update profile state on blur
    * Why? So other state updates dont reset their values pre submit
@@ -188,6 +198,7 @@ EditProfileForm.propTypes = {
   updateAvatarFields: PropTypes.func.isRequired,
   updateLayoutField: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
+  submitFailed: PropTypes.boolean,
   handleSubmit: PropTypes.func.isRequired,
   defaultInputClasses: PropTypes.string
 }
