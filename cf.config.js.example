@@ -5,12 +5,12 @@
  */
 const __CONFIG__ = {
   development: {
-    "API_URL": "http://your-api-production-url.com",
-    "API_KEY": "YOURPRODUCTIONAPIKEY111222"
+    "API_URL": "http://localhost:8080",
+    "API_KEY": "YOURAPIKEY111222"
   },
   production: {
-    "API_URL": "http://localhost:8080",
-    "API_KEY": "YOURDEVAPIKEY111222"
+    "API_URL": "http://your-api-production-url.com",
+    "API_KEY": "YOURAPIKEY111222"
   }
 }
 
