@@ -54,7 +54,7 @@ const initialState = {
   },
   auth: {
     token: null,
-    username: '',
+    username: null,
     lastLoggedIn: null,
     authLoading: false,
     errMessage: null,

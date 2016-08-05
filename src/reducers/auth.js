@@ -42,7 +42,8 @@ const auth = (state = {}, action) => {
       return Object.assign({}, state, {
         errMessage: action.payload,
         error: true,
-        authLoading: false
+        authLoading: false,
+        username: null
       })
     case AUTH_LOGOUT:
       return Object.assign({}, state, {

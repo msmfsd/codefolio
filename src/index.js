@@ -39,19 +39,25 @@ const history = syncHistoryWithStore(browserHistory, store)
 store.dispatch(authInit())
 
 // redirect admin to login?
-const requireAuth = (nextState, replace) => {
-  if (!store.getState().auth.token) {
+const redirectIfLoggedOut = (nextState, replace) => {
+  if (!store.getState().auth.token || !store.getState().auth.username) {
     replace('/login')
+  }
+}
+// redirect reset/forgot/login/register to admin?
+const redirectIfLoggedIn = (nextState, replace) => {
+  if (store.getState().auth.token || store.getState().auth.username) {
+    replace('/admin')
   }
 }
 
 render(<Provider store={store}>
     <Router history={history} render={applyRouterMiddleware(useScroll())}>
-      <Route path={'/login'} component={Login}/>
-      <Route path={'/register'} component={Register}/>
-      <Route path={'/forgot'} component={Forgot}/>
-      <Route path={'/reset/:resetToken'} component={Reset}/>
-      <Route path={'/admin'} component={AdminLayout} onEnter={requireAuth}>
+      <Route path={'/login'} component={Login} onEnter={redirectIfLoggedIn}/>
+      <Route path={'/register'} component={Register} onEnter={redirectIfLoggedIn}/>
+      <Route path={'/forgot'} component={Forgot} onEnter={redirectIfLoggedIn}/>
+      <Route path={'/reset/:resetToken'} component={Reset} onEnter={redirectIfLoggedIn}/>
+      <Route path={'/admin'} component={AdminLayout} onEnter={redirectIfLoggedOut}>
         <IndexRoute component={AdminDashboard}/>
         <Route path={'edit-administrator'} component={EditAdministrator} />
         <Route path={'edit-profile'} component={EditProfile} />

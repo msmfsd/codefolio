@@ -5,7 +5,6 @@
  */
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
-import { browserHistory } from 'react-router'
 import { reduxForm } from 'redux-form'
 import CssModules from 'react-css-modules'
 import { createValidator, email, required, minLength, maxLength, alphaNumeric, match } from '../../../utils/validate'
@@ -23,13 +22,6 @@ const loginValidation = createValidator({
  * @extends Component
  */
 class RegisterForm extends Component {
-
-  componentWillMount () {
-    // if logged in redirect to admin
-    if(this.props.auth.token !== null) {
-      browserHistory.push('/admin')
-    }
-  }
 
   render () {
     const { auth, registerAsync, fields: { username, password, confirm }, handleSubmit, defaultInputClasses } = this.props

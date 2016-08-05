@@ -6,7 +6,7 @@
 import { browserHistory } from 'react-router'
 import API from '../utils/api'
 import { convertToBase64Async, formatProfileData, formatProjectData } from '../utils/helpers'
-import { localStorageSupported, setStorage, getStorage, clearStorage } from '../utils/storage'
+import { setStorage, getStorage, clearStorage } from '../utils/storage'
 
 // simulate server loading for dev environment only
 const devOnlySimulateDelay = process.env.NODE_ENV !== 'production' ? 1000 : 0
@@ -430,15 +430,11 @@ export const editProjectAsync = (formData, token, projectId) => {
 
 // AUTH
 export const authInit = () => (dispatch) => {
-  // *private browsing on iOS does not support storage
-  if(!localStorageSupported) {
-    dispatch(authFail('It appears you have private browsing turned on. Please turn off to use administration area.'))
-    return false
-  }
   // if storage found and token not expired
   const storageResult = getStorage()
   if(!storageResult) {
     clearStorage()
+    dispatch(authFail(''))
   } else {
     dispatch(auth(storageResult.username))
     dispatch(authSuccess({ token: storageResult.token, lastLoggedIn: storageResult.lastLoggedIn }))
@@ -447,16 +443,12 @@ export const authInit = () => (dispatch) => {
 
 export const loginAsync = (formData) => {
   return (dispatch) => {
-    // *private browsing on iOS does not support storage
-    if(!localStorageSupported) {
-      dispatch(authFail('It appears you have private browsing turned on. Login not allowed.'))
-      return false
-    }
     dispatch(auth(formData.username))
     setTimeout(() => {
       API.Login(formData)
       .then((response) => {
         if(!response.success) {
+          clearStorage()
           dispatch(authFail(response.message))
         } else {
           dispatch(authSuccess(response))
@@ -464,7 +456,10 @@ export const loginAsync = (formData) => {
           browserHistory.push('/admin')
         }
       })
-      .catch((reason) => dispatch(authFail(reason.message + '. API server unreachable.')))
+      .catch((reason) => {
+        clearStorage()
+        dispatch(authFail(reason.message + '. API server unreachable.'))
+      })
     }, devOnlySimulateDelay)
   }
 }
