@@ -135,7 +135,7 @@ class NewProjectForm extends Component {
                 {client.touched && client.error && <div className="input-field-message">{client.error}</div>}
               </div>
               <div className={defaultInputClasses}>
-                <h6>Project description:<div className="hint">Paste in your bio, <a style={{textDecoration: 'underline'}} href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> is allowed</div></h6>
+                <h6>Project description:<div className="hint">Use <a style={{textDecoration: 'underline'}} href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> or plain text</div></h6>
                 <textarea rows="8" placeholder="Enter project description" {...description} onBlur={(e) => this.onBlurUpdate(e)}/>
                 {description.touched && description.error && <div className="input-field-message">{description.error}</div>}
               </div>

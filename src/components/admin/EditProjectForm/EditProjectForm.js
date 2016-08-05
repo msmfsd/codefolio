@@ -149,7 +149,7 @@ class EditProjectForm extends Component {
                 {client.touched && client.error && <div className="input-field-message">{client.error}</div>}
               </div>
               <div className={defaultInputClasses}>
-                <h6>Project description:<div className="hint">Paste in your bio, <a style={{textDecoration: 'underline'}} href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> is allowed</div></h6>
+                <h6>Project description:<div className="hint">Use <a style={{textDecoration: 'underline'}} href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> or plain text</div></h6>
                 <textarea rows="8" placeholder="Enter project description" {...description} onBlur={(e) => this.onBlurUpdate(e)}/>
                 {description.touched && description.error && <div className="input-field-message">{description.error}</div>}
               </div>
@@ -218,7 +218,7 @@ class EditProjectForm extends Component {
               <div className={defaultInputClasses}><h5>Save changes</h5></div>
               <div styleName="form-messages" className="col s12">{editProject.editProjectError && editProject.editProjectErrMessage}</div>
               <div className={defaultInputClasses}>
-                <button styleName="form-btn" className={editProject.editProjectLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={editProject.editProjectLoading || editProject.editProjectFilesLoading}><i className="material-icons">settings</i><span>Edit project</span></button>
+                <button styleName="form-btn" className={editProject.editProjectLoading ? 'waves-effect btn btn-loading' : 'waves-effect btn'} type="submit" disabled={editProject.editProjectLoading || editProject.editProjectFilesLoading}><i className="material-icons">settings</i><span>Update project</span></button>
               </div>
             </form>
           </div>

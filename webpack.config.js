@@ -8,7 +8,7 @@ const DEV = process.env.NODE_ENV !== 'production'
 
 const config = {
   entry: ['babel-polyfill', 'whatwg-fetch', './src/index.js'],
-  devtool: DEV ? 'cheap-module-eval-source-map' : 'source-map',
+  devtool: DEV ? 'cheap-module-eval-source-map' : '',
   target: 'web',
   output: {
     path: path.join(__dirname, 'dist'),

@@ -11,6 +11,28 @@ const storageData = {
   storageTokenExpires: 'storageTokenExpires'
 }
 
+/**
+ * Ensure support for browser storage
+ * @return boolean
+ */
+export function localStorageSupported () {
+  const cf = 'cf'
+  try {
+    localStorage.setItem(cf, cf)
+    localStorage.removeItem(cf)
+    return true
+  } catch (e) {
+    clearStorage()
+    return false
+  }
+}
+
+/**
+ * Set auth to browser storage
+ * @param token: string
+ * @param lastLoggedIn: string
+ * @param username: string
+ */
 export function setStorage (token, lastLoggedIn, username) {
   localStorage.setItem(storageData.token, token)
   localStorage.setItem(storageData.lastLoggedIn, lastLoggedIn)
@@ -18,6 +40,10 @@ export function setStorage (token, lastLoggedIn, username) {
   localStorage.setItem(storageData.storageTokenExpires, new Date().getTime())
 }
 
+/**
+ * Get auth from browser storage
+ * @return storage object or false
+ */
 export function getStorage () {
   let now = new Date().getTime()
   let storageToken = localStorage.getItem(storageData.token)
@@ -33,6 +59,9 @@ export function getStorage () {
   }
 }
 
+/**
+ * Clear browser storage
+ */
 export function clearStorage () {
   localStorage.removeItem(storageData.token)
   localStorage.removeItem(storageData.lastLoggedIn)

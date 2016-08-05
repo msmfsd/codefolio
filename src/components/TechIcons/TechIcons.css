@@ -6,6 +6,10 @@
   height: auto;
   padding: 0 $padding;
 
+  @media (min-width: $medium) {
+    max-width: 75%;
+  }
+
   & i {
     margin-right: 10px;
     margin-bottom: 1.5rem;

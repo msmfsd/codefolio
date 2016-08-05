@@ -38,7 +38,7 @@ class ProfileViewer extends Component {
           <IconLinks icon="perm_contact_calendar" data={profile.data.contacts} />
           <IconLinks icon="location_on" data={profile.data.location} />
           <IconLinks icon="link" data={profile.data.links} />
-          <div styleName="cf-bio">
+          <div styleName="cf-bio" className="cf-markdown">
             <Markdown source={profile.data.bio} />
           </div>
         </div>

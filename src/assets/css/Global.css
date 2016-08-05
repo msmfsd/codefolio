@@ -105,6 +105,18 @@ input:-webkit-autofill:active {
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
    color: $midGrey;
 }
+a:focus,
+button:focus,
+select:focus {
+  outline:none;
+}
+a::-moz-focus-inner,
+button::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+select::-moz-focus-inner {
+  border:0;
+}
 
 /* ------------------ GLOBAL STYLES */
 
@@ -197,11 +209,33 @@ input:-webkit-autofill:active {
   }
 }
 
+:global .cf-markdown {
+  & h2 {
+    font-size: 2.5rem;
+  }
+  & h4 {
+    font-size: 1.5rem;
+  }
+  & h5 {
+    font-size: 1.1rem;
+  }
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6,
+  & p {
+    margin-top: 0
+  }
+}
+
 /* ------------------ MAIN STYLES TO COMPOSE */
 
 /* main layout panels */
 .cf-container-global {
   width: $mainWidth;
+  padding-bottom: $padding;
   @media (min-width: $medium) {
     width: $mainWidth;
     max-width: $mainWidthMax;
@@ -215,6 +249,11 @@ input:-webkit-autofill:active {
   margin-top: 2rem;
   background-color: $midGreyBlue;
   border: 1px solid $blackGreyBlue;
+  @media (max-width: $small) {
+    & a {
+      word-break: break-all;
+    }
+  }
 }
 
 .cf-main-inner-global {
@@ -421,6 +460,12 @@ input:-webkit-autofill:active {
 }
 
 /* ------------------ OVERRIDE MATERIALIZE */
+
+@media only screen and (min-width: 0) {
+  html {
+      font-size: 16px;
+  }
+}
 
 :global #sidenav-overlay {
   background-color: color(black alpha(40%));
@@ -665,6 +710,12 @@ select {
   width: 100%;
   padding: 3px 6px;
   background-color: color($darkGreyBlue alpha(50%));
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAICAMAAAD6Ou7DAAAAHlBMVEUAAADS193U2d/U2t/V1+DV2N3V2d/V2d/W2uDW2uBep0t/AAAACXRSTlMALVhZWluAgfwzpUG9AAAALklEQVR42i3HyREAMAjDQOeAmP4bzgxCr5W01DXSgbefsrjjSs3dNheYw3N4Dn87IQEkyBqThQAAAABJRU5ErkJggg==);
+  background-repeat: no-repeat;
+  background-position: 96% 50%;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
   font-size: 17px;
   color: $lightGrey;
   border: 1px solid color($lightGrey alpha(80%));

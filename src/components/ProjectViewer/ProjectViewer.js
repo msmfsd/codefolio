@@ -60,12 +60,12 @@ class ProjectViewer extends Component {
           <h1 styleName="project-name">{project.name}</h1>
           <span styleName="project-client">{project.client}</span>
           <div styleName="project-gallery" className={images && images.length > 0 ? 'show' : 'hide'}>
-            <ImageGallery ref={i => this._imageGallery = i} items={images} slideInterval={6000} autoPlay={true} showNav={false} showThumbnails={true}/>
+            <ImageGallery ref={i => this._imageGallery = i} items={images} slideInterval={12000} autoPlay={true} showNav={false} showThumbnails={true}/>
           </div>
           <IconLinks icon="web" data={project.linkWeb} />
           <RepoLink data={project.repo} />
           <IconTechChips icon="code" data={project.projectTech} />
-          <div styleName="cf-project-description">
+          <div styleName="cf-project-description" className="cf-markdown">
             <Markdown source={project.description} />
           </div>
           <CodeSnippet data={project.codeSnippet} />

@@ -142,7 +142,7 @@ class EditProfileForm extends Component {
                 {description.touched && description.error && <div className="input-field-message">{description.error}</div>}
               </div>
               <div className={defaultInputClasses}>
-                <h6>Biography:<div className="hint">Paste in your bio, <a style={{textDecoration: 'underline'}} href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> is allowed</div></h6>
+                <h6>Biography:<div className="hint">Use <a style={{textDecoration: 'underline'}} href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown</a> or plain text</div></h6>
                 <textarea rows="8" placeholder="Enter your bio" {...bio} onBlur={(e) => this.onBlurUpdate(e)}/>
                 {bio.touched && bio.error && <div className="input-field-message">{bio.error}</div>}
               </div>
