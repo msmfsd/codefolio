@@ -198,7 +198,7 @@ EditProfileForm.propTypes = {
   updateAvatarFields: PropTypes.func.isRequired,
   updateLayoutField: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
-  submitFailed: PropTypes.boolean,
+  submitFailed: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   defaultInputClasses: PropTypes.string
 }

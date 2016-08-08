@@ -228,7 +228,7 @@ NewProjectForm.propTypes = {
   editProjectRemoveMedia: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  submitFailed: PropTypes.boolean,
+  submitFailed: PropTypes.bool,
   defaultInputClasses: PropTypes.string
 }
 

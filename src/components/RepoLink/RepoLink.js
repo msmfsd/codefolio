@@ -51,6 +51,8 @@ class RepoLink extends Component {
             .then((response) => {
               if (response.status >= 200 && response.status < 300) {
                 return response.json()
+              } else {
+                return false
               }
             }).then((json) => {
               if(json.stargazers_count) {

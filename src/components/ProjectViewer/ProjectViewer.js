@@ -9,15 +9,15 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import Markdown from 'react-markdown'
 import CssModules from 'react-css-modules'
-import ImageGallery from 'react-image-gallery'
 import __CONFIG__ from '../../../cf.config'
-import Loader from '../../components/Loader/Loader'
-import Panel from '../../components/Panel/Panel'
-import IconLinks from '../../components/IconLinks/IconLinks'
-import RepoLink from '../../components/RepoLink/RepoLink'
-import IconTechChips from '../../components/IconTechChips/IconTechChips'
-import CodeSnippet from '../../components/CodeSnippet/CodeSnippet'
-import ScrollTopButton from '../../components/ScrollTopButton/ScrollTopButton'
+import Slider from '../Slider/Slider'
+import Loader from '../Loader/Loader'
+import Panel from '../Panel/Panel'
+import IconLinks from '../IconLinks/IconLinks'
+import RepoLink from '../RepoLink/RepoLink'
+import IconTechChips from '../IconTechChips/IconTechChips'
+import CodeSnippet from '../CodeSnippet/CodeSnippet'
+import ScrollTopButton from '../ScrollTopButton/ScrollTopButton'
 import styles from './ProjectViewer.css'
 
 /**
@@ -29,7 +29,7 @@ class ProjectViewer extends Component {
   componentWillUpdate () {
     // on route update reset gallery index
     if(typeof this._imageGallery !== 'undefined') {
-      this._imageGallery.slideToIndex(0)
+      // TODO this._imageGallery.slideToIndex(0)
     }
   }
 
@@ -49,8 +49,9 @@ class ProjectViewer extends Component {
       // async success - get project with route paramater
       project = projects.data.find((item) => item.slug === slug)
       if(typeof project !== 'undefined') {
-        images = project.media.map((img) => {
-          return { original: API_URL + '/uploads/projects/' + img, thumbnail: API_URL + '/uploads/projects/' + img }
+        images = project.media.map((img, index) => {
+          let imgUrl = API_URL + '/uploads/projects/' + img
+          return <div key={index} styleName="cf-slide" style={{ backgroundImage: 'url(' + imgUrl + ')' }}></div>
         })
       }
       // render project
@@ -60,7 +61,7 @@ class ProjectViewer extends Component {
           <h1 styleName="project-name">{project.name}</h1>
           <span styleName="project-client">{project.client}</span>
           <div styleName="project-gallery" className={images && images.length > 0 ? 'show' : 'hide'}>
-            <ImageGallery ref={i => this._imageGallery = i} items={images} slideInterval={12000} autoPlay={true} showNav={false} showThumbnails={true}/>
+            <Slider loop={true} showNav={false}>{images}</Slider>
           </div>
           <IconLinks icon="web" data={project.linkWeb} />
           <RepoLink data={project.repo} />

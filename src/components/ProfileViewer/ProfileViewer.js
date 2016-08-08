@@ -7,11 +7,11 @@
 import React, { Component, PropTypes } from 'react'
 import Markdown from 'react-markdown'
 import CssModules from 'react-css-modules'
-import Loader from '../../components/Loader/Loader'
-import Panel from '../../components/Panel/Panel'
-import Avatar from '../../components/Avatar/Avatar'
-import IconLinks from '../../components/IconLinks/IconLinks'
-import TechIcons from '../../components/TechIcons/TechIcons'
+import Loader from '../Loader/Loader'
+import Panel from '../Panel/Panel'
+import Avatar from '../Avatar/Avatar'
+import IconLinks from '../IconLinks/IconLinks'
+import TechIcons from '../TechIcons/TechIcons'
 import styles from './ProfileViewer.css'
 
 /**

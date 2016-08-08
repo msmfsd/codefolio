@@ -44,6 +44,18 @@
     padding: $padding 0;
     margin-bottom: 1rem;
     padding: 8px;
+
+    & button::before,
+    & button::after {
+      background: $coralPink;
+      border-radius: 0;
+    }
+
+    & button:focus,
+    & button:active {
+      outline: none;
+      background-color: transparent !important;
+    }
   }
 
   & .cf-project-description {
@@ -59,4 +71,16 @@
   top: 10px;
   right: $padding;
   composes: cf-btn from '../../assets/css/Global.css';
+}
+
+.cf-slide {
+  display: block;
+  width: 100%;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  @media (min-width: $small) {
+    height: 400px;
+  }
 }
