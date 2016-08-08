@@ -14,12 +14,10 @@ import rootReducer from '../reducers'
  * @returns {*}
  */
 export default function configureStore (initialState) {
-  //const logger = createLogger()
-  //const middleware = applyMiddleware(thunk, logger)
   const middleware = applyMiddleware(thunk)
   const createStoreWithMiddleware = compose(
     middleware,
-    window.devToolsExtension && window.devToolsExtension()
+    typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
   )
   const store = createStoreWithMiddleware(createStore)(rootReducer, initialState)
   if (module.hot) {
