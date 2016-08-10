@@ -228,6 +228,14 @@ select::-moz-focus-inner {
   & p {
     margin-top: 0
   }
+  & code {
+    background-color: $blackGrey;
+    border-radius: 3px;
+    padding: 1px 4px;
+  }
+  & ul {
+    padding: 5px 0 5px 20px;
+  }
 }
 
 /* ------------------ MAIN STYLES TO COMPOSE */
@@ -504,8 +512,16 @@ select::-moz-focus-inner {
 }
 
 :global .card {
-  background-color: $rustGrey;
+  background-color: $blackGreyBlue;
   color: $lightGrey;
+  box-shadow: none;
+  border-radius: 4px;
+  & .card-title {
+    font-weight: 900;
+  }
+  & .card-action {
+    border-top: 3px solid $midGreyBlue;
+  }
 }
 
 :global .card .activator i {

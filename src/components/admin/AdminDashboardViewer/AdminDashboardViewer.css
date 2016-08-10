@@ -4,7 +4,7 @@
 
 .admin-btn-create {
   composes: cf-form-btn from '../../../assets/css/Global.css';
-  margin-right: $padding;
+  margin-top: 14px;
 }
 
 .card-padding {
@@ -50,10 +50,10 @@ $rowHeight: 62px;
   height: calc($rowHeight * 1.5);
   float: left;
   opacity: 1;
-  padding: 0 0 0 10px;
+  padding: 0 0 0 18px;
   margin-bottom: 10px;
-  border: 1px solid color($lightGrey alpha(30%));
-  background-color: $midGreyBlue;
+  border: none;
+  background-color: $darkGreyBlue;
 
   @media (min-width: $small) {
     height: $rowHeight;
@@ -89,7 +89,7 @@ $rowHeight: 62px;
   & a {
     float: left;
     display: inline-block;
-    margin: 12px 12px 0 0;
+    margin: 12px 18px 0 0;
     padding: 0;
     background-color: $coralPink;
 

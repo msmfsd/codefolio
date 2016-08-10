@@ -36,7 +36,7 @@ class ProjectViewer extends Component {
   render () {
     // vars
     const { projects } = this.props
-    const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_URL : __CONFIG__.production.API_URL
+    const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.API_DEV_URL : __CONFIG__.API_PROD_URL
     const slug = this.props.params.projectId
     let project = null
     let images = []

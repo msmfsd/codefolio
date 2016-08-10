@@ -9,7 +9,7 @@ import { convertToBase64Async, formatProfileData, formatProjectData } from '../u
 import { setStorage, getStorage, clearStorage } from '../utils/storage'
 
 // simulate server loading for dev environment only
-const devOnlySimulateDelay = process.env.NODE_ENV !== 'production' ? 1000 : 0
+const devOnlySimulateDelay = process.env.NODE_ENV !== 'production' ? 0 : 0
 
 /*
  * action types

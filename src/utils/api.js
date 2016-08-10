@@ -6,8 +6,8 @@
 /* eslint-disable quote-props*/
 import __CONFIG__ from '../../cf.config'
 
-const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_URL : __CONFIG__.production.API_URL
-const API_KEY = process.env.NODE_ENV !== 'production' ? __CONFIG__.development.API_KEY : __CONFIG__.production.API_KEY
+const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.API_DEV_URL : __CONFIG__.API_PROD_URL
+const API_KEY = __CONFIG__.API_KEY
 
 /**
 * @class Api

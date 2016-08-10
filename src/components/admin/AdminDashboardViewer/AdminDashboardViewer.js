@@ -61,13 +61,8 @@ class AdminDashboardViewer extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col s12">
-            <h3>Admin Dashboard</h3>
-          </div>
-        </div>
-        <div className="row">
           <div className="col s12 m6">
-            <div className="card hoverable">
+            <div className="card">
               <div className="card-content">
                 <span className="card-title">Admin settings</span>
                 <p>View administrator username and last logged in date and change your admin password.</p>
@@ -78,7 +73,7 @@ class AdminDashboardViewer extends Component {
             </div>
           </div>
           <div className="col s12 m6">
-            <div className="card hoverable">
+            <div className="card">
               <div className="card-content">
                 <span className="card-title">Profile settings</span>
                 <p>Manage your public folio profile to update your avatar, details, technology set, contacts and bio.</p>
@@ -89,25 +84,25 @@ class AdminDashboardViewer extends Component {
             </div>
           </div>
           <div className="col s12">
-            <div className="card hoverable">
+            <div className="card">
               <div className="card-content">
                 <span className="card-title">Projects</span>
                 <p>Manage your public folio projects to showcase your development work. Edit current projects below or create a new project.</p>
+                <p><Link styleName="admin-btn-create" className="btn" to={'/admin/new-project'}>Create new project</Link></p>
               </div>
               <div styleName="card-action-full" className="card-action left">
                 <div className={projects.loading || projects.error ? 'show' : 'hide'}>
                   {projects.error ? <div styleName="card-padding" className="card-panel">{projects.errMessage}</div> : <div styleName="cf-progress"><div className="progress"><div className="indeterminate"></div></div></div>}
                 </div>
                 <div className={projects.loading ? 'hide' : 'show'}>
-                  <Link styleName="admin-btn-create" className="btn right" to={'/admin/new-project'}>Create new project</Link>
                   <ul styleName="cf-projects-list" className={projects.loading || projects.error ? 'hide' : 'show'}>
                     {
                       projects.data.map((obj, index) => {
-                        return (<li key={index} styleName="cf-project-link-item">
+                        return (<li key={index} styleName="cf-project-link-item" className="hoverable">
                           <div>
                             <h6 className="truncate">
-                              {index + 1} - {obj.name}
-                              <span className="truncate">View order: {obj.viewOrder} | Featured: {obj.sticky === 1 ? 'Yes' : 'No'}</span>
+                              {obj.name}
+                              <span className="truncate">view order: {obj.viewOrder}{obj.sticky === 1 ? ' | featured' : ''}</span>
                             </h6>
                             <Link to={'/admin/edit-project/' + obj.slug} className="btn-floating hoverable"><i className="material-icons">mode_edit</i></Link>
                             <a href="#" onClick={(this.deleteProject.bind(this, obj._id))} className="btn-floating hoverable"><i className="material-icons">delete</i></a>
