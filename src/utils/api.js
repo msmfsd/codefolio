@@ -4,7 +4,7 @@
  * MIT Licensed
  */
 /* eslint-disable quote-props*/
-import __CONFIG__ from '../../cf.config'
+import __CONFIG__ from '../../config'
 
 const API_URL = process.env.NODE_ENV !== 'production' ? __CONFIG__.API_DEV_URL : __CONFIG__.API_PROD_URL
 const API_KEY = __CONFIG__.API_KEY

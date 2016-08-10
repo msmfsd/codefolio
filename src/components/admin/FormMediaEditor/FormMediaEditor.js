@@ -6,7 +6,7 @@
 import React, { Component, PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
 import CssModules from 'react-css-modules'
-import __CONFIG__ from '../../../../cf.config'
+import __CONFIG__ from '../../../../config'
 import styles from './FormMediaEditor.css'
 
 /**

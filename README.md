@@ -21,7 +21,7 @@ Codefolio project is an open source build-your-own folio website & CMS for devel
 5. Make your own .git with ```git init```
 
 #### Configuration
-1. Copy the ***cf.config.js.example*** file in the root directory and rename it to ***cf.config.js***
+1. Open the root file ***config.js***
 2. Follow the instructions carefully in the comments of the file
 
 #### Start dev server
@@ -35,7 +35,7 @@ Codefolio project is an open source build-your-own folio website & CMS for devel
 3. NOTE: your folio profile will be automatically created and saved to the db the first time your Codefolio API is called.
 
 #### Build production bundle
-1. Ensure the cf.config.js file has your correct API_PROD_URL
+1. Ensure the config.js file has your correct API_PROD_URL
 2. Run ```npm run build``` command
 3. Follow the [Codefolio + Codefolio API Guide](https://github.com/msmfsd/codefolio-guide) to publish your folio to a production server
 
