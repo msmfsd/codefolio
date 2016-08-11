@@ -31,8 +31,9 @@ Codefolio project is an open source build-your-own folio website & CMS for devel
 
 #### Edit content using the CMS
 1. Create your administrator at [http://localhost:3000/register](http://localhost:3000/register)
-2. Login and start building your folio using the CMS at [http://localhost:3000/admin](http://localhost:3000/admin)
-3. NOTE: your folio profile will be automatically created and saved to the db the first time your Codefolio API is called.
+2. Login and start editing your folio using the CMS at [http://localhost:3000/admin](http://localhost:3000/admin)
+
+> NOTE: Currently the admin forms will output React Unknown props warnings in the browser inspector console, they are caused by current stable ReduxForm/React versions. These do not effect the application, can be ignored and will not appear in your production bundle.
 
 #### Build production bundle
 1. Ensure the config.js file has your correct API_PROD_URL
