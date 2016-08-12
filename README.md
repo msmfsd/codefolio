@@ -5,7 +5,7 @@ Codefolio project is an open source build-your-own folio website & CMS for devel
 > Codefolio & Codefolio API are seperate projects that connect with each other to create your developer folio. Codefolio is the static front-end website & CMS that displays your folio to the public and allows you to manage it's content. Codefolio API is a RESTful API server that performs CRUD operations on data requested by your Codefolio site.
 
 #### Demo
-- [View my Codefolio](http://msmfsd.com)
+- [View Codefolio preview](https://goo.gl/photos/fqhDKEvH9RTejUzY9)
 
 #### Requirements
 - npm v3+ & node v4+
@@ -33,12 +33,12 @@ Codefolio project is an open source build-your-own folio website & CMS for devel
 1. Create your administrator at [http://localhost:3000/register](http://localhost:3000/register)
 2. Login and start editing your folio using the CMS at [http://localhost:3000/admin](http://localhost:3000/admin)
 
-> NOTE: Currently the admin forms will output React Unknown props warnings in the browser inspector console, they are caused by current stable ReduxForm/React versions. These do not effect the application, can be ignored and will not appear in your production bundle.
-
 #### Build production bundle
 1. Ensure the config.js file has your correct API_PROD_URL
 2. Run ```npm run build``` command
 3. Follow the [Codefolio + Codefolio API Guide](https://github.com/msmfsd/codefolio-guide) to publish your folio to a production server
+
+> NOTE: In development environment the admin forms will output React Unknown props warnings in the browser inspector console, they are caused by current stable ReduxForm/React versions. These do not effect the application, can be ignored and will not appear in your production bundle.
 
 #### Contributing
 Feel free to open an issue or post a pull request
