@@ -10,8 +10,7 @@ Codefolio project is an open source build-your-own folio website & CMS for devel
 #### Requirements
 - npm v3+ & node v4+
 - [Codefolio API](https://github.com/msmfsd/codefolio-api)
-- Modern browser ie. Chrome, FF, Safari, IE10+
-- If you want to modify or customize the core I recommend you install [Redux Devtools extension](https://github.com/zalmoxisus/redux-devtools-extension) to your browser
+- Modern browser ie. Chrome, FF, Safari, IE10+, iOS, Android
 
 #### Getting started
 1. Clone this repo with ```git clone https://github.com/msmfsd/codefolio.git```
@@ -38,7 +37,10 @@ Codefolio project is an open source build-your-own folio website & CMS for devel
 2. Run ```npm run build``` command
 3. Follow the [Codefolio + Codefolio API Guide](https://github.com/msmfsd/codefolio-guide) to publish your folio to a production server
 
-> NOTE: In development environment the admin forms will output React Unknown props warnings in the browser inspector console, they are caused by current stable ReduxForm/React versions. These do not effect the application, can be ignored and will not appear in your production bundle.
+#### Customize
+- Feel free to customize the source code to suit your needs
+- I recommend you install [Redux Devtools extension](https://github.com/zalmoxisus/redux-devtools-extension) to your browser
+- NOTE: In development environment the admin forms will output React Unknown props warnings in the browser inspector console, they are caused by current stable ReduxForm/React versions. These do not effect the application, can be ignored and will not appear in your production bundle.
 
 #### Contributing
 Feel free to open an issue or post a pull request
