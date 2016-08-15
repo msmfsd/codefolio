@@ -1,4 +1,4 @@
-# Codefolio [![Build Status](https://travis-ci.org/msmfsd/codefolio.svg?token=pQuZQVJCHi2ifpjKbzd7&branch=master)](https://travis-ci.org/msmfsd/codefolio)
+# Codefolio [![Build Status](https://travis-ci.org/msmfsd/codefolio.svg?branch=master)](https://travis-ci.org/msmfsd/codefolio)
 
 Codefolio project is an open source build-your-own folio website & CMS for developers to showcase their skills and work. See the [Codefolio + Codefolio API Guide](https://github.com/msmfsd/codefolio-guide) as the first point of reference.
 
