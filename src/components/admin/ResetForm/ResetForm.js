@@ -18,7 +18,7 @@ const loginValidation = createValidator({
 
 /**
  * @class ResetForm
- * @extends Component
+ * @extends {Component}
  */
 class ResetForm extends Component {
 

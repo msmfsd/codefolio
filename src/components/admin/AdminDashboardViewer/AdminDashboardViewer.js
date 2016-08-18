@@ -10,7 +10,7 @@ import styles from './AdminDashboardViewer.css'
 
 /**
  * @class AdminDashboardViewer
- * @extends Component
+ * @extends {Component}
  */
 class AdminDashboardViewer extends Component {
 
@@ -29,8 +29,8 @@ class AdminDashboardViewer extends Component {
 
   /**
    * Prepare to remove project by id
-   * @param id : string
-   * @param e : dom node event object
+   * @param {string} id
+   * @param {object} e - event object
    */
   deleteProject (id, e) {
     e.preventDefault()
@@ -40,7 +40,7 @@ class AdminDashboardViewer extends Component {
 
   /**
    * Remove project by current deleteId
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   deleteProjectConfirm (e) {
     e.preventDefault()
@@ -49,7 +49,7 @@ class AdminDashboardViewer extends Component {
 
   /**
    * Cancel remove project by current deleteId
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   deleteProjectCancel (e) {
     e.preventDefault()
@@ -135,4 +135,5 @@ AdminDashboardViewer.propTypes = {
   fetchProjectsAsync: PropTypes.func.isRequired
 }
 
-export default CssModules(AdminDashboardViewer, styles)
+AdminDashboardViewer = CssModules(AdminDashboardViewer, styles)
+export default AdminDashboardViewer

@@ -17,7 +17,7 @@ const loginValidation = createValidator({
 
 /**
  * @class ForgotForm
- * @extends Component
+ * @extends {Component}
  */
 class ForgotForm extends Component {
 

@@ -10,7 +10,7 @@ import styles from './FormLinksEditor.css'
 
 /**
  * @class FormLinksEditor
- * @extends Component
+ * @extends {Component}
  */
 class FormLinksEditor extends Component {
 
@@ -26,7 +26,7 @@ class FormLinksEditor extends Component {
 
   /**
    * Create new empty link fields
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   createItem (e) {
     e.preventDefault()
@@ -44,7 +44,7 @@ class FormLinksEditor extends Component {
 
   /**
    * Add new link to store/form
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   addItem (e) {
     e.preventDefault()
@@ -61,8 +61,8 @@ class FormLinksEditor extends Component {
 
   /**
    * Remove new link from store/form
-   * @param index : number
-   * @param e : dom node event object
+   * @param {number} index
+   * @param {object} e - event object
    */
   removeItem (index, e) {
     e.preventDefault()
@@ -80,7 +80,7 @@ class FormLinksEditor extends Component {
 
   /**
    * Cancel create new link
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   cancelItem (e) {
     e.preventDefault()
@@ -160,4 +160,5 @@ FormLinksEditor.propTypes = {
   max: PropTypes.number.isRequired
 }
 
-export default CssModules(FormLinksEditor, styles)
+FormLinksEditor = CssModules(FormLinksEditor, styles)
+export default FormLinksEditor

@@ -14,7 +14,7 @@ import styles from './AdminLayout.css'
 
 /**
  * @class AdminLayout
- * @extends Component
+ * @extends {Component}
  */
 class AdminLayout extends Component {
 
@@ -58,4 +58,5 @@ function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispachToProps)(CssModules(AdminLayout, styles))
+AdminLayout = connect(mapStateToProps, mapDispachToProps)(CssModules(AdminLayout, styles))
+export default AdminLayout

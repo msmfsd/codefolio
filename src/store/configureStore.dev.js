@@ -10,8 +10,8 @@ import rootReducer from '../reducers'
 /**
  * Method to create stores based on a set of passed
  * reducers
- * @param initialState
- * @returns {*}
+ * @param {object} initialState
+ * @return {object} redux store
  */
 export default function configureStore (initialState) {
   const middleware = applyMiddleware(thunk)

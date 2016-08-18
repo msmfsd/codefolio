@@ -9,7 +9,7 @@ import styles from './IconTechChips.css'
 
 /**
  * @class IconTechChips
- * @extends Component
+ * @extends {Component}
  */
 class IconTechChips extends Component {
 
@@ -32,4 +32,5 @@ IconTechChips.propTypes = {
   icon: PropTypes.string
 }
 
-export default CssModules(IconTechChips, styles)
+IconTechChips = CssModules(IconTechChips, styles)
+export default IconTechChips

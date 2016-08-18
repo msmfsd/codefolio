@@ -10,7 +10,7 @@ import styles from './FormArrayEditor.css'
 
 /**
  * @class FormArrayEditor
- * @extends Component
+ * @extends {Component}
  */
 class FormArrayEditor extends Component {
 
@@ -25,7 +25,7 @@ class FormArrayEditor extends Component {
 
   /**
    * Create new empty link fields
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   createItem (e) {
     e.preventDefault()
@@ -41,7 +41,7 @@ class FormArrayEditor extends Component {
 
   /**
    * Add new link to store/form
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   addItem (e) {
     e.preventDefault()
@@ -57,8 +57,8 @@ class FormArrayEditor extends Component {
 
   /**
    * Remove new link from store/form
-   * @param index : number
-   * @param e : dom node event object
+   * @param {number} index
+   * @param {object} e - event object
    */
   removeItem (index, e) {
     e.preventDefault()
@@ -75,7 +75,7 @@ class FormArrayEditor extends Component {
 
   /**
    * Cancel create new link
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   cancelItem (e) {
     e.preventDefault()
@@ -147,4 +147,5 @@ FormArrayEditor.propTypes = {
   max: PropTypes.number.isRequired
 }
 
-export default CssModules(FormArrayEditor, styles)
+FormArrayEditor = CssModules(FormArrayEditor, styles)
+export default FormArrayEditor

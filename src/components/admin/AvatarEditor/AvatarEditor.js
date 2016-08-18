@@ -9,14 +9,13 @@ import styles from './AvatarEditor.css'
 
 /**
  * @class AvatarEditor
- * @extends Component
+ * @extends {Component}
  */
 class AvatarEditor extends Component {
 
   /**
    * Allow live form edits to update profile state on blur
    * Why? So other state updates dont reset their values pre submit
-   * @param e : object
    */
   onBlurUpdate () {
     this.props.updateAvatarFields(this.props.use.value, this.props.gravitarEmail.value, this.props.customAvatarFile.value)
@@ -69,4 +68,5 @@ AvatarEditor.defaultProps = {
   defaultInputClasses: 'input-field col s12'
 }
 
-export default CssModules(AvatarEditor, styles)
+AvatarEditor = CssModules(AvatarEditor, styles)
+export default AvatarEditor

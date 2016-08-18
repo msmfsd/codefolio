@@ -16,7 +16,7 @@ export default class Api {
 
   /**
    * Get profile data from Codefolio API
-   * @returns {object}
+   * @return {object}
    */
   static async FetchCodefolioProfile () {
     return await fetch(API_URL + '/api/profile?apikey=' + API_KEY)
@@ -27,7 +27,7 @@ export default class Api {
 
   /**
    * Get projects data from Codefolio API
-   * @returns {object}
+   * @return {object}
    */
   static async FetchCodefolioProjects () {
     return await fetch(API_URL + '/api/projects?apikey=' + API_KEY)
@@ -37,9 +37,9 @@ export default class Api {
   }
 
   /**
-   * Get projects data from Codefolio API
-   * @param id : string
-   * @returns {object}
+   * Get projects data from Codefolio API by id
+   * @param {string} id
+   * @return {object}
    */
   static async FetchCodefolioProjectById (id) {
     return await fetch(API_URL + '/api/project/' + id.trim() + API_KEY)
@@ -50,9 +50,8 @@ export default class Api {
 
   /**
    * Login admin to Codefolio API
-   * @param username : string
-   * @param password : string
-   * @returns {object}
+   * @param {object} formData
+   * @return {object}
    */
   static async Login (formData) {
     const serialized = JSON.stringify(formData)
@@ -70,9 +69,9 @@ export default class Api {
   }
 
   /**
-   * Login admin to Codefolio API
-   * @param token : string
-   * @returns {object}
+   * Logout admin to Codefolio API
+   * @param {string} token
+   * @return {object}
    */
   static async Logout (token) {
     const opts = {
@@ -90,9 +89,8 @@ export default class Api {
 
   /**
    * Register admin to Codefolio API
-   * @param username : string
-   * @param password : string
-   * @returns {object}
+   * @param {object} formData
+   * @return {object}
    */
   static async Register (formData) {
     const serialized = JSON.stringify(formData)
@@ -111,8 +109,8 @@ export default class Api {
 
   /**
    * Forgot password request for Codefolio API
-   * @param username : string
-   * @returns {object}
+   * @param {object} formData
+   * @return {object}
    */
   static async Forgot (formData) {
     formData.reseturl = window.location.protocol + '//' + window.location.host + '/reset'
@@ -132,10 +130,9 @@ export default class Api {
 
   /**
    * Reset admin password to Codefolio API
-   * @param password : string
-   * @param confirm : string
-   * @param resetToken : string
-   * @returns {object}
+   * @param {object} formData
+   * @param {string} resetToken
+   * @return {object}
    */
   static async Reset (formData, resetToken) {
     const serialized = JSON.stringify(formData)
@@ -154,9 +151,9 @@ export default class Api {
 
   /**
    * Edit admin password to Codefolio API
-   * @param password : string
-   * @param token : string
-   * @returns {object}
+   * @param {object} formData
+   * @param {string} token
+   * @return {object}
    */
   static async EditAdmin (formData, token) {
     const serialized = JSON.stringify(formData)
@@ -176,9 +173,9 @@ export default class Api {
 
   /**
    * Create new project to Codefolio API
-   * @param formData : object
-   * @param token : string
-   * @returns {object}
+   * @param {object} formData
+   * @param {string} token
+   * @return {object}
    */
   static async NewProject (formData, token) {
     const serialized = JSON.stringify(formData)
@@ -197,11 +194,11 @@ export default class Api {
   }
 
   /**
-   * Create new project to Codefolio API
-   * @param formData : object
-   * @param token : string
-   * @param projectId : string
-   * @returns {object}
+   * Edit project to Codefolio API
+   * @param {object} formData
+   * @param {string} token
+   * @param {string} projectId
+   * @return {object}
    */
   static async EditProject (formData, token, projectId) {
     const serialized = JSON.stringify(formData)
@@ -221,10 +218,9 @@ export default class Api {
 
   /**
    * Delete project to Codefolio API
-   * @param formData : object
-   * @param token : string
-   * @param projectId : string
-   * @returns {object}
+   * @param {string} projectId
+   * @param {string} token
+   * @return {object}
    */
   static async DeleteProject (projectId, token) {
     const opts = {
@@ -241,9 +237,10 @@ export default class Api {
   }
 
   /**
-   * Upload files to Codefolio API
-   * @param files : array
-   * @returns {object}
+   * Upload project files to Codefolio API
+   * @param {array} files
+   * @param {string} token
+   * @return {object}
    */
   static async UploadProjectFiles (files, token) {
     const formData = new FormData()
@@ -272,9 +269,9 @@ export default class Api {
 
   /**
    * Edit profile to Codefolio API
-   * @param formData : object
-   * @param token : string
-   * @returns {object}
+   * @param {object} formData
+   * @param {string} token
+   * @return {object}
    */
   static async EditProfile (formData, token) {
     const serialized = JSON.stringify(formData)

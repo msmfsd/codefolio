@@ -9,7 +9,7 @@ import styles from './IconLinks.css'
 
 /**
  * @class IconLinks
- * @extends Component
+ * @extends {Component}
  */
 class IconLinks extends Component {
 
@@ -36,4 +36,5 @@ IconLinks.propTypes = {
   icon: PropTypes.string
 }
 
-export default CssModules(IconLinks, styles)
+IconLinks = CssModules(IconLinks, styles)
+export default IconLinks

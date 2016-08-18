@@ -10,7 +10,7 @@ import styles from './AdminNav.css'
 
 /**
  * @class AdminNav
- * @extends Component
+ * @extends {Component}
  */
 class AdminNav extends Component {
 
@@ -39,4 +39,5 @@ AdminNav.propTypes = {
   location: PropTypes.object.isRequired
 }
 
-export default CssModules(AdminNav, styles)
+AdminNav = CssModules(AdminNav, styles)
+export default AdminNav

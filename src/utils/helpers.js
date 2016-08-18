@@ -9,7 +9,7 @@ import striptags from 'striptags'
 
 /**
  * Helper method to convert custom avatar file stream to base64
- * @param formData - object
+ * @param {object} formData
  */
 export const convertToBase64Async = (formData) => {
   return new Promise ((resolve, reject) => {
@@ -29,7 +29,8 @@ export const convertToBase64Async = (formData) => {
 * Helper method to reformat redux form data to profile state
 * Why? Redux-form cannot map nested state props to fields
 * See: Bindings on /src/components/admin/EditProfileForm/EditProfileForm.js
-* @param formData - object
+* @param {object} formData
+* @param {string} base64
 */
 export const formatProfileData = (formData, base64) => {
   // sanitize
@@ -64,7 +65,7 @@ export const formatProfileData = (formData, base64) => {
 * Helper method to reformat redux form data to profile state
 * Why? Redux-form cannot map nested state props to fields
 * See: Bindings on /src/components/admin/NewProjectForm/NewProjectForm.js
-* @param formData - object
+* @param {object} formData
 */
 export const formatProjectData = (formData) => {
   // sanitize

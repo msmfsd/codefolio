@@ -10,7 +10,7 @@ import styles from './CodeSnippet.css'
 
 /**
  * @class CodeSnippet
- * @extends Component
+ * @extends {Component}
  */
 class CodeSnippet extends Component {
 
@@ -41,4 +41,5 @@ CodeSnippet.propTypes = {
   data: PropTypes.object
 }
 
-export default CssModules(CodeSnippet, styles)
+CodeSnippet = CssModules(CodeSnippet, styles)
+export default CodeSnippet

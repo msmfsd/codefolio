@@ -9,7 +9,7 @@ import styles from './Loader.css'
 
 /**
  * @class Loader
- * @extends Component
+ * @extends {Component}
  */
 class Loader extends Component {
 
@@ -25,4 +25,5 @@ class Loader extends Component {
 
 }
 
-export default CssModules(Loader, styles)
+Loader = CssModules(Loader, styles)
+export default Loader

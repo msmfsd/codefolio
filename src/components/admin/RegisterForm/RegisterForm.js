@@ -19,7 +19,7 @@ const loginValidation = createValidator({
 
 /**
  * @class RegisterForm
- * @extends Component
+ * @extends {Component}
  */
 class RegisterForm extends Component {
 

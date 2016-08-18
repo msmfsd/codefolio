@@ -29,9 +29,9 @@ export function localStorageSupported () {
 
 /**
  * Set auth to browser storage
- * @param token: string
- * @param lastLoggedIn: string
- * @param username: string
+ * @param {string} token
+ * @param {string} lastLoggedIn
+ * @param {string} username
  */
 export function setStorage (token, lastLoggedIn, username) {
   localStorage.setItem(storageData.token, token)
@@ -42,7 +42,7 @@ export function setStorage (token, lastLoggedIn, username) {
 
 /**
  * Get auth from browser storage
- * @return storage object or false
+ * @return {object} storage object or false
  */
 export function getStorage () {
   let now = new Date().getTime()

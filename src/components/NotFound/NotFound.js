@@ -10,7 +10,7 @@ import styles from './NotFound.css'
 
 /**
  * @class NotFound
- * @extends Component
+ * @extends {Component}
  */
 class NotFound extends Component {
 
@@ -27,4 +27,5 @@ class NotFound extends Component {
 
 }
 
-export default CssModules(NotFound, styles)
+NotFound = CssModules(NotFound, styles)
+export default NotFound

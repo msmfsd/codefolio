@@ -13,7 +13,7 @@ import styles from './ProjectsListViewer.css'
 
 /**
  * @class ProjectsListViewer
- * @extends Component
+ * @extends {Component}
  */
 class ProjectsListViewer extends Component {
 
@@ -39,7 +39,6 @@ class ProjectsListViewer extends Component {
 
   /**
    * Show projects list
-   * @returns void
    */
   updateLayout () {
     this.setState({ listShown: true })
@@ -78,4 +77,5 @@ ProjectsListViewer.propTypes = {
   projects: PropTypes.object.isRequired
 }
 
-export default CssModules(ProjectsListViewer, styles)
+ProjectsListViewer = CssModules(ProjectsListViewer, styles)
+export default ProjectsListViewer

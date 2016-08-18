@@ -52,4 +52,5 @@ ProfileViewer.propTypes = {
   profile: PropTypes.object.isRequired
 }
 
-export default CssModules(ProfileViewer, styles)
+ProfileViewer = CssModules(ProfileViewer, styles)
+export default ProfileViewer

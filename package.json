@@ -30,7 +30,8 @@
     "lint": "eslint --ext .js --ext .jsx ./test ./src; exit 0",
     "mocha": "mocha --compilers js:babel-core/register --require babel-polyfill src/reducers --recursive",
     "karma": "NODE_ENV=testing karma start --require babel-polyfill",
-    "test": "npm run lint && npm run mocha"
+    "test": "npm run lint && npm run mocha",
+    "esdoc": "esdoc -c ./esdoc.json && open ./esdoc/index.html"
   },
   "dependencies": {
     "babel-core": "^6.11.4",
@@ -99,6 +100,7 @@
     "clean-webpack-plugin": "^0.1.9",
     "copy-webpack-plugin": "^3.0.1",
     "enzyme": "^2.4.1",
+    "esdoc-es7-plugin": "0.0.3",
     "expect": "^1.20.2",
     "ignore-styles": "^4.0.0",
     "karma": "^1.1.1",

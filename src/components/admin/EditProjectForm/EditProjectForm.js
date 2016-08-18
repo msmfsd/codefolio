@@ -45,7 +45,7 @@ const editProjectValidation = createValidator({
 
 /**
  * @class EditProjectForm
- * @extends Component
+ * @extends {Component}
  */
 class EditProjectForm extends Component {
 
@@ -78,7 +78,7 @@ class EditProjectForm extends Component {
   /**
    * Allow live form edits to update profile state on blur
    * Why? So other state updates dont reset their values pre submit
-   * @param e : object
+   * @param {object} e - event object
    */
   onBlurUpdate (e) {
     this.props.editProjectUpdateField(e.currentTarget.name, e.currentTarget.value)

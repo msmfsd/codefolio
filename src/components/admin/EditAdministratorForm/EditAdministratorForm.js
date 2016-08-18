@@ -17,7 +17,7 @@ const editadminValidation = createValidator({
 
 /**
  * @class EditAdministratorForm
- * @extends Component
+ * @extends {Component}
  */
 class EditAdministratorForm extends Component {
 

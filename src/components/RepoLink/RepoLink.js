@@ -9,7 +9,7 @@ import styles from './RepoLink.css'
 
 /**
  * @class RepoLink
- * @extends Component
+ * @extends {Component}
  */
 class RepoLink extends Component {
 
@@ -85,4 +85,5 @@ RepoLink.propTypes = {
   data: PropTypes.object
 }
 
-export default CssModules(RepoLink, styles)
+RepoLink = CssModules(RepoLink, styles)
+export default RepoLink

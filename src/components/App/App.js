@@ -14,7 +14,7 @@ import styles from './App.css'
 
 /**
  * @class App
- * @extends Component
+ * @extends {Component}
  */
 class App extends Component {
 
@@ -43,8 +43,7 @@ class App extends Component {
   /**
    * Method to set theme & bg image
    * & any dom manipulation
-   * @param layout : object
-   * @returns {}
+   * @param {object} layout
    */
   initialiseLayout (layout) {
     // set body classes
@@ -96,4 +95,5 @@ function mapDispachToProps (dispatch) {
   return bindActionCreators(actionCreators, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispachToProps)(CssModules(App, styles))
+App = connect(mapStateToProps, mapDispachToProps)(CssModules(App, styles))
+export default App

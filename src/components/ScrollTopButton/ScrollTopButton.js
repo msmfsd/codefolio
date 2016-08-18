@@ -9,7 +9,7 @@ import styles from './ScrollTopButton.css'
 
 /**
  * @class ScrollTopButton
- * @extends Component
+ * @extends {Component}
  */
 class ScrollTopButton extends Component {
 
@@ -34,9 +34,10 @@ class ScrollTopButton extends Component {
 
   /**
    * Back to top btn click
-   * @param event : object
+   * @param {object} e - event object
    */
-  scrollToTop () {
+  scrollToTop (e) {
+    e.preventDefault()
     const doc = document.documentElement
     let top = null
     this.scrollTopTimer = setInterval(() => {
@@ -52,7 +53,7 @@ class ScrollTopButton extends Component {
 
   render () {
     return (
-      <a onClick={this.scrollToTop} styleName="projects-back-to-top" className="btn"><i className="material-icons left">arrow_upward</i>Top</a>
+      <a onClick={(e) => this.scrollToTop(e)} styleName="projects-back-to-top" className="btn"><i className="material-icons left">arrow_upward</i>Top</a>
     )
   }
 
@@ -66,4 +67,5 @@ ScrollTopButton.defaultProps = {
   scrollSpeed: 10
 }
 
-export default CssModules(ScrollTopButton, styles)
+ScrollTopButton = CssModules(ScrollTopButton, styles)
+export default ScrollTopButton

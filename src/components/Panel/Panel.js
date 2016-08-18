@@ -9,7 +9,7 @@ import styles from './Panel.css'
 
 /**
  * @class Panel
- * @extends Component
+ * @extends {Component}
  */
 class Panel extends Component {
 
@@ -23,4 +23,5 @@ Panel.propTypes = {
   message: PropTypes.string.isRequired
 }
 
-export default CssModules(Panel, styles)
+Panel = CssModules(Panel, styles)
+export default Panel

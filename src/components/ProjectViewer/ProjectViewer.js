@@ -22,7 +22,7 @@ import styles from './ProjectViewer.css'
 
 /**
  * @class ProjectViewer
- * @extends Component
+ * @extends {Component}
  */
 class ProjectViewer extends Component {
 
@@ -83,4 +83,5 @@ ProjectViewer.propTypes = {
   params: PropTypes.object
 }
 
-export default CssModules(ProjectViewer, styles)
+ProjectViewer = CssModules(ProjectViewer, styles)
+export default ProjectViewer

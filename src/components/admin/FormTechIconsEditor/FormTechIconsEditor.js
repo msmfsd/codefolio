@@ -10,7 +10,7 @@ import styles from './FormTechIconsEditor.css'
 
 /**
  * @class FormTechIconsEditor
- * @extends Component
+ * @extends {Component}
  */
 class FormTechIconsEditor extends Component {
 
@@ -24,7 +24,7 @@ class FormTechIconsEditor extends Component {
 
   /**
    * Create new empty link fields
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   createItem (e) {
     e.preventDefault()
@@ -38,7 +38,7 @@ class FormTechIconsEditor extends Component {
 
   /**
    * Add new link to store/form
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   addItem (e) {
     e.preventDefault()
@@ -64,8 +64,8 @@ class FormTechIconsEditor extends Component {
 
   /**
    * Remove new link from store/form
-   * @param index : number
-   * @param e : dom node event object
+   * @param {number} index
+   * @param {object} e - event object
    */
   removeItem (index, e) {
     e.preventDefault()
@@ -74,7 +74,7 @@ class FormTechIconsEditor extends Component {
 
   /**
    * Cancel create new link
-   * @param e : dom node event object
+   * @param {object} e - event object
    */
   cancelItem (e) {
     e.preventDefault()
@@ -158,4 +158,5 @@ FormTechIconsEditor.defaultProps = {
   devIconPrefix: 'devicon-'
 }
 
-export default CssModules(FormTechIconsEditor, styles)
+FormTechIconsEditor = CssModules(FormTechIconsEditor, styles)
+export default FormTechIconsEditor

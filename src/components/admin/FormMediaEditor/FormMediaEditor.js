@@ -11,7 +11,7 @@ import styles from './FormMediaEditor.css'
 
 /**
  * @class FormMediaEditor
- * @extends Component
+ * @extends {Component}
  */
 class FormMediaEditor extends Component {
 
@@ -22,7 +22,7 @@ class FormMediaEditor extends Component {
 
   /**
    * On files selected for update
-   * @param files : object
+   * @param {array} files
    */
   onDrop (files) {
     this.setState({ files: files })
@@ -31,8 +31,8 @@ class FormMediaEditor extends Component {
 
   /**
    * Remove media from store/form
-   * @param index : number
-   * @param e : dom node event object
+   * @param {number} index
+   * @param {object} e - event object
    */
   removeMediaItem (index, e) {
     e.preventDefault()
@@ -86,4 +86,5 @@ FormMediaEditor.propTypes = {
   removeMediaItemFunc: PropTypes.func.isRequired
 }
 
-export default CssModules(FormMediaEditor, styles)
+FormMediaEditor = CssModules(FormMediaEditor, styles)
+export default FormMediaEditor

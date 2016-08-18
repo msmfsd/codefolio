@@ -10,7 +10,7 @@ import styles from './Avatar.css'
 
 /**
  * @class Avatar
- * @extends Component
+ * @extends {Component}
  */
 class Avatar extends Component {
 
@@ -47,4 +47,5 @@ Avatar.propTypes = {
   data: PropTypes.object
 }
 
-export default CssModules(Avatar, styles)
+Avatar = CssModules(Avatar, styles)
+export default Avatar

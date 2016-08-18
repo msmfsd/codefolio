@@ -9,7 +9,7 @@ import styles from './TechIcons.css'
 
 /**
  * @class TechIcons
- * @extends Component
+ * @extends {Component}
  */
 class TechIcons extends Component {
 
@@ -35,4 +35,5 @@ TechIcons.defaultProps = {
   devIconPrefix: 'devicon-'
 }
 
-export default CssModules(TechIcons, styles)
+TechIcons = CssModules(TechIcons, styles)
+export default TechIcons

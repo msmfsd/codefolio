@@ -224,49 +224,83 @@ const editAdminFail = (err) => ({
  */
 
 // PROFILE
+
+/**
+ * Update Profile Field
+ * @param {string} fieldName
+ * @param {string} fieldValue
+ */
 export const updateProfileField = (fieldName, fieldValue) => ({
   type: UPDATE_PROFILE_FIELD,
   fieldName,
   fieldValue
 })
-
+/**
+ * Update Avatar Field
+ * @param {string} use
+ * @param {string} gravitarEmail
+ * @param {string} customAvatarFile
+ */
 export const updateAvatarFields = (use, gravitarEmail, customAvatarFile) => ({
   type: UPDATE_AVATAR_FIELDS,
   use,
   gravitarEmail,
   customAvatarFile
 })
-
+/**
+ * Update Layout Field
+ * @param {string} fieldName
+ * @param {string} fieldValue
+ */
 export const updateLayoutField = (fieldName, fieldValue) => ({
   type: UPDATE_LAYOUT_FIELD,
   fieldName,
   fieldValue
 })
-
+/**
+ * add Profile Techicon
+ * @param {string} linkGroup
+ * @param {string} linkName
+ * @param {string} linkIcon
+ */
 export const addProfileTechicon = (linkGroup, linkName, linkIcon) => ({
   type: ADD_PROFILE_TECHICON,
   linkGroup,
   linkName,
   linkIcon
 })
-
+/**
+ * add Profile Link
+ * @param {string} linkGroup
+ * @param {string} linkName
+ * @param {string} linkUrl
+ */
 export const addProfileLink = (linkGroup, linkName, linkUrl) => ({
   type: ADD_PROFILE_LINK,
   linkGroup,
   linkName,
   linkUrl
 })
-
+/**
+ * remove Profile Item
+ * @param {string} linkGroup
+ * @param {number} index
+ */
 export const removeProfileItem = (linkGroup, index) => ({
   type: REMOVE_PROFILE_ITEM,
   linkGroup,
   index
 })
-
+/**
+ * edit Profile Reset
+ */
 export const editProfileReset = () => ({
   type: EDIT_PROFILE_RESET
 })
-
+/**
+ * fetch Profile Async
+ * @return {object}
+ */
 export const fetchProfileAsync = () => {
   return dispatch => {
     dispatch(fetchProfileRequest())
@@ -286,6 +320,11 @@ export const fetchProfileAsync = () => {
 }
 
 // PROJECTS
+
+/**
+ * fetch Projects Async
+ * @return {object}
+ */
 export const fetchProjectsAsync = () => {
   return dispatch => {
     dispatch(fetchProjectsRequest())
@@ -304,6 +343,12 @@ export const fetchProjectsAsync = () => {
   }
 }
 
+/**
+ * Delete project async
+ * @param {string} id
+ * @param {string} token
+ * @return {object}
+ */
 export const deleteProjectAsync = (id, token) => {
   return dispatch => {
     dispatch(deleteProjectRequest())
@@ -325,51 +370,86 @@ export const deleteProjectAsync = (id, token) => {
 }
 
 // EDIT/NEW PROJECT
+
+/**
+ * edit Project Set
+ * @param {object} project
+ */
 export const editProjectSet = (project) => ({
   type: EDIT_PROJECT_SET,
   project
 })
-
+/**
+ * edit Project Reset
+ */
 export const editProjectReset = () => ({
   type: EDIT_PROJECT_RESET
 })
-
+/**
+ * edit Project Update Field
+ * @param {string} fieldName
+ * @param {string} fieldValue
+ */
 export const editProjectUpdateField = (fieldName, fieldValue) => ({
   type: EDIT_PROJECT_UPDATE_FIELD,
   fieldName,
   fieldValue
 })
-
+/**
+ * edit Project On Push Field Array
+ * @param {string} fieldName
+ * @param {string} fieldValue
+ */
 export const editProjectOnPushFieldArray = (fieldName, fieldValue) => ({
   type: EDIT_PROJECT_ON_PUSH_FIELD_ARRAY,
   fieldName,
   fieldValue
 })
-
+/**
+ * edit Project On Splice Field Array
+ * @param {string} fieldName
+ * @param {number} index
+ */
 export const editProjectOnSpliceFieldArray = (fieldName, index) => ({
   type: EDIT_PROJECT_ON_SPLICE_FIELD_ARRAY,
   fieldName,
   index
 })
-
+/**
+ * edit Project Add Link
+ * @param {string} linkGroup
+ * @param {string} linkName
+ * @param {string} linkUrl
+ */
 export const editProjectAddLink = (linkGroup, linkName, linkUrl) => ({
   type: EDIT_PROJECT_ADD_LINK,
   linkGroup,
   linkName,
   linkUrl
 })
-
+/**
+ * edit Project Remove Link
+ * @param {string} linkGroup
+ * @param {number} index
+ */
 export const editProjectRemoveLink = (linkGroup, index) => ({
   type: EDIT_PROJECT_REMOVE_LINK,
   linkGroup,
   index
 })
-
+/**
+ * edit Project Remove Media
+ * @param {number} index
+ */
 export const editProjectRemoveMedia = (index) => ({
   type: EDIT_PROJECT_REMOVE_MEDIA,
   index
 })
-
+/**
+ * edit Project Upload Files Async
+ * @param {array} files
+ * @param {string} token
+ */
 export const editProjectUploadFilesAsync = (files, token) => {
   return dispatch => {
     dispatch(editProjectUploadingFiles())
@@ -388,7 +468,11 @@ export const editProjectUploadFilesAsync = (files, token) => {
     }, devOnlySimulateDelay)
   }
 }
-
+/**
+ * new Project Async
+ * @param {object} formData
+ * @param {string} token
+ */
 export const newProjectAsync = (formData, token) => {
   return (dispatch) => {
     dispatch(editProject())
@@ -410,7 +494,12 @@ export const newProjectAsync = (formData, token) => {
     }, devOnlySimulateDelay)
   }
 }
-
+/**
+ * edit Project Async
+ * @param {object} formData
+ * @param {string} token
+ * @param {string} projectId
+ */
 export const editProjectAsync = (formData, token, projectId) => {
   return (dispatch) => {
     dispatch(editProject())
@@ -429,6 +518,10 @@ export const editProjectAsync = (formData, token, projectId) => {
 }
 
 // AUTH
+
+/**
+ * auth Init
+ */
 export const authInit = () => (dispatch) => {
   // if storage found and token not expired
   const storageResult = getStorage()
@@ -440,7 +533,10 @@ export const authInit = () => (dispatch) => {
     dispatch(authSuccess({ token: storageResult.token, lastLoggedIn: storageResult.lastLoggedIn }))
   }
 }
-
+/**
+ * login Async
+ * @param {object} formData
+ */
 export const loginAsync = (formData) => {
   return (dispatch) => {
     dispatch(auth(formData.username))
@@ -463,7 +559,10 @@ export const loginAsync = (formData) => {
     }, devOnlySimulateDelay)
   }
 }
-
+/**
+ * logout Async
+ * @param {string} token
+ */
 export const logoutAsync = (token) => (dispatch) => {
   dispatch(authLogout())
   setTimeout(() => {
@@ -480,7 +579,10 @@ export const logoutAsync = (token) => (dispatch) => {
     .catch((reason) => dispatch(authLogoutFail(reason.message + '. API server unreachable.')))
   }, devOnlySimulateDelay)
 }
-
+/**
+ * register Async
+ * @param {object} formData
+ */
 export const registerAsync = (formData) => {
   return (dispatch) => {
     dispatch(register())
@@ -497,7 +599,10 @@ export const registerAsync = (formData) => {
     }, devOnlySimulateDelay)
   }
 }
-
+/**
+ * forgot Async
+ * @param {object} formData
+ */
 export const forgotAsync = (formData) => {
   return (dispatch) => {
     dispatch(forgot())
@@ -514,7 +619,11 @@ export const forgotAsync = (formData) => {
     }, devOnlySimulateDelay)
   }
 }
-
+/**
+ * reset Async
+ * @param {object} formData
+ * @param {string} resetToken
+ */
 export const resetAsync = (formData, resetToken) => {
   return (dispatch) => {
     dispatch(resetInit())
@@ -533,6 +642,12 @@ export const resetAsync = (formData, resetToken) => {
 }
 
 // ADMIN
+
+/**
+ * edit Admin Async
+ * @param {object} formData
+ * @param {string} token
+ */
 export const editAdminAsync = (formData, token) => {
   return (dispatch) => {
     dispatch(editAdmin())
@@ -553,7 +668,11 @@ export const editAdminAsync = (formData, token) => {
     }, devOnlySimulateDelay)
   }
 }
-
+/**
+ * edit Profile Async
+ * @param {object} formData
+ * @param {string} token
+ */
 export const editProfileAsync = (formData, token) => {
   return (dispatch) => {
     dispatch(editProfile())
