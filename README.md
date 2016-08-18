@@ -39,7 +39,7 @@ Codefolio project is an open source build-your-own folio website & CMS for devel
 
 #### Customize
 - Feel free to customize the source code to suit your needs
-- View [Documentation]()
+- View [Codefolio Documentation](https://doc.esdoc.org/github.com/msmfsd/codefolio/)
 - I recommend you install [Redux Devtools extension](https://github.com/zalmoxisus/redux-devtools-extension) to your browser
 - NOTE: In development environment the admin forms will output React Unknown props warnings in the browser inspector console, they are caused by current stable ReduxForm/React versions. These do not effect the application, can be ignored and will not appear in your production bundle.
 
